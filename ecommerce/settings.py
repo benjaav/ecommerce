@@ -15,7 +15,7 @@ SECRET_KEY = 'django-insecure-(wlxd-4*159by$$_f+r)ugq5p)^!z2h38b7_$or^ubln-&$a@z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["codestorebl.com", "www.codestorebl.com"]
 
 SIMPLE_JWT = {
     # Token de acceso: 1 hora de duración
