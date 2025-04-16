@@ -1,0 +1,231 @@
+/* Contenedor principal del carrito */
+.cart-container {
+    width: 90%;
+    max-width: 600px;           /* Limita el ancho, para que se vea centrado y ordenado */
+    margin: 40px auto;          /* Centra horizontalmente, y añade margen superior/inferior */
+    background-color: #1E1E1E;  /* Fondo oscuro; cámbialo a #fff si prefieres contenedor blanco */
+    color: #fff;                /* Texto claro si usas fondo oscuro */
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  .cart-product-image {
+    width: 80px;            /* Ajusta el ancho a tu gusto */
+    height: 80px;           /* Ajusta la altura, o puedes usar 'auto' para mantener la proporción */
+    object-fit: cover;      /* Se ajusta y recorta la imagen sin distorsioanarla */
+    border-radius: 0.5rem;  /* Bordes redondeados */
+    margin-right: 1rem;     /* Espacio a la derecha, útil para separar la imagen del texto */
+  }
+  
+  
+  /* Título del carrito */
+  .cart-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Lista de ítems del carrito */
+  .cart-items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Cada ítem: ajusta su aspecto y separa sus elementos */
+  .cart-item {
+    display: flex;             
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #444;   /* Separador tenue entre ítems */
+    padding: 10px 0;
+  }
+  
+  /* Quita la línea inferior del último item */
+  .cart-item:last-child {
+    border-bottom: none;
+  }
+  
+  /* Nombre del producto */
+  .cart-item-name {
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+  
+  /* Información extra, como cantidad y precio */
+  .cart-item-details {
+    font-size: 1rem;
+    color: #ccc;
+  }
+  
+  /* Mensaje de error o aviso */
+  .cart-error {
+    color: red;
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  /* Botón de checkout: centrado y con un margen superior */
+  .checkout-btn {
+    display: block;
+    margin: 30px auto 0 auto;
+    background-color: #FF69B4;   /* color principal */
+    border: none;
+    border-radius: 4px;
+    padding: 12px 24px;
+    font-size: 1rem;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .checkout-btn:hover,
+  .checkout-btn:focus {
+    background-color: #FF85C8;
+    transform: translateY(-2px);
+  }
+  
+  /* Opcional: Ajuste para un posible mensaje "Carrito vacío" */
+  .empty-cart-message {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #ccc;
+    margin-top: 20px;
+  }
+
+  .quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  
+  .quantity-input {
+    width: 60px;
+    padding: 4px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .update-btn,
+  .remove-btn {
+    padding: 4px 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .update-btn {
+    background-color: #00ffcc;
+    color: #222;
+  }
+  
+  .update-btn:hover {
+    background-color: #00e0b0;
+  }
+  
+  .remove-btn {
+    background-color: #ff4d4d;
+    color: #fff;
+  }
+  
+  .remove-btn:hover {
+    background-color: #ff1a1a;
+  }
+  
+  .quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  
+  .quantity-input {
+    width: 60px;
+    padding: 4px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .update-btn,
+  .remove-btn {
+    padding: 4px 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .update-btn {
+    background-color: #00ffcc;
+    color: #222;
+  }
+  
+  .update-btn:hover {
+    background-color: #00e0b0;
+  }
+  
+  .remove-btn {
+    background-color: #ff4d4d;
+    color: #fff;
+  }
+  
+  .remove-btn:hover {
+    background-color: #ff1a1a;
+  }
+/* Contenedor que agrupa todo el texto de precio */
+.cart-price-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* El texto quedará alineado a la derecha */
+    gap: 2px;
+  }
+  
+  /* Primera línea: "1 × $10.00" */
+  .price-line {
+    font-size: 1rem;
+    color: #ccc; /* Ajusta al color que prefieras */
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  
+  /* Cantidad */
+  .qty {
+    font-weight: bold;
+    color: #fff;  /* O el color que encaje con tu diseño */
+  }
+  
+  /* El símbolo "×" */
+  .multiply {
+    color: #ff69b4; /* Destaca un poco */
+  }
+  
+  /* Precio unitario */
+  .unit-price {
+    font-weight: bold;
+    color: #00ffcc;  /* Turquesa para resaltar */
+  }
+  
+  /* Segunda línea: "Total: $XX.XX" */
+  .total-line {
+    font-size: 0.9rem;
+    color: #fff;
+    margin-top: 2px;
+  }
+  
+  .total-line strong {
+    color: #ff69b4; /* Texto "Total:" en rosa */
+    margin-right: 4px;
+  }
+    
+  
+  

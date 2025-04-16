@@ -1,0 +1,190 @@
+/* ===================== */
+/* VARIABLES DE COLOR    */
+/* ===================== */
+:root {
+    /* Fondo de la pantalla en gradiente para un look futurista */
+    --clr-background: linear-gradient(135deg, #141e30, #243b55);
+  
+    /* Rectángulo semitransparente (form-container) */
+    --clr-rectangle: rgba(255, 255, 255, 0.07);
+    --clr-form-border: #00ffcc;  /* Borde de tono neón */
+  
+    /* Inputs */
+    --clr-input-bg: rgba(255, 255, 255, 0.1);
+    --clr-input-focus: #00ffcc;
+  
+    /* Texto y acentos */
+    --clr-text: #e0e0e0;
+    --clr-accent: #00ffcc;       /* Color para el enlace de "Registrarse" */
+    --clr-error: #f33;           /* Color para mensajes de error */
+  
+    /* Botones */
+    --clr-button-bg: #333;
+    --clr-button-hover: #00ffcc; 
+  
+    /* Colores generales */
+    --clr-dark: #222;
+    --clr-light: #fff;
+  }
+  
+  /* ===================== */
+  /* CONTENEDOR PRINCIPAL  */
+  /* ===================== */
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 1rem;
+    background: var(--clr-background);
+  }
+  
+  /* ===================== */
+  /* ENCABEZADO Y TÍTULOS  */
+  /* ===================== */
+  .container h2 {
+    text-align: center;
+    color: var(--clr-light);
+    margin-bottom: 1rem;
+  }
+  
+  /* ===================== */
+  /* MENSAJES DE ERROR     */
+  /* ===================== */
+  .container p {
+    text-align: center;
+    color: var(--clr-error);
+  }
+  
+  /* ===================== */
+  /* RECTÁNGULO DEL FORM   */
+  /* ===================== */
+  .form-container {
+    background: var(--clr-rectangle);
+    border: 2px solid var(--clr-form-border);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 0 20px var(--clr-form-border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 350px;
+    width: 100%;
+  }
+  
+  /* ===================== */
+  /* FORMULARIO            */
+  /* ===================== */
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+  }
+  
+  /* Sección de inputs (usuario, contraseña) */
+  .form .input-span {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  /* ===================== */
+  /* ESTILOS DE LOS INPUTS */
+  /* ===================== */
+  .form input[type="username"],
+  .form input[type="email"],
+  .form input[type="password"],
+  .form input[type="text"] {
+    border-radius: 0.5rem;
+    padding: 1rem 0.75rem;
+    width: 100%;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--clr-input-bg);
+    color: var(--clr-text);
+    outline: none;
+  }
+  .form input[type="username"]:focus,
+  .form input[type="email"]:focus,
+  .form input[type="password"]:focus,
+  .form input[type="text"]:focus {
+    outline: 2px solid var(--clr-input-focus);
+  }
+  
+  /* Etiquetas */
+  .label {
+    align-self: flex-start;
+    color: var(--clr-light);
+    font-weight: 600;
+  }
+  
+  /* ===================== */
+  /* BOTÓN DE ENVÍO        */
+  /* ===================== */
+  .form .submit {
+    padding: 1rem 0.75rem;
+    width: 100%;
+    border-radius: 3rem;
+    background-color: var(--clr-button-bg);
+    color: var(--clr-light);
+    border: none;
+    cursor: pointer;
+    transition: all 300ms;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+  }
+  
+  .form .submit:hover {
+    background-color: var(--clr-button-hover);
+    color: var(--clr-dark);
+  }
+  
+  /* ===================== */
+  /* ENLACE DE REGISTRO    */
+  /* ===================== */
+  .span {
+    text-decoration: none;
+    color: var(--clr-text);
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .span a {
+    color: var(--clr-accent);
+    transition: color 300ms ease;
+  }
+  
+  .span a:hover {
+    color: var(--clr-input-focus);
+  }
+  
+  .back-arrow {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    cursor: pointer;
+    color: #fff; /* Ajusta el color según tu tema */
+    opacity: 0.8;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  
+  /* Efecto hover: flecha se ilumina y se desplaza un poco */
+  .back-arrow:hover {
+    opacity: 1;
+    transform: translateX(-3px);
+  }
+  
+  .arrow-icon {
+    /* Ajusta tamaño e icono según necesites */
+    font-size: 1.5rem;
+  }
+  

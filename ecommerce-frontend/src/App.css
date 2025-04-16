@@ -1,0 +1,142 @@
+:root {
+  --primary-color: #FF69B4;
+  --primary-dark: #FF69B4;
+  --secondary-color: #f5f5f5;
+  --text-color: #333;
+  --border-color: #ddd;
+  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Asegúrate de que html, body y #root ocupen el 100% del viewport */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+/* DEFINICIÓN DE LA ANIMACIÓN DEL GRADIENTE */
+
+@keyframes hero-gradient-animation {
+  0% {
+    --x-0: 91%;
+    --y-0: 90%;
+    --s-start-0: 1%;
+    --s-end-0: 61%;
+    --c-0: hsla(97, 2%, 11%, 1);
+    
+    --x-1: 17%;
+    --y-1: 24%;
+    --s-start-1: 0%;
+    --s-end-1: 55%;
+    --c-1: hsla(75, 0%, 0%, 1);
+    
+    --x-2: 11%;
+    --y-2: 32%;
+    --s-start-2: 19%;
+    --s-end-2: 54%;
+    --c-2: hsla(248, 37%, 20%, 1);
+    
+    --x-3: 2%;
+    --y-3: 31%;
+    --s-start-3: 0%;
+    --s-end-3: 67%;
+    --c-3: hsla(254, 100%, 52%, 1);
+    
+    --x-4: 74%;
+    --y-4: 93%;
+    --s-start-4: 12%;
+    --s-end-4: 82%;
+    --c-4: hsla(349, 0%, 0%, 1);
+  }
+  100% {
+    --x-0: 49%;
+    --y-0: 25%;
+    --s-start-0: 19%;
+    --s-end-0: 69%;
+    --c-0: hsla(313, 0%, 0%, 1);
+    
+    --x-1: 1%;
+    --y-1: 41%;
+    --s-start-1: 3%;
+    --s-end-1: 77%;
+    --c-1: hsla(242, 88%, 22%, 1);
+    
+    --x-2: 44%;
+    --y-2: 93%;
+    --s-start-2: 6%;
+    --s-end-2: 73%;
+    --c-2: hsla(321, 0%, 0%, 1);
+    
+    --x-3: 97%;
+    --y-3: 51%;
+    --s-start-3: 8%;
+    --s-end-3: 86%;
+    --c-3: hsla(0, 0%, 0%, 1);
+    
+    --x-4: 10%;
+    --y-4: 69%;
+    --s-start-4: 20%;
+    --s-end-4: 75%;
+    --c-4: hsla(172, 95%, 37%, 1);
+  }
+}
+
+/* Declaración de propiedades personalizadas para animación (@property) */
+@property --x-0 { syntax: '<percentage>'; inherits: false; initial-value: 91%; }
+@property --y-0 { syntax: '<percentage>'; inherits: false; initial-value: 90%; }
+@property --s-start-0 { syntax: '<percentage>'; inherits: false; initial-value: 1%; }
+@property --s-end-0 { syntax: '<percentage>'; inherits: false; initial-value: 61%; }
+@property --c-0 { syntax: '<color>'; inherits: false; initial-value: hsla(97, 2%, 11%, 1); }
+
+@property --x-1 { syntax: '<percentage>'; inherits: false; initial-value: 17%; }
+@property --y-1 { syntax: '<percentage>'; inherits: false; initial-value: 24%; }
+@property --s-start-1 { syntax: '<percentage>'; inherits: false; initial-value: 0%; }
+@property --s-end-1 { syntax: '<percentage>'; inherits: false; initial-value: 55%; }
+@property --c-1 { syntax: '<color>'; inherits: false; initial-value: hsla(75, 0%, 0%, 1); }
+
+@property --x-2 { syntax: '<percentage>'; inherits: false; initial-value: 11%; }
+@property --y-2 { syntax: '<percentage>'; inherits: false; initial-value: 32%; }
+@property --s-start-2 { syntax: '<percentage>'; inherits: false; initial-value: 19%; }
+@property --s-end-2 { syntax: '<percentage>'; inherits: false; initial-value: 54%; }
+@property --c-2 { syntax: '<color>'; inherits: false; initial-value: hsla(248, 37%, 20%, 1); }
+
+@property --x-3 { syntax: '<percentage>'; inherits: false; initial-value: 2%; }
+@property --y-3 { syntax: '<percentage>'; inherits: false; initial-value: 31%; }
+@property --s-start-3 { syntax: '<percentage>'; inherits: false; initial-value: 0%; }
+@property --s-end-3 { syntax: '<percentage>'; inherits: false; initial-value: 67%; }
+@property --c-3 { syntax: '<color>'; inherits: false; initial-value: hsla(254, 100%, 52%, 1); }
+
+@property --x-4 { syntax: '<percentage>'; inherits: false; initial-value: 74%; }
+@property --y-4 { syntax: '<percentage>'; inherits: false; initial-value: 93%; }
+@property --s-start-4 { syntax: '<percentage>'; inherits: false; initial-value: 12%; }
+@property --s-end-4 { syntax: '<percentage>'; inherits: false; initial-value: 82%; }
+@property --c-4 { syntax: '<color>'; inherits: false; initial-value: hsla(349, 0%, 0%, 1); }
+
+/* Aplica el fondo animado a todo el body */
+body {
+  /* Eliminamos el fondo gris anterior */
+  background-color: hsla(356, 0%, 0%, 1);
+  background-image:
+    radial-gradient(circle at var(--x-0) var(--y-0), var(--c-0) var(--s-start-0), transparent var(--s-end-0)),
+    radial-gradient(circle at var(--x-1) var(--y-1), var(--c-1) var(--s-start-1), transparent var(--s-end-1)),
+    radial-gradient(circle at var(--x-2) var(--y-2), var(--c-2) var(--s-start-2), transparent var(--s-end-2)),
+    radial-gradient(circle at var(--x-3) var(--y-3), var(--c-3) var(--s-start-3), transparent var(--s-end-3)),
+    radial-gradient(circle at var(--x-4) var(--y-4), var(--c-4) var(--s-start-4), transparent var(--s-end-4));
+  background-blend-mode: normal;
+  animation: hero-gradient-animation 10s linear infinite alternate;
+  min-height: 100vh;
+}
+
+/* Contenedor global para el contenido (no interfiere con el fondo) */
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    padding: 10px;
+  }
+}
