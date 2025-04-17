@@ -12,7 +12,7 @@ function ProductDetail() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`http://127.0.0.1:8000/api/products/${id}/`)
+    axios.get(`http://https://codestorebl.com/api/products/${id}/`)
       .then((response) => {
         setProduct(response.data);
       })
@@ -66,7 +66,7 @@ function ProductDetail() {
               // Construimos URL completa si no viene con la ruta absoluta
               const imgUrl = imgObj.image.startsWith('http') || imgObj.image.startsWith('/')
                 ? imgObj.image
-                : `http://127.0.0.1:8000/media/${imgObj.image}`;
+                : `http://https://codestorebl.com/media/${imgObj.image}`;
 
               return (
                 <img

@@ -15,7 +15,13 @@ SECRET_KEY = 'django-insecure-(wlxd-4*159by$$_f+r)ugq5p)^!z2h38b7_$or^ubln-&$a@z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["codestorebl.com", "www.codestorebl.com"]
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    'codestorebl.com',
+    'www.codestorebl.com',
+    'api.codestorebl.com',             # si luego apuntas tu API aquí
+    'ecommerce-1-3qrf.onrender.com',]
 
 SIMPLE_JWT = {
     # Token de acceso: 1 hora de duración

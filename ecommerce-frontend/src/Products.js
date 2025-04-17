@@ -11,7 +11,7 @@ function Products() {
   const token = localStorage.getItem('accessToken');
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/products/')
+    axios.get('http://https://codestorebl.com/api/products/')
       .then(response => setProducts(response.data))
       .catch(error => console.error("Error al cargar productos:", error));
   }, []);
@@ -20,7 +20,7 @@ function Products() {
     e.stopPropagation(); 
     if (!token) return;
 
-    axios.post('http://127.0.0.1:8000/api/add-to-cart/', 
+    axios.post('http://https://codestorebl.com/api/add-to-cart/', 
       { product_id: productId, quantity: 1 },
       { headers: { Authorization: `Bearer ${token}` } }
     ).then(response => {
