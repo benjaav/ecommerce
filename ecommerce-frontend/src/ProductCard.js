@@ -17,7 +17,7 @@ function ProductCard({ product }) {
     } else {
       // Si la imagen es solo el nombre o la ruta relativa sin "/" inicial,
       // se le antepone el host y el directorio de media.
-      imageUrl = `http://https://codestorebl.com/media/${imgPath}`;
+      imageUrl = `http://codestorebl.com/media/${imgPath}`;
     }
   }
 

@@ -12,7 +12,7 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://https://codestorebl.com/api/auth/login/', { username, password })
+    axios.post('http://codestorebl.com/api/auth/login/', { username, password })
       .then(response => {
         localStorage.setItem('accessToken', response.data.access);
         localStorage.setItem('refreshToken', response.data.refresh);
