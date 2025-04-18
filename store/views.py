@@ -135,6 +135,12 @@ class UserRegistrationView(generics.CreateAPIView):
     serializer_class = UserRegistrationSerializer
     permission_classes = [AllowAny]
 
+    def create(self, request, *args, **kwargs):
+        try:
+            return super().create(request, *args, **kwargs)
+        except Exception as e:
+            return Response({'error': str(e)}, status=500)
+
 # Añadir producto al carrito
 class AddToCartView(APIView):
     permission_classes = [IsAuthenticated]
