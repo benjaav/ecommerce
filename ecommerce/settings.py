@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from datetime import timedelta
+from corsheaders.defaults import default_headers, default_methods
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -46,7 +47,7 @@ ALLOWED_HOSTS = [
     'codestorebl.com',
     'www.codestorebl.com',
     'api.codestorebl.com',             # si luego apuntas tu API aquí
-    'ecommerce-1-3qrf.onrender.com',]
+    'ecommerce-idm5.onrender.com',]
 
 SIMPLE_JWT = {
     # Token de acceso: 1 hora de duración
@@ -69,10 +70,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-     'store',
+
+    # CORS
     'corsheaders',
+
+    # REST
     'rest_framework',
-     'rest_framework_simplejwt',
+    'rest_framework_simplejwt',
+
+    # Tu app
+    'store',
 ]
 
 REST_FRAMEWORK = {
@@ -84,15 +91,15 @@ REST_FRAMEWORK = {
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
-]
++    'corsheaders.middleware.CorsMiddleware',  # ← debe ser el primero
+     'django.middleware.security.SecurityMiddleware',
+     'django.contrib.sessions.middleware.SessionMiddleware',
+     'django.middleware.common.CommonMiddleware',
+     'django.middleware.csrf.CsrfViewMiddleware',
+     'django.contrib.auth.middleware.AuthenticationMiddleware',
+     'django.contrib.messages.middleware.MessageMiddleware',
+     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+ ]
 
 ROOT_URLCONF = 'ecommerce.urls'
 
@@ -176,5 +183,11 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_METHODS     = list(default_methods)
+CORS_ALLOW_HEADERS     = list(default_headers) + [
+    # si usas headers personalizados, agrégalos aquí
+]
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 # Mercado Pago settings
 MERCADO_PAGO_ACCESS_TOKEN = 'TEST-38253822250545-041101-0ebb1cbedaa0af046cfbac47a95bbfac-1212312390'  # Reemplaza con tu token real o usa una variable de entorno
