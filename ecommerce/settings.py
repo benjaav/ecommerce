@@ -26,6 +26,13 @@ ALLOWED_HOSTS = [
     'api.codestorebl.com',             
     'ecommerce-idm5.onrender.com']
 
+CORS_ALLOWED_ORIGINS = [
+    "https://codestorebl.com",
+    "https://www.codestorebl.com",
+    # si haces pruebas desde localhost:
+    "http://localhost:3000",
+]
+
 SIMPLE_JWT = {
     # Token de acceso: 1 hora de duración
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),
