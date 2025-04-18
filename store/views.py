@@ -9,9 +9,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 import mercadopago
-
-
-from .models import Category, OrderItem, Product, Cart, Order, CartItem
+from django.shortcuts import get_object_or_404
+from .serializers import UserRegistrationSerializer
+from .models import Category, OrderItem, Product, Cart, Order, CartItem, User
 from .serializers import (
     CategorySerializer, 
     ProductSerializer, 
@@ -130,15 +130,10 @@ class OrderListCreateView(generics.ListCreateAPIView):
 CustomUser = get_user_model()
 
 class UserRegistrationView(generics.CreateAPIView):
-    queryset = CustomUser.objects.all()
+    """ Crea un nuevo usuario sin requerir autenticación previa. """
+    queryset = User.objects.all()
     serializer_class = UserRegistrationSerializer
     permission_classes = [AllowAny]
-
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 # Añadir producto al carrito
 class AddToCartView(APIView):
