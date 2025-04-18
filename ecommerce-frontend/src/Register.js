@@ -36,7 +36,7 @@ function Register() {
     }
 
     axios.post(
-    ('https://tu-backend-en-render.onrender.com/api/auth/register/', payload),
+    ('https://tu-backend-en-render.onrender.com/api/auth/register/',
       formData
     )
       .then((response) => {
