@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 from datetime import timedelta
 from corsheaders.defaults import default_headers, default_methods
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -134,14 +135,11 @@ REST_FRAMEWORK = {
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ecommerce',
-        'USER': 'postgres',
-        'PASSWORD': 'Nandito2004.',
-        'HOST': 'localhost',
-        'PORT': '2004',
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL'),
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
