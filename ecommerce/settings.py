@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from datetime import timedelta
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -15,13 +16,15 @@ SECRET_KEY = 'django-insecure-(wlxd-4*159by$$_f+r)ugq5p)^!z2h38b7_$or^ubln-&$a@z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')
+
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
     'codestorebl.com',
     'www.codestorebl.com',
-    'api.codestorebl.com',             # si luego apuntas tu API aquí
-    'ecommerce-1-3qrf.onrender.com',]
+    'api.codestorebl.com',             
+    'ecommerce-idm5.onrender.com']
 
 SIMPLE_JWT = {
     # Token de acceso: 1 hora de duración
@@ -102,14 +105,11 @@ REST_FRAMEWORK = {
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ecommerce',
-        'USER': 'postgres',
-        'PASSWORD': 'Nandito2004.',
-        'HOST': 'localhost',
-        'PORT': '2004',
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL'),
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
