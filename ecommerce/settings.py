@@ -15,6 +15,31 @@ SECRET_KEY = 'django-insecure-(wlxd-4*159by$$_f+r)ugq5p)^!z2h38b7_$or^ubln-&$a@z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
+CORS_ALLOWED_ORIGINS = [
+    "https://codestorebl.com",
+    "https://www.codestorebl.com",
+]
+
+# Si quieres probar con todo abierto (solo mientras debuggeas):
+# CORS_ALLOW_ALL_ORIGINS = True
+
+# Asegúrate de permitir el método OPTIONS
+CORS_ALLOW_METHODS = [
+    "GET",
+    "POST",
+    "PUT",
+    "PATCH",
+    "DELETE",
+    "OPTIONS",
+]
+
+CORS_ALLOW_HEADERS = [
+    "authorization",
+    "content-type",
+    # añade aquí otros headers que uses
+]
+
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',

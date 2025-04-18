@@ -36,9 +36,7 @@ function Register() {
     }
 
     axios.post
-    ('https://tu-backend-en-render.onrender.com/api/auth/register/',
-      formData
-    )
+    ('https://tu-backend-en-render.onrender.com/api/auth/register/',formData)
       .then((response) => {
         console.log('Registro exitoso:', response.data);
         // Redirige al usuario a la página de login una vez registrado

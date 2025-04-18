@@ -11,5 +11,5 @@ root.render(
     <App />
   </React.StrictMode>
 );
-
+axios.defaults.baseURL = "https://api.codestorebl.com";
 reportWebVitals();
