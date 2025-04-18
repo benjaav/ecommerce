@@ -36,7 +36,7 @@ function Register() {
     }
 
     
-      axios.post('register/', formData)   // esto ahora resuelve a https://api.codestorebl.com/api/register/
+    axios.post('auth/register/', formData)  // esto ahora resuelve a https://api.codestorebl.com/api/register/
       .then((response) => {
         console.log('Registro exitoso:', response.data);
         // Redirige al usuario a la página de login una vez registrado
