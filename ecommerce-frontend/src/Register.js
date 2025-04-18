@@ -35,8 +35,8 @@ function Register() {
       return;
     }
 
-    axios.post
-    ('https://tu-backend-en-render.onrender.com/api/auth/register/',formData)
+    axios
+      .post('https://codestorebl.com/api/auth/register/', formData)
       .then((response) => {
         console.log('Registro exitoso:', response.data);
         // Redirige al usuario a la página de login una vez registrado

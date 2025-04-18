@@ -1,8 +1,6 @@
 import os
 from pathlib import Path
 from datetime import timedelta
-from corsheaders.defaults import default_headers, default_methods
-import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -17,38 +15,13 @@ SECRET_KEY = 'django-insecure-(wlxd-4*159by$$_f+r)ugq5p)^!z2h38b7_$or^ubln-&$a@z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-
-CORS_ALLOWED_ORIGINS = [
-    "https://codestorebl.com",
-    "https://www.codestorebl.com",
-]
-
-# Si quieres probar con todo abierto (solo mientras debuggeas):
-# CORS_ALLOW_ALL_ORIGINS = True
-
-# Asegúrate de permitir el método OPTIONS
-CORS_ALLOW_METHODS = [
-    "GET",
-    "POST",
-    "PUT",
-    "PATCH",
-    "DELETE",
-    "OPTIONS",
-]
-
-CORS_ALLOW_HEADERS = [
-    "authorization",
-    "content-type",
-    # añade aquí otros headers que uses
-]
-
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
     'codestorebl.com',
     'www.codestorebl.com',
     'api.codestorebl.com',             # si luego apuntas tu API aquí
-    'ecommerce-idm5.onrender.com',]
+    'ecommerce-1-3qrf.onrender.com',]
 
 SIMPLE_JWT = {
     # Token de acceso: 1 hora de duración
@@ -71,16 +44,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # CORS
+     'store',
     'corsheaders',
-
-    # REST
     'rest_framework',
-    'rest_framework_simplejwt',
-
-    # Tu app
-    'store',
+     'rest_framework_simplejwt',
 ]
 
 REST_FRAMEWORK = {
@@ -92,15 +59,15 @@ REST_FRAMEWORK = {
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
-+    'corsheaders.middleware.CorsMiddleware',  # ← debe ser el primero
-     'django.middleware.security.SecurityMiddleware',
-     'django.contrib.sessions.middleware.SessionMiddleware',
-     'django.middleware.common.CommonMiddleware',
-     'django.middleware.csrf.CsrfViewMiddleware',
-     'django.contrib.auth.middleware.AuthenticationMiddleware',
-     'django.contrib.messages.middleware.MessageMiddleware',
-     'django.middleware.clickjacking.XFrameOptionsMiddleware',
- ]
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+]
 
 ROOT_URLCONF = 'ecommerce.urls'
 
@@ -135,11 +102,14 @@ REST_FRAMEWORK = {
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'),
-        conn_max_age=600,
-        ssl_require=True
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'ecommerce',
+        'USER': 'postgres',
+        'PASSWORD': 'Nandito2004.',
+        'HOST': 'localhost',
+        'PORT': '2004',
+    }
 }
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -181,11 +151,5 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_METHODS     = list(default_methods)
-CORS_ALLOW_HEADERS     = list(default_headers) + [
-    # si usas headers personalizados, agrégalos aquí
-]
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 # Mercado Pago settings
-MERCADO_PAGO_ACCESS_TOKEN = 'TEST-38253822250545-041101-0ebb1cbedaa0af046cfbac47a95bbfac-1212312390'  # Reemplaza con tu token real o usa una variable de entorno
+MERCADO_PAGO_ACCESS_TOKEN = 'TEST-38253822250545-041101-0ebb1cbedaa0af046cfbac47a95bbfac-1212312390'
