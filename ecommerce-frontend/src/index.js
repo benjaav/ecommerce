@@ -7,7 +7,7 @@ import axios from 'axios';
 
 // apuntas a https://api.codestorebl.com/api/
 // dejamos la base apuntando al prefijo /api/
-axios.defaults.baseURL = 'https://api.codestorebl.com/api/';
+axios.defaults.baseURL = 'https://api.codestorebl.com/api/auth/';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
