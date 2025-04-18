@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 import mercadopago
+from .serializers import UserSerializer
 
 from .models import Category, OrderItem, Product, Cart, Order, CartItem
 from .serializers import (
@@ -128,10 +129,14 @@ class OrderListCreateView(generics.ListCreateAPIView):
 # Registro usuario
 CustomUser = get_user_model()
 
-class UserRegistrationView(generics.CreateAPIView):
-    serializer_class = UserRegistrationSerializer
-    queryset = CustomUser.objects.all()
-    permission_classes = [AllowAny]
+class UserRegistrationView(APIView):
+    permission_classes = [ AllowAny ]           # ← permitir POST sin auth
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Añadir producto al carrito
 class AddToCartView(APIView):
