@@ -18,6 +18,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')
 
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = False
+
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
@@ -33,6 +37,25 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
 
+
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'OPTIONS',
+    'PUT',
+    'PATCH',
+    'DELETE',
+]
+
+# y todas las cabeceras que puedas necesitar (o '*' si prefieres)
+CORS_ALLOW_HEADERS = [
+    'authorization',
+    'content-type',
+    'x-requested-with',
+    'accept',
+    'origin',
+    'user-agent',
+]
 SIMPLE_JWT = {
     # Token de acceso: 1 hora de duración
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),
