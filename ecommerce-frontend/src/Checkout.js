@@ -1,4 +1,3 @@
-// src/Checkout.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavBar from './NavBar';
@@ -41,7 +40,12 @@ function Checkout() {
         // Paso 2: Solicitar la preferencia de pago usando el total
         return axios.post('create-payment-preference/', 
           { total: total },
-          { headers: { Authorization: `Bearer ${token}` } }
+          { 
+            headers: { 
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            } 
+          }
         );
       })
       .then(preferenceResponse => {
