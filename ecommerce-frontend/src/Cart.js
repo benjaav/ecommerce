@@ -15,7 +15,7 @@ const Cart = () => {
 
   // Función para recargar el carrito
   const fetchCart = () => {
-    axios.get('auth/cart/', {
+    axios.get('cart/', {
       headers: { Authorization: `Bearer ${token}` }
     })
     
