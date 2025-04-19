@@ -46,13 +46,15 @@ function Register() {
       })
       .catch((error) => {
         console.error('Error al registrar:', error);
-        // Muestra el error devuelto por el backend
         if (error.response && error.response.data) {
           setError(JSON.stringify(error.response.data));
+        } else if (error.message) {
+          setError(error.message);
         } else {
           setError('Error al registrar el usuario.');
         }
       });
+      
   };
 
   return (
