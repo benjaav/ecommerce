@@ -22,7 +22,7 @@ function NavBar() {
           // Token inválido o expirado, forzar logout
           localStorage.removeItem('accessToken');
           setUsername(null);
-          navigate('/login');
+          navigate('auth/login');
         }
       });
     } else {
