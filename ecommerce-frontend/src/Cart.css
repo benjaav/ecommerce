@@ -275,5 +275,12 @@
     }
   }
   
-  
+  /* ===== Responsive Cart ===== */
+@media (max-width: 1024px) {
+  .cart-container {
+    width: 95%;
+    padding: 15px;
+  }
+}
+
   

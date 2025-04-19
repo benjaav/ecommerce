@@ -46,4 +46,13 @@
     font-weight: bold;
     color: var(--clr-form-border);
   }
+
+  /* ===== Responsive Product Card ===== */
+@media (max-width: 768px) {
+  .product-card {
+    max-width: 100%;
+    margin: 1rem 0;
+  }
+}
+
   

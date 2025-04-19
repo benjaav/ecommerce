@@ -143,3 +143,19 @@
 .home-hero-buttons {
   margin-top: 2rem;
 }
+
+
+/* ===== Responsive Home Hero ===== */
+@media (max-width: 768px) {
+  .home-hero h1 { font-size: 2rem; }
+  .home-hero p  { font-size: 1rem; }
+  .home-hero-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-hero h1 { font-size: 1.5rem; }
+  .home-hero p  { font-size: 0.9rem; }
+}

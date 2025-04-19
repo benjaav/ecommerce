@@ -267,3 +267,14 @@
     margin-bottom: 10px;
   }
 }
+
+@media (max-width: 480px) {
+  .form-container {
+    padding: 0.5rem;
+  }
+  .form input,
+  .submit {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+}

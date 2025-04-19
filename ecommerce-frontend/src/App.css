@@ -140,3 +140,8 @@ body {
     padding: 10px;
   }
 }
+@media (max-width: 480px) {
+  .app-container {
+    padding: 5px;
+  }
+}

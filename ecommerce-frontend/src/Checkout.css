@@ -118,13 +118,25 @@
   }
   
   @media (max-width: 768px) {
-    .checkout-form {
-      padding: 10px;
+    .checkout-container {
+      padding: 1rem;
     }
-  
-    input, button {
+    .form-container {
+      max-width: 100%;
+      padding: 1rem;
+    }
+    .input-span input,
+    .submit,
+    .secondary-btn {
       width: 100%;
-      margin-bottom: 10px;
+      margin-bottom: 0.5rem;
     }
   }
+  
+  @media (max-width: 480px) {
+    .checkout-container {
+      padding: 0.5rem;
+    }
+  }
+  
   

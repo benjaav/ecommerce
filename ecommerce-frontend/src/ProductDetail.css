@@ -63,4 +63,21 @@
   .detail-info h3 {
     margin: 0 0 0.5rem;
   }
-  
+  /* ===== Responsive Product Detail ===== */
+@media (max-width: 768px) {
+  .detail-container {
+    flex-direction: column;
+    padding: 1rem;
+  }
+  .detail-images {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .detail-images .detail-img {
+    width: 100%;
+    height: auto;
+  }
+}
