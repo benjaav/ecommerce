@@ -26,9 +26,7 @@ function Register() {
 
   // Envía el formulario al endpoint de registro
   const handleSubmit = (e) => {
-    console.log('Datos enviados para registro:', formData);
     e.preventDefault();
-    console.log('Respuesta de error del backend:', error.response.data);
     setError('');
 
     // Validación: las contraseñas deben coincidir
@@ -47,6 +45,7 @@ function Register() {
       .catch((error) => {
         console.error('Error al registrar:', error);
         if (error.response && error.response.data) {
+          console.log('Respuesta de error del backend:', error.response.data);
           setError(JSON.stringify(error.response.data));
         } else if (error.message) {
           setError(error.message);
