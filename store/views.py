@@ -57,9 +57,9 @@ class CreatePaymentPreferenceView(APIView):
                     "email": request.user.email or "comprador@test.com"
                 },
                 "back_urls": {
-                    "success": "http://localhost:3000/success",
-                    "failure": "http://localhost:3000/failure",
-                    "pending": "http://localhost:3000/pending"
+                "success": "https://codestorebl.com/success",
+                "failure": "https://codestorebl.com/failure",
+                "pending": "https://codestorebl.com/pending"
                 },
                 "auto_return": "approved",
             }
