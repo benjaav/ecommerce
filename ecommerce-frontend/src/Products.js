@@ -11,7 +11,7 @@ function Products() {
   const token = localStorage.getItem('accessToken');
 
   useEffect(() => {
-    axios.get('products/')
+    axios.get('auth/products/')
       .then(response => setProducts(response.data))
       .catch(error => console.error("Error al cargar productos:", error));
   }, []);
