@@ -10,6 +10,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 import mercadopago
 from django.shortcuts import get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 from .serializers import UserRegistrationSerializer
 from .models import Category, OrderItem, Product, Cart, Order, CartItem, User
 from .serializers import (
@@ -129,6 +131,7 @@ class OrderListCreateView(generics.ListCreateAPIView):
 # Registro usuario
 CustomUser = get_user_model()
 
+@method_decorator(csrf_exempt, name='dispatch')
 class UserRegistrationView(generics.CreateAPIView):
     """ Crea un nuevo usuario sin requerir autenticación previa. """
     queryset = User.objects.all()
