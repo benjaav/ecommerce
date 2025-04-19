@@ -28,6 +28,7 @@ function Register() {
   const handleSubmit = (e) => {
     console.log('Datos enviados para registro:', formData);
     e.preventDefault();
+    console.log('Respuesta de error del backend:', error.response.data);
     setError('');
 
     // Validación: las contraseñas deben coincidir
