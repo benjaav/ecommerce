@@ -17,16 +17,20 @@ function Products() {
   }, []);
 
   const handleAddToCart = (e, productId) => {
-    e.stopPropagation(); 
-    if (!token) return;
+  e.stopPropagation(); 
+  if (!token) return;
 
-    axios.get('products/').then(response => {
-      setSuccessMessage(productId);
-      setTimeout(() => setSuccessMessage(null), 3000); // Mensaje desaparece después de 3 segundos
-    }).catch(error => {
-      console.error("Error agregando al carrito:", error);
-    });
-  };
+  axios.post('add-to-cart/', { product_id: productId, quantity: 1 }, {
+    headers: { Authorization: `Bearer ${token}` }
+  })
+  .then(response => {
+    setSuccessMessage(productId);
+    setTimeout(() => setSuccessMessage(null), 3000);
+  })
+  .catch(error => {
+    console.error("Error agregando al carrito:", error);
+  });
+};
 
   return (
     <div className="container">
