@@ -15,10 +15,10 @@ const Cart = () => {
 
   // Función para recargar el carrito
   const fetchCart = () => {
-    axios
-      .get('http://codestorebl.com/api/cart/', {
-        headers: { Authorization: `Bearer ${token}` }
-      })
+    axios.get('cart/', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    
       .then((response) => {
         setCart(response.data);
         // Inicializa las cantidades con el valor actual de cada ítem
@@ -48,8 +48,7 @@ const Cart = () => {
 
   // Actualiza la cantidad con una petición PATCH
   const handleUpdateQuantity = (itemId) => {
-    axios
-      .patch(`http://codestorebl.com/api/cartitem/${itemId}/`, 
+    axios.patch('cartitem/${itemId}/', 
         { quantity: quantities[itemId] },
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -65,8 +64,7 @@ const Cart = () => {
 
   // Elimina el ítem del carrito
   const handleRemoveItem = (itemId) => {
-    axios
-      .delete(`http://codestorebl.com/api/cartitem/${itemId}/`, {
+    axios.delete('cartitem/${itemId}/', {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(() => {
@@ -107,7 +105,7 @@ const Cart = () => {
                   const imgPath = product.images[0].image;
                   imageUrl = imgPath.startsWith('http') || imgPath.startsWith('/')
                     ? imgPath
-                    : `http://codestorebl.com/media/${imgPath}`;
+                    : `https://codestorebl.com/media/${imgPath}`;
                 }
 
                 return (
