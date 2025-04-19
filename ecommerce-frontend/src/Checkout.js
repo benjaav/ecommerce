@@ -28,7 +28,7 @@ function Checkout() {
     setError('');
 
     // Paso 1: Crear la orden pendiente
-    axios.post('orders/', formData, {
+    axios.post('auth/orders/', formData, {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(orderResponse => {
