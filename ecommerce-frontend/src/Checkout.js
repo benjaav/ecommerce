@@ -29,8 +29,7 @@ function Checkout() {
     setError('');
 
     // Paso 1: Crear la orden pendiente
-    axios
-      .post('http://codestorebl.com/api/orders/', formData, {
+    axios.post('orders/', formData, {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(orderResponse => {
@@ -40,7 +39,7 @@ function Checkout() {
           throw new Error("El total de la orden es 0. Verifica tu carrito.");
         }
         // Paso 2: Solicitar la preferencia de pago usando el total
-        return axios.post('http://codestorebl.com/api/create-payment-preference/', 
+        return axios.post('create-payment-preference/', 
           { total: total },
           { headers: { Authorization: `Bearer ${token}` } }
         );
