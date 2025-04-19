@@ -10,7 +10,7 @@ function NavBar() {
 
   useEffect(() => {
     if (token) {
-      axios.get('http://codestorebl.com/api/user/', {
+      axios.get('user/', {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(response => {
