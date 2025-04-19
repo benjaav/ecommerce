@@ -167,6 +167,22 @@ const StyledWrapper = styled.div`
   .link-btn {
     text-decoration: none;
   }
+
+
+  @media (max-width: 768px) {
+  .button-container {
+    flex-direction: column;
+    position: static;
+    transform: none;
+    padding: 10px;
+  }
+
+  .button {
+    width: 100%;
+    margin: 5px 0;
+  }
+}
+
 `;
 
 export default NavBar;

@@ -117,3 +117,14 @@
     margin: 10px 0;
   }
   
+  @media (max-width: 768px) {
+    .checkout-form {
+      padding: 10px;
+    }
+  
+    input, button {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+  

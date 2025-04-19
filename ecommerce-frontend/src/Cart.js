@@ -48,9 +48,7 @@ const Cart = () => {
 
   // Actualiza la cantidad con una petición PATCH
   const handleUpdateQuantity = (itemId) => {
-    axios.patch('cartitem/${itemId}/', 
-        { quantity: quantities[itemId] },
-        { headers: { Authorization: `Bearer ${token}` } }
+    axios.patch(`cartitem/${itemId}/`, { quantity: quantities[itemId] }, { headers: { Authorization: `Bearer ${token}` } }
       )
       .then((response) => {
         setMessage("Cantidad actualizada.");
@@ -64,8 +62,7 @@ const Cart = () => {
 
   // Elimina el ítem del carrito
   const handleRemoveItem = (itemId) => {
-    axios.delete('cartitem/${itemId}/', {
-        headers: { Authorization: `Bearer ${token}` }
+    axios.delete(`cartitem/${itemId}/`, { headers: { Authorization: `Bearer ${token}` }
       })
       .then(() => {
         setMessage("Producto eliminado.");
