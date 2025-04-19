@@ -26,6 +26,7 @@ function Register() {
 
   // Envía el formulario al endpoint de registro
   const handleSubmit = (e) => {
+    console.log('Datos enviados para registro:', formData);
     e.preventDefault();
     setError('');
 
