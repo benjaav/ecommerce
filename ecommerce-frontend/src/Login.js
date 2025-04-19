@@ -12,7 +12,7 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('login/', { username, password })
+    axios.post('auth/login/', { username, password })
 
       .then(response => {
         localStorage.setItem('accessToken', response.data.access);

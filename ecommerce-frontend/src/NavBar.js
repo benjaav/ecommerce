@@ -10,7 +10,7 @@ function NavBar() {
 
   useEffect(() => {
     if (token) {
-      axios.get('user/', {
+      axios.get('auth/user/', {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(response => {
