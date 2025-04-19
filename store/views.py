@@ -33,13 +33,18 @@ class CurrentUserView(APIView):
         return Response({"username": request.user.username})
 
 # Vista Mercado Pago
+import logging
+
 class CreatePaymentPreferenceView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
+        logger = logging.getLogger(__name__)
         try:
             total = float(request.data.get('total', 0))
+            logger.info(f"Received total for payment preference: {total}")
             if total <= 0:
+                logger.error("Total is less or equal to 0")
                 return Response({'error': 'El total debe ser mayor a 0.'}, status=400)
             
             sdk = mercadopago.SDK(settings.MERCADO_PAGO_ACCESS_TOKEN)
@@ -59,22 +64,25 @@ class CreatePaymentPreferenceView(APIView):
                     "email": request.user.email or "comprador@test.com"
                 },
                 "back_urls": {
-                "success": "https://codestorebl.com/success",
-                "failure": "https://codestorebl.com/failure",
-                "pending": "https://codestorebl.com/pending"
+                    "success": "https://codestorebl.com/success",
+                    "failure": "https://codestorebl.com/failure",
+                    "pending": "https://codestorebl.com/pending"
                 },
                 "auto_return": "approved",
             }
 
             preference_response = sdk.preference().create(preference_data)
+            logger.info(f"Mercado Pago preference response: {preference_response}")
 
             if preference_response['status'] != 201:
+                logger.error(f"Mercado Pago Error: {preference_response}")
                 return Response({'error': 'Mercado Pago Error', 'details': preference_response}, status=500)
 
             preference = preference_response["response"]
             return Response({"init_point": preference["init_point"]}, status=200)
 
         except Exception as e:
+            logger.exception("Exception in CreatePaymentPreferenceView")
             return Response({'error': str(e)}, status=500)
 
 # ViewSets
