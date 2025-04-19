@@ -17,7 +17,7 @@ if 'ecommerce-g7ge.onrender.com' not in ALLOWED_HOSTS:
     ALLOWED_HOSTS.append('ecommerce-g7ge.onrender.com')
 
 CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_CREDENTIALS = False
+CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
     "https://codestorebl.com",
@@ -42,6 +42,7 @@ CORS_ALLOW_HEADERS = [
     'origin',
     'user-agent',
 ]
+
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),
