@@ -15,6 +15,8 @@ DEBUG = True
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')
 if 'ecommerce-g7ge.onrender.com' not in ALLOWED_HOSTS:
     ALLOWED_HOSTS.append('ecommerce-g7ge.onrender.com')
+if 'api.codestorebl.com' not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append('api.codestorebl.com')
 
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
