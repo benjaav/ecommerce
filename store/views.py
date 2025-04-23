@@ -221,7 +221,22 @@ class AddToCartView(APIView):
 class CartItemDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = CartItem.objects.all()
     serializer_class = CartItemSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
+
+    def get_object(self):
+        obj = super().get_object()
+        if self.request.user.is_authenticated:
+            # Ensure the cart item belongs to the user's cart
+            if obj.cart.user != self.request.user:
+                from rest_framework.exceptions import PermissionDenied
+                raise PermissionDenied("No tienes permiso para acceder a este ítem.")
+        else:
+            # For anonymous users, check session_key matches
+            session_key = self.request.session.session_key
+            if not session_key or obj.cart.session_key != session_key:
+                from rest_framework.exceptions import PermissionDenied
+                raise PermissionDenied("No tienes permiso para acceder a este ítem.")
+        return obj
 
 class CurrentUserView(APIView):
     permission_classes = [IsAuthenticated]
