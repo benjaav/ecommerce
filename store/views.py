@@ -35,8 +35,10 @@ class CurrentUserView(APIView):
 # Vista Mercado Pago
 import logging
 
+from rest_framework.permissions import AllowAny
+
 class CreatePaymentPreferenceView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def post(self, request, format=None):
         logger = logging.getLogger(__name__)
@@ -51,6 +53,11 @@ class CreatePaymentPreferenceView(APIView):
             
             unit_price = int(round(total))
 
+            # Use email from request if authenticated, else use a default guest email
+            payer_email = "guest@example.com"
+            if request.user and request.user.is_authenticated:
+                payer_email = request.user.email or payer_email
+
             preference_data = {
                 "items": [
                     {
@@ -61,7 +68,7 @@ class CreatePaymentPreferenceView(APIView):
                     }
                 ],
                 "payer": {
-                    "email": request.user.email or "comprador@test.com"
+                    "email": payer_email
                 },
                 "back_urls": {
                     "success": "https://codestorebl.com/success",
@@ -99,44 +106,58 @@ class ProductViewSet(viewsets.ModelViewSet):
 class CartDetailView(generics.RetrieveUpdateAPIView):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get_object(self):
-        cart, created = Cart.objects.get_or_create(user=self.request.user)
+        if self.request.user.is_authenticated:
+            cart, created = Cart.objects.get_or_create(user=self.request.user)
+        else:
+            session_key = self.request.session.session_key
+            if not session_key:
+                self.request.session.create()
+                session_key = self.request.session.session_key
+            cart, created = Cart.objects.get_or_create(session_key=session_key, user=None)
         return cart
 
 # Crear y listar órdenes de usuario
 class OrderListCreateView(generics.ListCreateAPIView):
     serializer_class = OrderSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
-        return Order.objects.filter(user=self.request.user)
+        if self.request.user.is_authenticated:
+            return Order.objects.filter(user=self.request.user)
+        else:
+            return Order.objects.none()
 
     def perform_create(self, serializer):
-        cart = Cart.objects.get(user=self.request.user)
-        total = 0
-        for cart_item in cart.items.all():
-            total += cart_item.product.price * cart_item.quantity
-        
-        order = serializer.save(
-            user=self.request.user,
-            total_price=total,
-            address=self.request.data.get('addressLine1', ''),
-            city=self.request.data.get('city', ''),
-            postal_code=self.request.data.get('postalCode', ''),
-            country=self.request.data.get('country', ''),
-            phone_number=self.request.data.get('phoneNumber', ''),
-            status='pending'
-        )
-
-        for cart_item in cart.items.all():
-            OrderItem.objects.create(
-                order=order,
-                product=cart_item.product,
-                quantity=cart_item.quantity,
-                price=cart_item.product.price
+        if self.request.user.is_authenticated:
+            cart = Cart.objects.get(user=self.request.user)
+            total = 0
+            for cart_item in cart.items.all():
+                total += cart_item.product.price * cart_item.quantity
+            
+            order = serializer.save(
+                user=self.request.user,
+                total_price=total,
+                address=self.request.data.get('addressLine1', ''),
+                city=self.request.data.get('city', ''),
+                postal_code=self.request.data.get('postalCode', ''),
+                country=self.request.data.get('country', ''),
+                phone_number=self.request.data.get('phoneNumber', ''),
+                status='pending'
             )
+
+            for cart_item in cart.items.all():
+                OrderItem.objects.create(
+                    order=order,
+                    product=cart_item.product,
+                    quantity=cart_item.quantity,
+                    price=cart_item.product.price
+                )
+        else:
+            # For anonymous users, handle order creation differently or reject
+            return Response({'error': 'Authentication required to create orders.'}, status=401)
 
 # Registro usuario
 CustomUser = get_user_model()
@@ -157,8 +178,10 @@ class UserRegistrationView(generics.CreateAPIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Añadir producto al carrito
+from rest_framework.permissions import AllowAny
+
 class AddToCartView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def post(self, request):
         product_id = request.data.get('product_id')
@@ -169,7 +192,16 @@ class AddToCartView(APIView):
             product = Product.objects.get(id=product_id)
         except Product.DoesNotExist:
             return Response({"error": "Product not found."}, status=status.HTTP_404_NOT_FOUND)
-        cart, created = Cart.objects.get_or_create(user=request.user)
+        
+        if request.user.is_authenticated:
+            cart, created = Cart.objects.get_or_create(user=request.user)
+        else:
+            session_key = request.session.session_key
+            if not session_key:
+                request.session.create()
+                session_key = request.session.session_key
+            cart, created = Cart.objects.get_or_create(session_key=session_key, user=None)
+        
         cart_item, item_created = CartItem.objects.get_or_create(cart=cart, product=product)
         if not item_created:
             cart_item.quantity += quantity

@@ -1,4 +1,3 @@
-// src/Cart.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -7,38 +6,47 @@ import './Cart.css';
 
 const Cart = () => {
   const [cart, setCart] = useState(null);
-  const [quantities, setQuantities] = useState({}); // Guarda la cantidad editable por ítem
+  const [quantities, setQuantities] = useState({});
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
   const token = localStorage.getItem('accessToken');
 
-  // Función para recargar el carrito
+  // Load cart from API or localStorage for anonymous users
   const fetchCart = () => {
-    axios.get('cart/', {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-    
-      .then((response) => {
-        setCart(response.data);
-        // Inicializa las cantidades con el valor actual de cada ítem
-        const initialQuantities = {};
-        response.data.items.forEach(item => {
-          initialQuantities[item.id] = item.quantity;
-        });
-        setQuantities(initialQuantities);
+    if (token) {
+      axios.get('cart/', {
+        headers: { Authorization: `Bearer ${token}` }
       })
-      .catch((err) => {
-        console.error("Error al obtener el carrito:", err);
-        setError("Error al cargar el carrito, por favor inicia sesión.");
+        .then((response) => {
+          setCart(response.data);
+          const initialQuantities = {};
+          response.data.items.forEach(item => {
+            initialQuantities[item.id] = item.quantity;
+          });
+          setQuantities(initialQuantities);
+        })
+        .catch((err) => {
+          console.error("Error al obtener el carrito:", err);
+          setError("Error al cargar el carrito, por favor inicia sesión.");
+        });
+    } else {
+      // Load cart from localStorage for anonymous users
+      const localCart = JSON.parse(localStorage.getItem('localCart')) || [];
+      setCart({ items: localCart });
+      const initialQuantities = {};
+      localCart.forEach(item => {
+        initialQuantities[item.id] = item.quantity;
       });
+      setQuantities(initialQuantities);
+    }
   };
 
   useEffect(() => {
     fetchCart();
   }, [token]);
 
-  // Manejar cambio de cantidad en el input
+  // Update quantity in state and localStorage or API
   const handleQuantityChange = (itemId, newQuantity) => {
     setQuantities(prev => ({
       ...prev,
@@ -46,32 +54,54 @@ const Cart = () => {
     }));
   };
 
-  // Actualiza la cantidad con una petición PATCH
   const handleUpdateQuantity = (itemId) => {
-    axios.patch(`cartitem/${itemId}/`, { quantity: quantities[itemId] }, { headers: { Authorization: `Bearer ${token}` } }
+    if (token) {
+      axios.patch(`cartitem/${itemId}/`,
+        { quantity: quantities[itemId] },
+        { headers: { Authorization: `Bearer ${token}` } }
       )
-      .then((response) => {
-        setMessage("Cantidad actualizada.");
-        fetchCart();
-      })
-      .catch((err) => {
-        console.error("Error al actualizar la cantidad:", err);
-        setMessage("Error al actualizar la cantidad.");
+        .then(() => {
+          setMessage("Cantidad actualizada.");
+          fetchCart();
+        })
+        .catch(() => {
+          setMessage("Error al actualizar la cantidad.");
+        });
+    } else {
+      // Update localStorage cart
+      const localCart = JSON.parse(localStorage.getItem('localCart')) || [];
+      const updatedCart = localCart.map(item => {
+        if (item.id === itemId) {
+          return { ...item, quantity: quantities[itemId] };
+        }
+        return item;
       });
+      localStorage.setItem('localCart', JSON.stringify(updatedCart));
+      setCart({ items: updatedCart });
+      setMessage("Cantidad actualizada.");
+    }
   };
 
-  // Elimina el ítem del carrito
   const handleRemoveItem = (itemId) => {
-    axios.delete(`cartitem/${itemId}/`, { headers: { Authorization: `Bearer ${token}` }
+    if (token) {
+      axios.delete(`cartitem/${itemId}/`, {
+        headers: { Authorization: `Bearer ${token}` }
       })
-      .then(() => {
-        setMessage("Producto eliminado.");
-        fetchCart();
-      })
-      .catch((err) => {
-        console.error("Error al eliminar el producto:", err);
-        setMessage("Error al eliminar el producto.");
-      });
+        .then(() => {
+          setMessage("Producto eliminado.");
+          fetchCart();
+        })
+        .catch(() => {
+          setMessage("Error al eliminar el producto.");
+        });
+    } else {
+      // Remove from localStorage cart
+      const localCart = JSON.parse(localStorage.getItem('localCart')) || [];
+      const updatedCart = localCart.filter(item => item.id !== itemId);
+      localStorage.setItem('localCart', JSON.stringify(updatedCart));
+      setCart({ items: updatedCart });
+      setMessage("Producto eliminado.");
+    }
   };
 
   const handleCheckout = () => {
@@ -94,9 +124,7 @@ const Cart = () => {
           <>
             <ul className="cart-items">
               {cart.items.map((item) => {
-                const product = item.product;
-                
-                // Construir URL de la imagen
+                const product = item.product || {};
                 let imageUrl = '';
                 if (product.images && product.images.length > 0) {
                   const imgPath = product.images[0].image;
@@ -107,45 +135,43 @@ const Cart = () => {
 
                 return (
                   <li key={item.id} className="cart-item">
-  {imageUrl && (
-    <img
-      src={imageUrl}
-      alt={product.name}
-      className="cart-product-image"
-    />
-  )}
-  <div style={{ flex: 1 }}>
-    <span className="cart-item-name">{product.name}</span>
-    <div className="quantity-controls">
-      <input
-        type="number"
-        min="1"
-        value={quantities[item.id] || item.quantity}
-        onChange={(e) => handleQuantityChange(item.id, Number(e.target.value))}
-        className="quantity-input"
-      />
-      <button onClick={() => handleUpdateQuantity(item.id)} className="update-btn">
-        Actualizar
-      </button>
-      <button onClick={() => handleRemoveItem(item.id)} className="remove-btn">
-        Eliminar
-      </button>
-    </div>
-  </div>
-  {/* Bloque de precio con nuevo diseño */}
-  <div className="cart-price-info">
-    <div className="price-line">
-      <span className="qty">{item.quantity}</span>
-      <span className="multiply">&times;</span>
-      <span className="unit-price">${Number(product.price).toFixed(0)}</span>
-    </div>
-    <div className="total-line">
-      <strong>Total:</strong>
-      ${ (item.quantity * Number(product.price)).toFixed(0) }
-    </div>
-  </div>
-</li>
-
+                    {imageUrl && (
+                      <img
+                        src={imageUrl}
+                        alt={product.name}
+                        className="cart-product-image"
+                      />
+                    )}
+                    <div style={{ flex: 1 }}>
+                      <span className="cart-item-name">{product.name || item.name}</span>
+                      <div className="quantity-controls">
+                        <input
+                          type="number"
+                          min="1"
+                          value={quantities[item.id] || item.quantity}
+                          onChange={(e) => handleQuantityChange(item.id, Number(e.target.value))}
+                          className="quantity-input"
+                        />
+                        <button onClick={() => handleUpdateQuantity(item.id)} className="update-btn">
+                          Actualizar
+                        </button>
+                        <button onClick={() => handleRemoveItem(item.id)} className="remove-btn">
+                          Eliminar
+                        </button>
+                      </div>
+                    </div>
+                    <div className="cart-price-info">
+                      <div className="price-line">
+                        <span className="qty">{item.quantity}</span>
+                        <span className="multiply">&times;</span>
+                        <span className="unit-price">${Number(product.price || item.price).toFixed(0)}</span>
+                      </div>
+                      <div className="total-line">
+                        <strong>Total:</strong>
+                        ${ (item.quantity * Number(product.price || item.price)).toFixed(0) }
+                      </div>
+                    </div>
+                  </li>
                 );
               })}
             </ul>

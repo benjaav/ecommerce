@@ -139,4 +139,32 @@
     }
   }
   
+  @media (max-width: 1024px) {
+    .checkout-form {
+      max-width: 90%;
+      margin: 20px auto;
+      padding: 15px 20px;
+    }
+  }
   
+  @media (max-width: 768px) {
+    .checkout-form {
+      padding: 15px 20px;
+      margin: 20px 10px;
+    }
+  
+    .checkout-form h2 {
+      font-size: 1.5rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .checkout-form {
+      padding: 10px 15px;
+      margin: 10px 5px;
+    }
+  
+    .checkout-form h2 {
+      font-size: 1.2rem;
+    }
+  }
