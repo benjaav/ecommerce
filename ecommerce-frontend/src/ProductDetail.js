@@ -12,7 +12,8 @@ function ProductDetail() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`http://codestorebl.com/api/products/${id}/`)
+    axios.get(`/api/products/${id}/`)
+      
       .then((response) => {
         setProduct(response.data);
       })
@@ -64,9 +65,8 @@ function ProductDetail() {
           {product.images && product.images.length > 0 ? (
             product.images.map((imgObj) => {
               // Construimos URL completa si no viene con la ruta absoluta
-              const imgUrl = imgObj.image.startsWith('http') || imgObj.image.startsWith('/')
-                ? imgObj.image
-                : `http://codestorebl.com/media/${imgObj.image}`;
+              const imageUrl = imgObj.image.startsWith('http') ? imgObj.image : `/media/${imgObj.image}`;
+
 
               return (
                 <img
