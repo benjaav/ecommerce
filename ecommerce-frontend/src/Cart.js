@@ -16,7 +16,8 @@ const Cart = () => {
   const fetchCart = () => {
     if (token) {
       axios.get('cart/', {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true
       })
         .then((response) => {
           setCart(response.data);
