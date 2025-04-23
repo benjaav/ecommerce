@@ -18,7 +18,20 @@ function Products() {
 
   const handleAddToCart = (e, productId) => {
     e.stopPropagation(); 
-    if (!token) return;
+    
+    if (!token) {
+      let localCart = JSON.parse(localStorage.getItem('localCart')) || [];
+      const existingItem = localCart.find(item => item.id === productId);
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        localCart.push({ id: productId, quantity: 1, name: '', price: 0, images: [] });
+      }
+      localStorage.setItem('localCart', JSON.stringify(localCart));
+      setSuccessMessage(productId);
+      setTimeout(() => setSuccessMessage(null), 3000);
+      return;
+    }
   
     axios.post('add-to-cart/', { product_id: productId, quantity: 1 }, {
       headers: { Authorization: `Bearer ${token}` }
