@@ -15,34 +15,22 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
-
-        <Route path="/products" element={
-          <ProtectedRoute>
-            <Products />
-          </ProtectedRoute>
-        } />
-
-        {/* Nueva ruta para el detalle de producto */}
-        <Route path="/products/:id" element={
-          <ProtectedRoute>
-            <ProductDetail />
-          </ProtectedRoute>
-        } />
-
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/cart" element={
-          <ProtectedRoute>
-            <Cart />
-          </ProtectedRoute>
-        } />
-        <Route path="/checkout" element={
-          <ProtectedRoute>
-            <Checkout />
-          </ProtectedRoute>
-        } />
-      </Routes>
+  <Route path="/" element={<Home />} />
+  <Route path="/products" element={<Products />} />
+  <Route path="/products/:id" element={<ProductDetail />} />
+  <Route path="/login" element={<Login />} />
+  <Route path="/register" element={<Register />} />
+  <Route path="/cart" element={
+    <ProtectedRoute>
+      <Cart />
+    </ProtectedRoute>
+  } />
+  <Route path="/checkout" element={
+    <ProtectedRoute>
+      <Checkout />
+    </ProtectedRoute>
+  } />
+</Routes>
     </Router>
   );
 }
