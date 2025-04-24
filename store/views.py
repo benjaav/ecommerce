@@ -201,7 +201,7 @@ class CartItemDetailView(generics.RetrieveUpdateDestroyAPIView):
                 raise PermissionDenied("No tienes permiso para este ítem.")
         return obj
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class OrderListCreateView(generics.ListCreateAPIView):
     """
     Listado y creación de órdenes:
