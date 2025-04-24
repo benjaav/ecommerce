@@ -159,3 +159,24 @@
   .home-hero h1 { font-size: 1.5rem; }
   .home-hero p  { font-size: 0.9rem; }
 }
+
+/* Botón "Ingresar como invitado" junto a "Iniciar Sesión" */
+.guest-btn {
+  display: inline-block;
+  margin-left: 10px;
+  border: 2px solid #00ffcc;           /* Borde turquesa para que combine con login-btn */
+  background: rgba(0, 255, 204, 0.1);  /* Fondo semi-transparente */
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.guest-btn:hover {
+  background: rgba(0, 255, 204, 0.3);
+  box-shadow: 0 0 10px #00ffcc;        /* Efecto neón turquesa */
+  transform: translateY(-2px);
+}
+
