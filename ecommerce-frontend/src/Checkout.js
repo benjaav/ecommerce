@@ -5,6 +5,21 @@ import NavBar from './NavBar';
 import './Checkout.css';
 import axios from 'axios';
 
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
 function Checkout() {
   const [formData, setFormData] = useState({
     addressLine1: '',
@@ -18,6 +33,7 @@ function Checkout() {
 
   const token   = localStorage.getItem('accessToken');
   const isGuest = localStorage.getItem('isGuest') === 'true';
+  const csrftoken = getCookie('csrftoken');
 
   const handleChange = e => {
     setFormData(fd => ({ ...fd, [e.target.name]: e.target.value }));
@@ -33,8 +49,8 @@ function Checkout() {
         'orders/',
         formData,
         isGuest 
-          ? { withCredentials: true, headers: { 'Content-Type': 'application/json' } }
-          : { withCredentials: true, headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' } }
+          ? { withCredentials: true, headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken } }
+          : { withCredentials: true, headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken } }
       );
 
       const total = Number(ordRes.data.total_price);
@@ -45,12 +61,13 @@ function Checkout() {
         'create-payment-preference/',
         { total },
         isGuest
-          ? { withCredentials: true, headers: { 'Content-Type': 'application/json' } }
+          ? { withCredentials: true, headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken } }
           : {
               withCredentials: true,
               headers: {
                 Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
               }
             }
       );
