@@ -81,6 +81,10 @@ function Login() {
       </div>
 
       <div className="span">
+      <button onClick={() => navigate('/cart')}>
+      Continuar como invitado
+      </button>
+
         ¿No tienes cuenta? <a href="/register">Registrarse</a>
       </div>
     </div>
