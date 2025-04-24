@@ -13,8 +13,10 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios.post('auth/login/', { username, password })
-
       .then(response => {
+        // Limpio flag de invitado si existía
+        localStorage.removeItem('isGuest');
+        // Guardo tokens y continuo sesión normal
         localStorage.setItem('accessToken', response.data.access);
         localStorage.setItem('refreshToken', response.data.refresh);
         navigate('/');
@@ -25,30 +27,23 @@ function Login() {
       });
   };
 
-  // Función para volver a la vista anterior
+  const continueAsGuest = () => {
+    // Marco como invitado
+    localStorage.setItem('isGuest', 'true');
+    // Borro tokens si existían
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    navigate('/cart');
+  };
+
   const goBack = () => {
-    navigate(-1);  // Regresa a la pantalla previa
+    navigate(-1);
   };
 
   return (
     <div className="container">
-      {/* Flecha para volver */}
       <div className="back-arrow" onClick={goBack}>
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          fill="currentColor" 
-          width="1.5em" 
-          height="1.5em" 
-          viewBox="0 0 16 16" 
-          className="arrow-icon"
-        >
-          <path 
-            fillRule="evenodd" 
-            d="M15 8a.5.5 0 0 1-.5.5H2.707l4.147 4.146a.5.5 0 0 1-.708.708l-5-5 
-               a.5.5 0 0 1 0-.708l5-5a.5.5 0 1 1 .708.708L2.707 7.5H14.5A.5.5 0 
-               0 1 15 8z"
-          />
-        </svg>
+        {/* ícono SVG */}
       </div>
 
       <h2>Iniciar Sesión</h2>
@@ -59,21 +54,21 @@ function Login() {
           <div className="input-span">
             <label htmlFor="username" className="label">Usuario:</label>
             <input 
-              type="text" 
-              id="username" 
-              value={username} 
-              onChange={(e) => setUsername(e.target.value)}
-              required 
+              type="text"
+              id="username"
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+              required
             />
           </div>
           <div className="input-span">
             <label htmlFor="password" className="label">Contraseña:</label>
             <input 
-              type="password" 
-              id="password" 
-              value={password} 
-              onChange={(e) => setPassword(e.target.value)}
-              required 
+              type="password"
+              id="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              required
             />
           </div>
           <button type="submit" className="submit">Entrar</button>
@@ -81,10 +76,9 @@ function Login() {
       </div>
 
       <div className="span">
-      <button onClick={() => navigate('/cart')}>
-      Continuar como invitado
-      </button>
-
+        <button onClick={continueAsGuest}>
+          Continuar como invitado
+        </button>
         ¿No tienes cuenta? <a href="/register">Registrarse</a>
       </div>
     </div>

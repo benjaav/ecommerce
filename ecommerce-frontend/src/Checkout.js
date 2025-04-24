@@ -1,3 +1,4 @@
+// src/Checkout.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavBar from './NavBar';
@@ -14,54 +15,50 @@ function Checkout() {
   });
   const [error, setError] = useState('');
   const navigate = useNavigate();
+
   const token = localStorage.getItem('accessToken');
+  const isGuest = localStorage.getItem('isGuest') === 'true';
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setError('');
 
-    // Paso 1: Crear la orden pendiente
     axios.post('orders/', formData, {
-        headers: { Authorization: `Bearer ${token}` }
-      })
-      .then(orderResponse => {
-        console.log("Orden creada:", orderResponse.data);
-        const total = Number(orderResponse.data.total_price);
-        if (total <= 0) {
-          throw new Error("El total de la orden es 0. Verifica tu carrito.");
-        }
-        // Paso 2: Solicitar la preferencia de pago usando el total
-        return axios.post('create-payment-preference/', 
-          { total: total },
-          { 
-            headers: { 
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json'
-            } 
+      headers: token && !isGuest
+        ? { Authorization: `Bearer ${token}` }
+        : {}
+    })
+      .then(orderRes => {
+        const total = Number(orderRes.data.total_price);
+        if (total <= 0) throw new Error("El total de la orden es 0.");
+        return axios.post('create-payment-preference/',
+          { total },
+          {
+            headers: token && !isGuest
+              ? { Authorization: `Bearer ${token}`, 'Content-Type':'application/json' }
+              : { 'Content-Type':'application/json' }
           }
         );
       })
-      .then(preferenceResponse => {
-        console.log("Preferencia generada:", preferenceResponse.data);
-        // Redirige al usuario a la URL de pago
-        window.location.href = preferenceResponse.data.init_point;
+      .then(prefRes => {
+        // Si fue invitado, limpio carrito e indicador
+        if (isGuest) {
+          localStorage.removeItem('localCart');
+          localStorage.removeItem('isGuest');
+        }
+        window.location.href = prefRes.data.init_point;
       })
       .catch(err => {
         console.error("Error en el checkout:", err.response || err);
-        setError(err.response?.data?.error || "Error procesando el checkout. Por favor, verifica la información.");
+        setError(err.response?.data?.error || err.message || "Error procesando el checkout.");
       });
   };
 
-  const goBackToCart = () => {
-    navigate('/cart');
-  };
+  const goBackToCart = () => navigate('/cart');
 
   return (
     <div className="container checkout-container">
@@ -81,7 +78,6 @@ function Checkout() {
               required
             />
           </div>
-
           <div className="input-span">
             <label htmlFor="city" className="label">Ciudad:</label>
             <input
@@ -93,7 +89,6 @@ function Checkout() {
               required
             />
           </div>
-
           <div className="input-span">
             <label htmlFor="postalCode" className="label">Código Postal:</label>
             <input
@@ -105,7 +100,6 @@ function Checkout() {
               required
             />
           </div>
-
           <div className="input-span">
             <label htmlFor="country" className="label">País:</label>
             <input
@@ -117,7 +111,6 @@ function Checkout() {
               required
             />
           </div>
-
           <div className="input-span">
             <label htmlFor="phoneNumber" className="label">Teléfono:</label>
             <input
@@ -130,10 +123,7 @@ function Checkout() {
               required
             />
           </div>
-
-          <button type="submit" className="submit">
-            Finalizar Compra
-          </button>
+          <button type="submit" className="submit">Finalizar Compra</button>
           <button type="button" onClick={goBackToCart} className="secondary-btn">
             Volver al Carrito
           </button>

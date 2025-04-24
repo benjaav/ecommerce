@@ -1,3 +1,4 @@
+// src/Cart.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -10,81 +11,67 @@ const Cart = () => {
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
-  const token = localStorage.getItem('accessToken');
 
-  // Load cart from API or localStorage for anonymous users
+  const token = localStorage.getItem('accessToken');
+  const isGuest = localStorage.getItem('isGuest') === 'true';
+
+  // Load cart from API (si user) o localStorage (si invitado)
   const fetchCart = () => {
-    if (token) {
+    if (token && !isGuest) {
       axios.get('cart/', {
         headers: { Authorization: `Bearer ${token}` },
         withCredentials: true
       })
-        .then((response) => {
-          setCart(response.data);
-          const initialQuantities = {};
-          response.data.items.forEach(item => {
-            initialQuantities[item.id] = item.quantity;
-          });
-          setQuantities(initialQuantities);
+        .then(res => {
+          setCart(res.data);
+          const initQ = {};
+          res.data.items.forEach(i => initQ[i.id] = i.quantity);
+          setQuantities(initQ);
         })
-        .catch((err) => {
+        .catch(err => {
           console.error("Error al obtener el carrito:", err);
           setError("Error al cargar el carrito, por favor inicia sesión.");
         });
     } else {
-      // Load cart from localStorage for anonymous users
       const localCart = JSON.parse(localStorage.getItem('localCart')) || [];
       setCart({ items: localCart });
-      const initialQuantities = {};
-      localCart.forEach(item => {
-        initialQuantities[item.id] = item.quantity;
-      });
-      setQuantities(initialQuantities);
+      const initQ = {};
+      localCart.forEach(i => initQ[i.id] = i.quantity);
+      setQuantities(initQ);
     }
   };
 
   useEffect(() => {
     fetchCart();
-  }, [token]);
+  }, [token, isGuest]);
 
-  // Update quantity in state and localStorage or API
-  const handleQuantityChange = (itemId, newQuantity) => {
-    setQuantities(prev => ({
-      ...prev,
-      [itemId]: newQuantity
-    }));
+  // Resto de handlers iguales, usando token & isGuest en lugar de sólo token
+  const handleQuantityChange = (itemId, newQty) => {
+    setQuantities(prev => ({ ...prev, [itemId]: newQty }));
   };
 
   const handleUpdateQuantity = (itemId) => {
-    if (token) {
-      axios.patch(`cartitem/${itemId}/`,
-        { quantity: quantities[itemId] },
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
+    if (token && !isGuest) {
+      axios.patch(`cartitem/${itemId}/`, { quantity: quantities[itemId] },
+        { headers: { Authorization: `Bearer ${token}` } })
         .then(() => {
           setMessage("Cantidad actualizada.");
           fetchCart();
         })
-        .catch(() => {
-          setMessage("Error al actualizar la cantidad.");
-        });
+        .catch(() => setMessage("Error al actualizar la cantidad."));
     } else {
-      // Update localStorage cart
-      const localCart = JSON.parse(localStorage.getItem('localCart')) || [];
-      const updatedCart = localCart.map(item => {
-        if (item.id === itemId) {
-          return { ...item, quantity: quantities[itemId] };
-        }
-        return item;
-      });
-      localStorage.setItem('localCart', JSON.stringify(updatedCart));
-      setCart({ items: updatedCart });
+      const local = JSON.parse(localStorage.getItem('localCart')) || [];
+      const updated = local.map(item =>
+        item.id === itemId ? { ...item, quantity: quantities[itemId] } : item
+      );
+      localStorage.setItem('localCart', JSON.stringify(updated));
+      setCart({ items: updated });
       setMessage("Cantidad actualizada.");
     }
   };
 
   const handleRemoveItem = (itemId) => {
-    if (token) {
+    if (token && !isGuest) {
       axios.delete(`cartitem/${itemId}/`, {
         headers: { Authorization: `Bearer ${token}` }
       })
@@ -92,15 +79,12 @@ const Cart = () => {
           setMessage("Producto eliminado.");
           fetchCart();
         })
-        .catch(() => {
-          setMessage("Error al eliminar el producto.");
-        });
+        .catch(() => setMessage("Error al eliminar el producto."));
     } else {
-      // Remove from localStorage cart
-      const localCart = JSON.parse(localStorage.getItem('localCart')) || [];
-      const updatedCart = localCart.filter(item => item.id !== itemId);
-      localStorage.setItem('localCart', JSON.stringify(updatedCart));
-      setCart({ items: updatedCart });
+      const local = JSON.parse(localStorage.getItem('localCart')) || [];
+      const updated = local.filter(item => item.id !== itemId);
+      localStorage.setItem('localCart', JSON.stringify(updated));
+      setCart({ items: updated });
       setMessage("Producto eliminado.");
     }
   };
@@ -124,25 +108,18 @@ const Cart = () => {
         ) : (
           <>
             <ul className="cart-items">
-              {cart.items.map((item) => {
+              {cart.items.map(item => {
                 const product = item.product || {};
                 let imageUrl = '';
-                if (product.images && product.images.length > 0) {
-                  const imgPath = product.images[0].image;
-                  imageUrl = imgPath.startsWith('http') || imgPath.startsWith('/')
-                    ? imgPath
-                    : `https://codestorebl.com/media/${imgPath}`;
+                if (product.images && product.images.length) {
+                  const img = product.images[0].image;
+                  imageUrl = img.startsWith('http') || img.startsWith('/')
+                    ? img
+                    : `https://codestorebl.com/media/${img}`;
                 }
-
                 return (
                   <li key={item.id} className="cart-item">
-                    {imageUrl && (
-                      <img
-                        src={imageUrl}
-                        alt={product.name}
-                        className="cart-product-image"
-                      />
-                    )}
+                    {imageUrl && <img src={imageUrl} alt={product.name} className="cart-product-image" />}
                     <div style={{ flex: 1 }}>
                       <span className="cart-item-name">{product.name || item.name}</span>
                       <div className="quantity-controls">
@@ -150,15 +127,11 @@ const Cart = () => {
                           type="number"
                           min="1"
                           value={quantities[item.id] || item.quantity}
-                          onChange={(e) => handleQuantityChange(item.id, Number(e.target.value))}
+                          onChange={e => handleQuantityChange(item.id, Number(e.target.value))}
                           className="quantity-input"
                         />
-                        <button onClick={() => handleUpdateQuantity(item.id)} className="update-btn">
-                          Actualizar
-                        </button>
-                        <button onClick={() => handleRemoveItem(item.id)} className="remove-btn">
-                          Eliminar
-                        </button>
+                        <button onClick={() => handleUpdateQuantity(item.id)} className="update-btn">Actualizar</button>
+                        <button onClick={() => handleRemoveItem(item.id)} className="remove-btn">Eliminar</button>
                       </div>
                     </div>
                     <div className="cart-price-info">
@@ -168,17 +141,14 @@ const Cart = () => {
                         <span className="unit-price">${Number(product.price || item.price).toFixed(0)}</span>
                       </div>
                       <div className="total-line">
-                        <strong>Total:</strong>
-                        ${ (item.quantity * Number(product.price || item.price)).toFixed(0) }
+                        <strong>Total:</strong> ${(item.quantity * Number(product.price || item.price)).toFixed(0)}
                       </div>
                     </div>
                   </li>
                 );
               })}
             </ul>
-            <button onClick={handleCheckout} className="submit">
-              Proceder al Checkout
-            </button>
+            <button onClick={handleCheckout} className="submit">Proceder al Checkout</button>
           </>
         )}
       </div>
