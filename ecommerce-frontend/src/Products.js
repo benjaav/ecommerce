@@ -25,13 +25,21 @@ function Products() {
       if (existingItem) {
         existingItem.quantity += 1;
       } else {
-        localCart.push({ id: productId, quantity: 1, name: '', price: 0, images: [] });
+        const product = products.find(p => p.id === productId);
+        localCart.push({ 
+          id: productId, 
+          quantity: 1, 
+          name: product ? product.name : '', 
+          price: product ? product.price : 0, 
+          images: product ? product.images : [] 
+        });
       }
       localStorage.setItem('localCart', JSON.stringify(localCart));
       setSuccessMessage(productId);
       setTimeout(() => setSuccessMessage(null), 3000);
       return;
     }
+    
   
     axios.post('add-to-cart/', { product_id: productId, quantity: 1 }, {
       headers: { Authorization: `Bearer ${token}` }
