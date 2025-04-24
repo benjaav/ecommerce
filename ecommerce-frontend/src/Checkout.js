@@ -19,62 +19,56 @@ function Checkout() {
   const token   = localStorage.getItem('accessToken');
   const isGuest = localStorage.getItem('isGuest') === 'true';
 
-  const handleChange = (e) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  const handleChange = e => {
+    setFormData(fd => ({ ...fd, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     setError('');
 
     try {
-      // 1) Crear la orden (anónimo o autenticado)
-      const orderResponse = await axios.post(
+      // 1) Crear la orden (invitado o autenticado)
+      const ordRes = await axios.post(
         'orders/',
         formData,
-        isGuest
-          ? {}  // invitados no envían cabeceras JWT
-          : { headers: { Authorization: `Bearer ${token}` } }
+        isGuest ? {} : { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      const total = Number(orderResponse.data.total_price);
-      if (total <= 0) {
-        throw new Error('El total de la orden es 0. Verifica tu carrito.');
-      }
+      const total = Number(ordRes.data.total_price);
+      if (total <= 0) throw new Error('El total de la orden es 0.');
 
       // 2) Generar preferencia de pago
-      const prefResponse = await axios.post(
+      const prefRes = await axios.post(
         'create-payment-preference/',
         { total },
         isGuest
           ? { headers: { 'Content-Type': 'application/json' } }
-          : { headers: {
+          : {
+              headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
-            } }
+              }
+            }
       );
 
-      // 3) Si fue invitado, limpiar carrito local y flag
+      // 3) Si fue invitado, limpio carrito local y flag
       if (isGuest) {
         localStorage.removeItem('localCart');
         localStorage.removeItem('isGuest');
       }
 
-      // 4) Redirigir a Mercado Pago
-      window.location.href = prefResponse.data.init_point;
+      // 4) Redirijo al init_point de Mercado Pago
+      window.location.href = prefRes.data.init_point;
 
     } catch (err) {
       console.error('Error en el checkout:', err.response || err);
       setError(
         err.response?.data?.error ||
         err.message ||
-        'Error procesando el checkout. Por favor, verifica los datos.'
+        'Error procesando el checkout. Verifica los datos.'
       );
     }
-  };
-
-  const goBackToCart = () => {
-    navigate('/cart');
   };
 
   return (
@@ -152,7 +146,7 @@ function Checkout() {
           </button>
           <button
             type="button"
-            onClick={goBackToCart}
+            onClick={() => navigate('/cart')}
             className="secondary-btn"
           >
             Volver al Carrito

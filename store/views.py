@@ -121,8 +121,14 @@ class CartDetailView(generics.RetrieveUpdateAPIView):
 
 # Crear y listar órdenes de usuario
 class OrderListCreateView(generics.ListCreateAPIView):
+    """
+    Listado y creación de órdenes. 
+    * Cualquiera puede crear (AllowAny).
+    * Si el usuario está autenticado, la orden se asocia a él.
+    * Si es invitado, se asocia a la session_key.
+    """
     serializer_class = OrderSerializer
-    permission_classes = [AllowAny]  # <-- antes era IsAuthenticatedOrReadOnly
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         user = self.request.user
@@ -131,26 +137,26 @@ class OrderListCreateView(generics.ListCreateAPIView):
         return Order.objects.none()
 
     def perform_create(self, serializer):
-        # Asegúrate de tener session_key
+        # Aseguramos session_key
         session_key = self.request.session.session_key
         if not session_key:
             self.request.session.create()
             session_key = self.request.session.session_key
 
-        # Tomo carrito según usuario o sesión
+        # Obtenemos el carrito: por usuario o por sesión
         if self.request.user.is_authenticated:
             cart, _ = Cart.objects.get_or_create(user=self.request.user)
-            user = self.request.user
+            order_user = self.request.user
         else:
             cart, _ = Cart.objects.get_or_create(session_key=session_key, user=None)
-            user = None
+            order_user = None
 
-        # Calculo total
+        # Calculamos total de la orden
         total = sum(item.product.price * item.quantity for item in cart.items.all())
 
-        # Creo la orden
+        # Creamos la orden
         order = serializer.save(
-            user=user,
+            user=order_user,
             total_price=total,
             address=self.request.data.get('addressLine1', ''),
             city=self.request.data.get('city', ''),
@@ -160,7 +166,7 @@ class OrderListCreateView(generics.ListCreateAPIView):
             status='pending'
         )
 
-        # Creo los OrderItem
+        # Creamos los OrderItem correspondientes
         for item in cart.items.all():
             OrderItem.objects.create(
                 order=order,
