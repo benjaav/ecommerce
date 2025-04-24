@@ -45,6 +45,14 @@ CORS_ALLOW_HEADERS = [
     'user-agent',
 ]
 
+# Para desarrollo local sin HTTPS
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+# Ajusta el dominio según tu dominio real
+SESSION_COOKIE_DOMAIN = 'codestorebl.com'
+CSRF_COOKIE_DOMAIN = 'codestorebl.com'
+
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),
