@@ -122,39 +122,44 @@ class CartDetailView(generics.RetrieveUpdateAPIView):
 # Crear y listar órdenes de usuario
 class OrderListCreateView(generics.ListCreateAPIView):
     serializer_class = OrderSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
-        if self.request.user.is_authenticated:
-            return Order.objects.filter(user=self.request.user)
-        else:
-            return Order.objects.none()
+        user = self.request.user
+        if user.is_authenticated:
+            return Order.objects.filter(user=user)
+        return Order.objects.none()
 
     def perform_create(self, serializer):
         if self.request.user.is_authenticated:
-            cart = Cart.objects.get(user=self.request.user)
-            total = 0
-            for cart_item in cart.items.all():
-                total += cart_item.product.price * cart_item.quantity
-            
-            order = serializer.save(
-                user=self.request.user,
-                total_price=total,
-                address=self.request.data.get('addressLine1', ''),
-                city=self.request.data.get('city', ''),
-                postal_code=self.request.data.get('postalCode', ''),
-                country=self.request.data.get('country', ''),
-                phone_number=self.request.data.get('phoneNumber', ''),
-                status='pending'
-            )
+            cart, created = Cart.objects.get_or_create(user=self.request.user)
+        else:
+            session_key = self.request.session.session_key
+            if not session_key:
+                self.request.session.create()
+                session_key = self.request.session.session_key
+            cart, created = Cart.objects.get_or_create(session_key=session_key, user=None)
 
-            for cart_item in cart.items.all():
-                OrderItem.objects.create(
-                    order=order,
-                    product=cart_item.product,
-                    quantity=cart_item.quantity,
-                    price=cart_item.product.price
-                )
+        total = sum(item.product.price * item.quantity for item in cart.items.all())
+
+        order = serializer.save(
+            user=self.request.user if self.request.user.is_authenticated else None,
+            total_price=total,
+            address=self.request.data.get('addressLine1', ''),
+            city=self.request.data.get('city', ''),
+            postal_code=self.request.data.get('postalCode', ''),
+            country=self.request.data.get('country', ''),
+            phone_number=self.request.data.get('phoneNumber', ''),
+            status='pending'
+        )
+
+        for item in cart.items.all():
+            OrderItem.objects.create(
+                order=order,
+                product=item.product,
+                quantity=item.quantity,
+                price=item.product.price
+            )
         else:
             # For anonymous users, handle order creation differently or reject
             return Response({'error': 'Authentication required to create orders.'}, status=401)

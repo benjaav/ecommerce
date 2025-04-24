@@ -57,7 +57,7 @@ class CartItem(models.Model):
 User = get_user_model()
 
 class Order(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='orders')
     total_price = models.DecimalField(max_digits=10, decimal_places=0, default=0)
     address = models.CharField(max_length=255, blank=True)
     city = models.CharField(max_length=100, blank=True)
