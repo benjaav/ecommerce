@@ -32,7 +32,9 @@ function Checkout() {
       const ordRes = await axios.post(
         'orders/',
         formData,
-        isGuest ? {} : { headers: { Authorization: `Bearer ${token}` } }
+        isGuest 
+          ? { withCredentials: true, headers: { 'Content-Type': 'application/json' } }
+          : { withCredentials: true, headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' } }
       );
 
       const total = Number(ordRes.data.total_price);
@@ -43,8 +45,9 @@ function Checkout() {
         'create-payment-preference/',
         { total },
         isGuest
-          ? { headers: { 'Content-Type': 'application/json' } }
+          ? { withCredentials: true, headers: { 'Content-Type': 'application/json' } }
           : {
+              withCredentials: true,
               headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
