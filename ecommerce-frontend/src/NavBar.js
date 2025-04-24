@@ -19,11 +19,12 @@ function NavBar() {
       .catch(error => {
         console.error("Error obteniendo usuario:", error);
         if (error.response && error.response.status === 401) {
-          // Token inválido o expirado, forzar logout
+          // Token inválido, tratamos como usuario anónimo
           localStorage.removeItem('accessToken');
           setUsername(null);
-          navigate('auth/login');
+          // No redirigir al login automáticamente
         }
+        
       });
     } else {
       setUsername(null);
