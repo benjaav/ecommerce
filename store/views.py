@@ -29,12 +29,14 @@ from .serializers import (
     UserRegistrationSerializer
 )
 
+# Logger para esta vista
+logger = logging.getLogger(__name__)
 User = get_user_model()
 
 
 class CurrentUserView(APIView):
     """
-    Devuelve datos del usuario autenticado.
+    Devuelve usuario autenticado.
     """
     permission_classes = [IsAuthenticated]
 
@@ -47,16 +49,14 @@ class CurrentUserView(APIView):
 
 class CreatePaymentPreferenceView(APIView):
     """
-    Crea una preferencia de pago en Mercado Pago.
-    Permite invitados (AllowAny).
+    Crea preferencia de pago en Mercado Pago.
+    Permite acceso anónimo.
     """
     permission_classes = [AllowAny]
 
     def post(self, request, format=None):
-        logger = logging.getLogger(__name__)
         try:
             total = float(request.data.get('total', 0))
-            logger.info(f"Total recibido: {total}")
             if total <= 0:
                 return Response(
                     {'error': 'El total debe ser mayor a 0.'},
@@ -122,7 +122,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 class CartDetailView(generics.RetrieveUpdateAPIView):
     """
-    Recupera o actualiza el carrito del usuario o sesión anónima.
+    Recupera o actualiza el carrito (usuario o sesión anónima).
     """
     serializer_class = CartSerializer
     permission_classes = [AllowAny]
@@ -149,7 +149,8 @@ class AddToCartView(APIView):
         prod_id = request.data.get('product_id')
         qty = int(request.data.get('quantity', 1))
         if not prod_id:
-            return Response({"error": "product_id es requerido."}, status=400)
+            return Response({"error": "product_id es requerido."},
+                            status=status.HTTP_400_BAD_REQUEST)
 
         product = get_object_or_404(Product, id=prod_id)
 
@@ -159,7 +160,7 @@ class AddToCartView(APIView):
             session_key = request.session.session_key
             if not session_key:
                 request.session.create()
-                session_key = request.session.session_key
+                session_key = self.request.session.session_key
             cart, _ = Cart.objects.get_or_create(session_key=session_key, user=None)
 
         item, created = CartItem.objects.get_or_create(cart=cart, product=product)
@@ -197,36 +198,39 @@ class CartItemDetailView(generics.RetrieveUpdateDestroyAPIView):
 class OrderListCreateView(generics.ListCreateAPIView):
     """
     Listado y creación de órdenes:
-     - Cualquiera (AllowAny) puede crear.
-     - Autenticados → se asocia a user.
-     - Invitados → se asocia a session_key y user=None.
+     - AllowAny: cualquiera puede crear.
+     - Autenticados → orden.user.
+     - Invitados → orden.user=None, asociada a session_key.
     """
     serializer_class = OrderSerializer
     permission_classes = [AllowAny]
 
     def get_queryset(self):
-        user = self.request.user
-        if user.is_authenticated:
-            return Order.objects.filter(user=user)
+        if self.request.user.is_authenticated:
+            return Order.objects.filter(user=self.request.user)
         return Order.objects.none()
 
     def perform_create(self, serializer):
+        # Asegura session_key
         session_key = self.request.session.session_key
         if not session_key:
             self.request.session.create()
             session_key = self.request.session.session_key
 
+        # Recupera o crea carrito
         if self.request.user.is_authenticated:
             cart, _ = Cart.objects.get_or_create(user=self.request.user)
-            user_or_none = self.request.user
+            order_user = self.request.user
         else:
             cart, _ = Cart.objects.get_or_create(session_key=session_key, user=None)
-            user_or_none = None
+            order_user = None
 
+        # Calcula total
         total = sum(i.product.price * i.quantity for i in cart.items.all())
 
+        # Crea la orden
         order = serializer.save(
-            user=user_or_none,
+            user=order_user,
             total_price=total,
             address=self.request.data.get('addressLine1', ''),
             city=self.request.data.get('city', ''),
@@ -236,6 +240,7 @@ class OrderListCreateView(generics.ListCreateAPIView):
             status='pending'
         )
 
+        # Crea los ítems de la orden
         for item in cart.items.all():
             OrderItem.objects.create(
                 order=order,
