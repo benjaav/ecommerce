@@ -1,26 +1,21 @@
-/* src/Products.css */
-
-/* Contenedor en grid para 4 columnas por fila */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 columnas */
-  gap: 20px; /* Espacio entre productos */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
   width: 90%;
   max-width: 1200px;
-  margin: 0 auto; /* Centra el grid horizontalmente */
-  margin-top: 1rem;
-  justify-items: center; /* Centra cada tarjeta en su columna */
+  margin: 1rem auto;
+  justify-items: center;
 }
 
-/* Tarjeta de producto */
 .product-card {
-  background: rgba(255, 255, 255, 0.07);
-  border: 2px solid #00ffcc;        /* Borde en tono turquesa */
+  background: rgba(255,255,255,0.07);
+  border: 2px solid #00ffcc;
   border-radius: 1rem;
-  box-shadow: 0 0 20px #00ffcc;     /* Efecto neón turquesa */
+  box-shadow: 0 0 20px #00ffcc;
   padding: 1rem;
   width: 100%;
-  max-width: 250px;                 /* Ajusta el ancho máximo de la tarjeta */
+  max-width: 250px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -31,7 +26,7 @@
   transform: translateY(-10px);
   box-shadow: 0 0 20px var(--primary-color);
 }
-/* Imagen del producto */
+
 .product-image {
   width: 100%;
   height: 200px;
@@ -40,27 +35,24 @@
   margin-bottom: 0.5rem;
 }
 
-/* Descripción */
 .description {
   font-size: 0.9rem;
   color: #ccc;
   margin-bottom: 0.5rem;
 }
 
-/* Precio */
 .price {
   font-weight: bold;
-  color: #00ffcc;   /* Tono turquesa para resaltar */
+  color: #00ffcc;
   font-size: 1.2rem;
 }
 
-/* Botón para agregar al carrito */
 .add-to-cart-btn {
-  margin-top: auto; /* Empuja el botón al final de la tarjeta */
+  margin-top: auto;
   padding: 0.75rem 1.5rem;
   border-radius: 50px;
   border: 2px solid #ff69b4;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255,255,255,0.1);
   color: #fff;
   font-weight: 600;
   cursor: pointer;
@@ -68,12 +60,11 @@
 }
 
 .add-to-cart-btn:hover {
-  background: rgba(255, 105, 180, 0.3);
+  background: rgba(255,105,180,0.3);
   box-shadow: 0 0 10px #ff69b4;
   transform: translateY(-2px);
 }
 
-/* Mensaje de éxito o error al agregar */
 .success-message {
   color: #00ffcc;
   text-align: center;
@@ -89,18 +80,13 @@
   100% { opacity: 0; }
 }
 
-/* ===== Responsive Product Grid ===== */
+/* Responsive */
 @media (max-width: 1024px) {
   .product-grid { grid-template-columns: repeat(3, 1fr); }
 }
-
 @media (max-width: 768px) {
   .product-grid { grid-template-columns: repeat(2, 1fr); }
 }
-
 @media (max-width: 480px) {
   .product-grid { grid-template-columns: 1fr; }
 }
-
-
-

@@ -9,7 +9,7 @@ function Home() {
 
   const handleGuestLogin = () => {
     localStorage.setItem('isGuest', 'true');
-    navigate('/cart');
+    navigate('/products');
   };
 
   return (

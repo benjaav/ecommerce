@@ -1,91 +1,78 @@
-/* Home.css */
-
-/* SECCIÓN HERO */
-/* Esta sección ya no necesita definir un fondo propio */
 .home-hero {
-  position: relative;       /* Permite ubicar .hero-header con position absolute */
-  text-align: center;       /* Centra el contenido principal */
-  padding: 80px 20px; 
-    background-color: rgba(255, 255, 255, 0.2);
-  }
-  
-  .home-hero h1 {
-    font-size: 3rem;
-    margin-bottom: 20px;
-    color: #333;
-    font-weight: bold;
-  }
-  
-  .home-hero p {
-    font-size: 1.25rem;
-    margin-bottom: 40px;
-    color: #555;
-  }
-  
-  /* Botones y otros estilos se mantienen igual */
-  .home-hero-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-  }
-  
-  .home-btn {
-    background-color: #FF69B4;
-    border: none;
-    border-radius: 25px;
-    padding: 12px 24px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    color: #fff;
-    text-decoration: none;
-  }
-  
-  .home-btn:hover,
-  .home-btn:focus {
-    background-color: #FF85C8;
-    transform: translateY(-2px);
-  }
+  position: relative;
+  text-align: center;
+  padding: 80px 20px;
+  background-color: rgba(255, 255, 255, 0.2);
+}
 
-  /* ========================================= */
-/* SECCIÓN HERO - BOTONES DE CTA (Home.css)  */
-/* ========================================= */
+.hero-header {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
 
-/* Contenedor de botones */
+.login-btn {
+  display: inline-block;
+  border: 2px solid #00ffcc;
+  background: rgba(0, 255, 204, 0.1);
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+  background: rgba(0, 255, 204, 0.3);
+  box-shadow: 0 0 10px #00ffcc;
+  transform: translateY(-2px);
+}
+
+.home-hero h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  color: #333;
+  font-weight: bold;
+}
+
+.home-hero p {
+  font-size: 1.25rem;
+  margin-bottom: 40px;
+  color: #555;
+}
+
 .home-hero-buttons {
   display: flex;
   justify-content: center;
   gap: 20px;
-  margin-top: 2rem; /* Espacio extra si deseas */
+  margin-top: 2rem;
 }
 
-/* Estilo principal de los botones */
-.cta-button {
+.cta-button,
+.home-btn {
   display: inline-block;
   padding: 0.75rem 1.5rem;
-  border-radius: 50px;           /* Botón redondeado */
-  border: 2px solid #ff69b4;    /* Borde rosa que hace match con el resto del theme */
-  background: rgba(255, 255, 255, 0.1); /* Fondo semi-transparente */
-  color: #fff;                  /* Texto blanco */
+  border-radius: 50px;
+  border: 2px solid #ff69b4;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
   font-size: 1rem;
   font-weight: 600;
   text-decoration: none;
-  text-align: center;
   transition: all 0.3s ease;
   cursor: pointer;
 }
 
-/* Hover: Efecto “levantar” y cambio de fondo/borde */
-.cta-button:hover {
-  background: rgba(255, 105, 180, 0.3); /* Rosa semi-transparente */
-  transform: translateY(-3px);
-  box-shadow: 0 0 10px #ff69b4;         /* Efecto “neón” suave */
+.cta-button:hover,
+.home-btn:hover {
+  background: rgba(255, 105, 180, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 0 10px #ff69b4;
 }
 
-/* Clase secundaria, si quieres distinguir un botón (ej. “Iniciar Sesión”) */
 .cta-button.secondary {
-  border-color: #00ffcc; /* Borde turquesa */
-  box-shadow: none;      /* Sin sombra inicial */
+  border-color: #00ffcc;
 }
 
 .cta-button.secondary:hover {
@@ -93,79 +80,11 @@
   box-shadow: 0 0 10px #00ffcc;
 }
 
-/* Contenedor para el botón "Iniciar Sesión" */
-.hero-header {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-}
-
-/* ============================= */
-/* BOTÓN "Iniciar Sesión"        */
-/* ============================= */
-.login-btn {
-  display: inline-block;
-  border: 2px solid #00ffcc;           /* Borde turquesa */
-  background: rgba(0, 255, 204, 0.1);  /* Fondo semi-transparente */
-  color: #fff;
-  padding: 0.75rem 1.5rem;
-  border-radius: 50px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-.login-btn:hover {
-  background: rgba(0, 255, 204, 0.3);
-  box-shadow: 0 0 10px #00ffcc;        /* Efecto neón turquesa */
-  transform: translateY(-2px);
-}
-
-/* ============================= */
-/* BOTÓN "Ver Productos" (CTA)   */
-/* ============================= */
-.cta-button {
-  border: 2px solid #ff69b4;         /* Borde rosa */
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  padding: 0.75rem 1.5rem;
-  border-radius: 50px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-.cta-button:hover {
-  background: rgba(255, 105, 180, 0.3);
-  box-shadow: 0 0 10px #ff69b4;       /* Efecto neón rosa */
-  transform: translateY(-2px);
-}
-
-/* Contenedor para el CTA centrado */
-.home-hero-buttons {
-  margin-top: 2rem;
-}
-
-
-/* ===== Responsive Home Hero ===== */
-@media (max-width: 768px) {
-  .home-hero h1 { font-size: 2rem; }
-  .home-hero p  { font-size: 1rem; }
-  .home-hero-buttons {
-    flex-direction: column;
-    gap: 10px;
-  }
-}
-
-@media (max-width: 480px) {
-  .home-hero h1 { font-size: 1.5rem; }
-  .home-hero p  { font-size: 0.9rem; }
-}
-
-/* Botón "Ingresar como invitado" junto a "Iniciar Sesión" */
 .guest-btn {
   display: inline-block;
   margin-left: 10px;
-  border: 2px solid #00ffcc;           /* Borde turquesa para que combine con login-btn */
-  background: rgba(0, 255, 204, 0.1);  /* Fondo semi-transparente */
+  border: 2px solid #00ffcc;
+  background: rgba(0, 255, 204, 0.1);
   color: #fff;
   padding: 0.75rem 1.5rem;
   border-radius: 50px;
@@ -176,7 +95,17 @@
 
 .guest-btn:hover {
   background: rgba(0, 255, 204, 0.3);
-  box-shadow: 0 0 10px #00ffcc;        /* Efecto neón turquesa */
+  box-shadow: 0 0 10px #00ffcc;
   transform: translateY(-2px);
 }
 
+/* Responsive */
+@media (max-width: 768px) {
+  .home-hero h1 { font-size: 2rem; }
+  .home-hero p  { font-size: 1rem; }
+  .home-hero-buttons { flex-direction: column; gap: 10px; }
+}
+@media (max-width: 480px) {
+  .home-hero h1 { font-size: 1.5rem; }
+  .home-hero p  { font-size: 0.9rem; }
+}
