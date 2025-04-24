@@ -43,6 +43,7 @@ CORS_ALLOW_HEADERS = [
     'accept',
     'origin',
     'user-agent',
+    'x-csrftoken',
 ]
 
 # Para desarrollo local sin HTTPS
