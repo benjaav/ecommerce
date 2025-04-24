@@ -6,8 +6,8 @@ import NavBar from './NavBar';
 import './Cart.css';
 
 const Cart = () => {
-  const [cart, setCart] = useState(null);
-  const [quantities, setQuantities] = useState({});
+  const [cart, setCart] = useState(null);            // { items: [ { id, product, quantity } ] }
+  const [quantities, setQuantities] = useState({});  // { [itemId]: qty }
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ const Cart = () => {
   const token   = localStorage.getItem('accessToken');
   const isGuest = localStorage.getItem('isGuest') === 'true';
 
-  // Carga del carrito: API si auth, localStorage si invitado
+  // Carga el carrito: API si auth, localStorage + fetch productos si invitado
   const fetchCart = async () => {
     if (token && !isGuest) {
       try {
@@ -32,12 +32,16 @@ const Cart = () => {
         setError('Error cargando carrito, por favor inicia sesión.');
       }
     } else {
-      // Invitado: solo IDs+qty en localStorage → enriquecemos con datos reales
       const local = JSON.parse(localStorage.getItem('localCart')) || [];
+      // Enriquecer cada item con datos reales de producto
       const detailed = await Promise.all(
-        local.map(async i => {
-          const prod = (await axios.get(`products/${i.id}/`)).data;
-          return { id: i.id, product: prod, quantity: i.quantity };
+        local.map(async entry => {
+          const prod = (await axios.get(`products/${entry.id}/`)).data;
+          return {
+            id: entry.id,
+            product: prod,
+            quantity: entry.quantity
+          };
         })
       );
       setCart({ items: detailed });
@@ -51,61 +55,73 @@ const Cart = () => {
     fetchCart();
   }, [token, isGuest]);
 
-  // Handlers para actualizar/eliminar igual que antes...
-  const handleQuantityChange = (id, amount) => {
-    setQuantities(q => ({ ...q, [id]: amount }));
+  // Cuando cambias el número en el input
+  const handleQuantityChange = (itemId, newQty) => {
+    setQuantities(q => ({ ...q, [itemId]: newQty }));
   };
 
-  const handleUpdateQuantity = async (id) => {
+  // Confirmar actualización de cantidad
+  const handleUpdateQuantity = async (itemId) => {
     if (token && !isGuest) {
       try {
-        await axios.patch(`cartitem/${id}/`, { quantity: quantities[id] }, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        await axios.patch(
+          `cartitem/${itemId}/`,
+          { quantity: quantities[itemId] },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
         setMessage('Cantidad actualizada.');
         fetchCart();
       } catch {
         setMessage('Error al actualizar la cantidad.');
       }
     } else {
-      const local = JSON.parse(localStorage.getItem('localCart')) || [];
-      const updated = local.map(item =>
-        item.id === id ? { ...item, quantity: quantities[id] } : item
-      );
-      localStorage.setItem('localCart', JSON.stringify(updated));
-      setCart({ items: updated.map(i => ({ ...i, product: { price: i.price, name: i.name, images: i.images || [] } })) });
+      // Invitado: actualizo estado y localStorage
+      const updatedItems = cart.items.map(item => {
+        if (item.id === itemId) {
+          return { ...item, quantity: quantities[itemId] };
+        }
+        return item;
+      });
+      setCart({ items: updatedItems });
+      // Persistir solo id y qty
+      const toStore = updatedItems.map(i => ({ id: i.id, quantity: i.quantity }));
+      localStorage.setItem('localCart', JSON.stringify(toStore));
       setMessage('Cantidad actualizada.');
     }
   };
 
-  const handleRemoveItem = async (id) => {
+  // Eliminar un ítem del carrito
+  const handleRemoveItem = async (itemId) => {
     if (token && !isGuest) {
       try {
-        await axios.delete(`cartitem/${id}/`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        await axios.delete(
+          `cartitem/${itemId}/`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
         setMessage('Producto eliminado.');
         fetchCart();
       } catch {
         setMessage('Error al eliminar el producto.');
       }
     } else {
-      const local = JSON.parse(localStorage.getItem('localCart')) || [];
-      const updated = local.filter(item => item.id !== id);
-      localStorage.setItem('localCart', JSON.stringify(updated));
-      setCart({ items: updated.map(i => ({ ...i, product: { price: i.price, name: i.name, images: i.images || [] } })) });
+      const updatedItems = cart.items.filter(item => item.id !== itemId);
+      setCart({ items: updatedItems });
+      const toStore = updatedItems.map(i => ({ id: i.id, quantity: i.quantity }));
+      localStorage.setItem('localCart', JSON.stringify(toStore));
       setMessage('Producto eliminado.');
     }
   };
 
-  const handleCheckout = () => navigate('/checkout');
+  const handleCheckout = () => {
+    navigate('/checkout');
+  };
 
   return (
     <div className="container">
       <NavBar />
       <h2>Mi Carrito</h2>
       {error && <p className="cart-error">{error}</p>}
-      {message && <p style={{ color: '#0f0' }}>{message}</p>}
+      {message && <p className="cart-message">{message}</p>}
 
       {!cart ? (
         <p>Cargando carrito…</p>
@@ -118,9 +134,11 @@ const Cart = () => {
               <li key={item.id} className="cart-item">
                 {item.product.images?.[0] && (
                   <img
-                    src={item.product.images[0].image.startsWith('http')
-                      ? item.product.images[0].image
-                      : `/media/${item.product.images[0].image}`}
+                    src={
+                      item.product.images[0].image.startsWith('http')
+                        ? item.product.images[0].image
+                        : `/media/${item.product.images[0].image}`
+                    }
                     alt={item.product.name}
                     className="cart-product-image"
                   />
@@ -132,13 +150,21 @@ const Cart = () => {
                       type="number"
                       min="1"
                       value={quantities[item.id]}
-                      onChange={e => handleQuantityChange(item.id, Number(e.target.value))}
+                      onChange={e =>
+                        handleQuantityChange(item.id, Number(e.target.value))
+                      }
                       className="quantity-input"
                     />
-                    <button onClick={() => handleUpdateQuantity(item.id)} className="update-btn">
+                    <button
+                      onClick={() => handleUpdateQuantity(item.id)}
+                      className="update-btn"
+                    >
                       Actualizar
                     </button>
-                    <button onClick={() => handleRemoveItem(item.id)} className="remove-btn">
+                    <button
+                      onClick={() => handleRemoveItem(item.id)}
+                      className="remove-btn"
+                    >
                       Eliminar
                     </button>
                   </div>
@@ -147,7 +173,9 @@ const Cart = () => {
                   <div className="price-line">
                     <span className="qty">{item.quantity}</span>
                     <span className="multiply">&times;</span>
-                    <span className="unit-price">${Number(item.product.price).toFixed(0)}</span>
+                    <span className="unit-price">
+                      ${Number(item.product.price).toFixed(0)}
+                    </span>
                   </div>
                   <div className="total-line">
                     <strong>Total:</strong> $
