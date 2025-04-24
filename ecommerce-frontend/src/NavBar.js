@@ -1,3 +1,4 @@
+// src/NavBar.js
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
@@ -19,17 +20,14 @@ function NavBar() {
       .catch(error => {
         console.error("Error obteniendo usuario:", error);
         if (error.response && error.response.status === 401) {
-          // Token inválido, tratamos como usuario anónimo
           localStorage.removeItem('accessToken');
           setUsername(null);
-          // No redirigir al login automáticamente
         }
-        
       });
     } else {
       setUsername(null);
     }
-  }, [token, navigate]);
+  }, [token]);
 
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
@@ -101,6 +99,7 @@ const StyledWrapper = styled.div`
   .button-container {
     display: flex;
     align-items: center;
+    justify-content: center;
     background: rgba(0, 0, 0, 0.6);
     padding: 10px 15px;
     border-radius: 10px;
@@ -110,11 +109,12 @@ const StyledWrapper = styled.div`
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
+    gap: 10px;
   }
 
   .button {
-    width: 80px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     background-color: rgba(255, 255, 255, 0.1);
     display: flex;
     flex-direction: column;
@@ -122,7 +122,6 @@ const StyledWrapper = styled.div`
     justify-content: center;
     color: var(--clr-light);
     border-radius: 10px;
-    margin: 0 8px;
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -135,7 +134,7 @@ const StyledWrapper = styled.div`
   }
 
   .btn-text {
-    font-size: 0.7rem;
+    font-size: 0.6rem;
     color: #fff;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -169,21 +168,34 @@ const StyledWrapper = styled.div`
     text-decoration: none;
   }
 
-
   @media (max-width: 768px) {
-  .button-container {
-    flex-direction: column;
-    position: static;
-    transform: none;
-    padding: 10px;
+    .button-container {
+      /* Mantenemos fila */
+      flex-direction: row;
+      position: static;
+      transform: none;
+      padding: 10px;
+      overflow-x: auto;
+      justify-content: center;
+    }
+
+    .button {
+      width: 50px;
+      height: 50px;
+      margin: 0 5px;
+    }
   }
 
-  .button {
-    width: 100%;
-    margin: 5px 0;
+  @media (max-width: 480px) {
+    .button {
+      width: 45px;
+      height: 45px;
+      margin: 0 4px;
+    }
+    .btn-text {
+      font-size: 0.5rem;
+    }
   }
-}
-
 `;
 
 export default NavBar;
