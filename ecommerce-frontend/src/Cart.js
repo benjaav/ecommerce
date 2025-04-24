@@ -25,7 +25,7 @@ const Cart = () => {
         });
         setCart(res.data);
         const initQ = {};
-        res.data.items.forEach(i => initQ[i.id] = i.quantity);
+        res.data.items.forEach(i => (initQ[i.id] = i.quantity));
         setQuantities(initQ);
       } catch (err) {
         console.error(err);
@@ -37,16 +37,12 @@ const Cart = () => {
       const detailed = await Promise.all(
         local.map(async entry => {
           const prod = (await axios.get(`products/${entry.id}/`)).data;
-          return {
-            id: entry.id,
-            product: prod,
-            quantity: entry.quantity
-          };
+          return { id: entry.id, product: prod, quantity: entry.quantity };
         })
       );
       setCart({ items: detailed });
       const initQ = {};
-      detailed.forEach(i => initQ[i.id] = i.quantity);
+      detailed.forEach(i => (initQ[i.id] = i.quantity));
       setQuantities(initQ);
     }
   };
@@ -55,19 +51,20 @@ const Cart = () => {
     fetchCart();
   }, [token, isGuest]);
 
-  // Cuando cambias el número en el input
   const handleQuantityChange = (itemId, newQty) => {
     setQuantities(q => ({ ...q, [itemId]: newQty }));
   };
 
-  // Confirmar actualización de cantidad
-  const handleUpdateQuantity = async (itemId) => {
+  const handleUpdateQuantity = async itemId => {
     if (token && !isGuest) {
       try {
         await axios.patch(
           `cartitem/${itemId}/`,
           { quantity: quantities[itemId] },
-          { headers: { Authorization: `Bearer ${token}` } }
+          {
+            headers: { Authorization: `Bearer ${token}` },
+            withCredentials: true
+          }
         );
         setMessage('Cantidad actualizada.');
         fetchCart();
@@ -75,29 +72,28 @@ const Cart = () => {
         setMessage('Error al actualizar la cantidad.');
       }
     } else {
-      // Invitado: actualizo estado y localStorage
-      const updatedItems = cart.items.map(item => {
-        if (item.id === itemId) {
-          return { ...item, quantity: quantities[itemId] };
-        }
-        return item;
-      });
+      const updatedItems = cart.items.map(item =>
+        item.id === itemId
+          ? { ...item, quantity: quantities[itemId] }
+          : item
+      );
       setCart({ items: updatedItems });
-      // Persistir solo id y qty
-      const toStore = updatedItems.map(i => ({ id: i.id, quantity: i.quantity }));
+      const toStore = updatedItems.map(i => ({
+        id: i.id,
+        quantity: i.quantity
+      }));
       localStorage.setItem('localCart', JSON.stringify(toStore));
       setMessage('Cantidad actualizada.');
     }
   };
 
-  // Eliminar un ítem del carrito
-  const handleRemoveItem = async (itemId) => {
+  const handleRemoveItem = async itemId => {
     if (token && !isGuest) {
       try {
-        await axios.delete(
-          `cartitem/${itemId}/`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
+        await axios.delete(`cartitem/${itemId}/`, {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true
+        });
         setMessage('Producto eliminado.');
         fetchCart();
       } catch {
@@ -106,15 +102,16 @@ const Cart = () => {
     } else {
       const updatedItems = cart.items.filter(item => item.id !== itemId);
       setCart({ items: updatedItems });
-      const toStore = updatedItems.map(i => ({ id: i.id, quantity: i.quantity }));
+      const toStore = updatedItems.map(i => ({
+        id: i.id,
+        quantity: i.quantity
+      }));
       localStorage.setItem('localCart', JSON.stringify(toStore));
       setMessage('Producto eliminado.');
     }
   };
 
-  const handleCheckout = () => {
-    navigate('/checkout');
-  };
+  const handleCheckout = () => navigate('/checkout');
 
   return (
     <div className="container">

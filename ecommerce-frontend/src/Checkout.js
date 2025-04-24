@@ -9,9 +9,9 @@ function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== '') {
     const cookies = document.cookie.split(';');
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+    for (let cookie of cookies) {
+      cookie = cookie.trim();
+      if (cookie.startsWith(name + '=')) {
         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
         break;
       }
@@ -31,8 +31,8 @@ function Checkout() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const token   = localStorage.getItem('accessToken');
-  const isGuest = localStorage.getItem('isGuest') === 'true';
+  const token     = localStorage.getItem('accessToken');
+  const isGuest   = localStorage.getItem('isGuest') === 'true';
   const csrftoken = getCookie('csrftoken');
 
   const handleChange = e => {
@@ -44,24 +44,36 @@ function Checkout() {
     setError('');
 
     try {
+      // 0) Si eres invitado, "sube" tu localCart al servidor
+      if (isGuest) {
+        const localCart = JSON.parse(localStorage.getItem('localCart')) || [];
+        for (let entry of localCart) {
+          await axios.post(
+            'add-to-cart/',
+            { product_id: entry.id, quantity: entry.quantity },
+            {
+              withCredentials: true,
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
+              }
+            }
+          );
+        }
+      }
+
       // 1) Crear la orden (invitado o autenticado)
       const ordRes = await axios.post(
         'orders/',
         formData,
-        isGuest 
-          ? { withCredentials: true, headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken } }
-          : { withCredentials: true, headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken } }
-      );
-
-      const total = Number(ordRes.data.total_price);
-      if (total <= 0) throw new Error('El total de la orden es 0.');
-
-      // 2) Generar preferencia de pago
-      const prefRes = await axios.post(
-        'create-payment-preference/',
-        { total },
         isGuest
-          ? { withCredentials: true, headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken } }
+          ? {
+              withCredentials: true,
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
+              }
+            }
           : {
               withCredentials: true,
               headers: {
@@ -72,13 +84,40 @@ function Checkout() {
             }
       );
 
-      // 3) Si fue invitado, limpio carrito local y flag
+      const total = Number(ordRes.data.total_price);
+      if (total <= 0) {
+        throw new Error('El total de la orden es 0. Verifica tu carrito.');
+      }
+
+      // 2) Generar preferencia de pago
+      const prefRes = await axios.post(
+        'create-payment-preference/',
+        { total },
+        isGuest
+          ? {
+              withCredentials: true,
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
+              }
+            }
+          : {
+              withCredentials: true,
+              headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
+              }
+            }
+      );
+
+      // 3) Si fuiste invitado, limpia localStorage
       if (isGuest) {
         localStorage.removeItem('localCart');
         localStorage.removeItem('isGuest');
       }
 
-      // 4) Redirijo al init_point de Mercado Pago
+      // 4) Redirige a Mercado Pago
       window.location.href = prefRes.data.init_point;
 
     } catch (err) {
@@ -95,7 +134,6 @@ function Checkout() {
     <div className="container checkout-container">
       <NavBar />
       <h2>Checkout</h2>
-
       {error && <p className="cart-error">{error}</p>}
 
       <div className="form-container">
