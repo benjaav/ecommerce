@@ -1,55 +1,14 @@
+/* index.css */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+               'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+               sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #111;
   color: #fff;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-}
-
-.button {
-  margin: 0;
-  background: transparent;
-  padding: 0;
-  border: none;
-  cursor: pointer;
-}
-
-.button {
-  --border-right: 6px;
-  --text-stroke-color: rgba(255,255,255,0.6);
-  --animation-color: #37FF8B;
-  --fs-size: 2em;
-  letter-spacing: 3px;
-  text-decoration: none;
-  font-size: var(--fs-size);
-  font-family: Arial;
-  position: relative;
-  text-transform: uppercase;
-  color: transparent;
-  -webkit-text-stroke: 1px var(--text-stroke-color);
-}
-
-.hover-text {
-  position: absolute;
-  content: attr(data-text);
-  color: var(--animation-color);
-  width: 0%;
-  inset: 0;
-  border-right: var(--border-right) solid var(--animation-color);
-  overflow: hidden;
-  transition: 0.5s;
-  -webkit-text-stroke: 1px var(--animation-color);
-}
-
-.button:hover .hover-text {
-  width: 100%;
-  filter: drop-shadow(0 0 23px var(--animation-color));
+  overflow-x: hidden;
 }
 
 .container {
@@ -59,56 +18,12 @@ code {
 }
 
 @media (max-width: 768px) {
-  body { font-size: 14px; }
-  .container { padding: 1rem; }
-  h2 { font-size: 1.5rem; }
-  .cart-item { flex-direction: column; align-items: flex-start; }
-  .cart-product-image { width: 100%; margin-bottom: 10px; }
-  .quantity-controls { flex-direction: column; }
-  .quantity-input { width: 60px; margin-bottom: 5px; }
-  .update-btn, .remove-btn { width: 100%; margin-bottom: 5px; }
+  body       { font-size: 14px; }
+  .container{ padding: 1rem; }
+  h2        { font-size: 1.5rem; }
 }
 @media (max-width: 480px) {
-  body { font-size: 12px; }
-  h2 { font-size: 1.2rem; }
-  .container { padding: 0.5rem; }
-  .quantity-input { width: 50px; }
-}
-
-/* ============================= */
-/* Logo “CodeStore” responsivo   */
-/* ============================= */
-
-/* Selector específico para no afectar otros .button */
-.home-hero > .button {
-  --fs-size: 4vw;               /* Tamaño base proporcional al viewport */
-  font-size: var(--fs-size);    
-  max-width: 90%;               /* No desborde en horizontal */
-  margin: 0 auto 1.5rem;        /* Centrado y espaciado inferior */
-  display: block;
-  letter-spacing: 0.3em;        /* Ajusta el espaciado de letras */
-}
-
-/* En pantallas muy grandes limita el máximo */
-@media (min-width: 1200px) {
-  .home-hero > .button {
-    font-size: 48px;
-  }
-}
-
-/* Tablets / pantallas medianas */
-@media (max-width: 768px) {
-  .home-hero > .button {
-    --fs-size: 6vw;
-    letter-spacing: 0.25em;
-  }
-}
-
-/* Móviles pequeños */
-@media (max-width: 480px) {
-  .home-hero > .button {
-    --fs-size: 8vw;
-    letter-spacing: 0.2em;
-    margin-bottom: 1rem;
-  }
+  body       { font-size: 12px; }
+  h2        { font-size: 1.2rem; }
+  .container{ padding: 0.5rem; }
 }
