@@ -13,10 +13,16 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-(wlxd-4*159by$
 DEBUG = True
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')
+if 'localhost' not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append('localhost')
+if '127.0.0.1' not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append('127.0.0.1')
 if 'ecommerce-g7ge.onrender.com' not in ALLOWED_HOSTS:
     ALLOWED_HOSTS.append('ecommerce-g7ge.onrender.com')
 if 'api.codestorebl.com' not in ALLOWED_HOSTS:
     ALLOWED_HOSTS.append('api.codestorebl.com')
+
+
 
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
