@@ -13,20 +13,22 @@ function Home() {
 
   return (
     <>
+      {/* Logo animado */}
       <button className="button" data-text="CodeStore">
         <span className="actual-text">&nbsp;CodeStore&nbsp;</span>
         <span aria-hidden="true" className="hover-text">&nbsp;CodeStore&nbsp;</span>
       </button>
 
+      {/* Hero */}
       <section className="home-hero">
-        <div className="hero-header">
-          <Link to="/login" className="login-btn">Iniciar Sesión</Link>
-          <button onClick={handleGuestLogin} className="guest-btn">Ingresar como invitado</button>
-        </div>
-
         <h1>¡Bienvenido a CodeStore!</h1>
         <p>Explora nuestros productos y descubre ofertas increíbles.</p>
-        {/* El CTA "Ver Productos" está oculto vía CSS */}
+
+        {/* Botones centrados debajo del texto */}
+        <div className="hero-btns">
+          <Link to="/login" className="hero-btn">Iniciar Sesión</Link>
+          <button onClick={handleGuestLogin} className="hero-btn">Ingresar como invitado</button>
+        </div>
       </section>
     </>
   );

@@ -1,88 +1,61 @@
 /* Home.css */
+
 .home-hero {
-  position: relative;
   text-align: center;
   padding: 80px 20px;
-  background-color: rgba(255,255,255,0.1);
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .home-hero h1 {
-  font-size: 3rem;
-  margin-bottom: 20px;
+  font-size: 2.5rem;
+  margin-bottom: 16px;
   color: #fff;
   font-weight: bold;
-  text-shadow: 0 0 5px #ff69b4;
 }
 
 .home-hero p {
-  font-size: 1.25rem;
-  margin-bottom: 40px;
-  color: #ddd;
+  font-size: 1.1rem;
+  margin-bottom: 32px;
+  color: #ccc;
 }
 
-/* Header en home solo login + invitado */
-.hero-header {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+/* Contenedor de los dos botones */
+.hero-btns {
   display: flex;
-  gap: 10px;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
-.login-btn,
-.guest-btn {
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-weight: 700;
-  font-size: 1rem;
+/* Estilo uniforme para ambos */
+.hero-btn {
+  min-width: 160px;
+  padding: 12px 0;
   border: 2px solid #00ffcc;
-  background: rgba(0,255,204,0.1);
-  color: #fff;
+  border-radius: 8px;
+  background: transparent;
+  color: #00ffcc;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s;
-}
-.login-btn:hover,
-.guest-btn:hover {
-  background: rgba(0,255,204,0.3);
-  box-shadow: 0 0 10px #00ffcc;
-  transform: translateY(-2px);
+  transition: background-color 0.3s, color 0.3s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* (Si deseas) oculta el botón “Ver Productos” aquí */
-.home-hero-buttons {
-  display: none;
+/* Hover / foco */
+.hero-btn:hover,
+.hero-btn:focus {
+  background-color: #00ffcc;
+  color: #222;
 }
 
-/* Logo “CodeStore” */
-.home-hero > .button {
-  --fs-size: 6vw;
-  font-size: var(--fs-size);
-  max-width: 90%;
-  margin: 0 auto 1.5rem;
-  display: block;
-  letter-spacing: 0.3em;
-  text-shadow: 0 0 5px #37FF8B;
-}
-
-@media (min-width: 1200px) {
-  .home-hero > .button { font-size: 48px; }
-}
-@media (max-width: 768px) {
-  .home-hero h1 { font-size: 2rem; }
-  .home-hero p  { font-size: 1rem; }
-}
+/* Responsive: en pantallas pequeñas, apilar verticalmente */
 @media (max-width: 480px) {
-  .home-hero h1 { font-size: 1.5rem; }
-  .home-hero p  { font-size: 0.9rem; }
-  .hero-header {
-    position: static;
-    margin: 10px auto 20px;
-    justify-content: center;
-  }
-  .login-btn,
-  .guest-btn {
-    font-size: 0.9rem;
-    padding: 8px 16px;
-    height: 36px;
+  .hero-btns {
+    flex-direction: column;
+    gap: 12px;
   }
 }
