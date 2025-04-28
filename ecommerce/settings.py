@@ -55,8 +55,12 @@ CORS_ALLOW_HEADERS = [
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
-SESSION_COOKIE_DOMAIN = 'codestorebl.com'
-CSRF_COOKIE_DOMAIN = 'codestorebl.com'
+if not DEBUG:
+    SESSION_COOKIE_DOMAIN = 'codestorebl.com'
+    CSRF_COOKIE_DOMAIN = 'codestorebl.com'
+else:
+    SESSION_COOKIE_DOMAIN = None
+    CSRF_COOKIE_DOMAIN = None
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),
