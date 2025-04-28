@@ -52,6 +52,11 @@ CORS_ALLOW_HEADERS = [
     'x-csrftoken',
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://codestorebl.com",
+    "https://www.codestorebl.com",
+]
+
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
