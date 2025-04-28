@@ -87,8 +87,6 @@ function Products() {
             {successMessage === product.id && (
               <p className="success-message">¡Producto agregado con éxito!</p>
             )}
-            <FloatingCartButton />
-
           </div>
         ))}
       </div>
