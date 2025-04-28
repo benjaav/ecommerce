@@ -52,11 +52,16 @@
   border-radius: 0.5rem;
 }
 
-.detail-info {
-  text-align: left;
-  width: 100%;
-  color: #fff;
-}
+.detail-info p {
+  background-color: rgba(0, 255, 204, 0.1);
+  border: 1px solid #00ffcc;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-size: 1rem;
+  color: #00ffcc;
+  margin-bottom: 1rem;
+  }
 
 .detail-info h3 {
   margin: 0 0 0.5rem;

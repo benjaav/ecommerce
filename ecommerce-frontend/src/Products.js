@@ -3,6 +3,7 @@ import axios from 'axios';
 import NavBar from './NavBar';
 import { useNavigate } from 'react-router-dom';
 import './Products.css';
+import FloatingCartButton from './FloatingCartButton';
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -86,6 +87,8 @@ function Products() {
             {successMessage === product.id && (
               <p className="success-message">¡Producto agregado con éxito!</p>
             )}
+            <FloatingCartButton />
+
           </div>
         ))}
       </div>
