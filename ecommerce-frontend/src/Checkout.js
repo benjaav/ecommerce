@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import NavBar from './NavBar';
 import './Checkout.css';
 import axios from 'axios';
+import { trackFacebookEvent } from './FacebookPixel';
 
 function getCookie(name) {
   let cookieValue = null;
@@ -116,6 +117,10 @@ function Checkout() {
         localStorage.removeItem('localCart');
         localStorage.removeItem('isGuest');
       }
+      trackFacebookEvent('Purchase', {
+               currency: 'CLP',
+               value: total + shipping  // total ya lo calculaste antes (subtotal + envío)
+             });
 
       // 4) Redirige a Mercado Pago
       window.location.href = prefRes.data.init_point;

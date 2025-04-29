@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { trackFacebookEvent } from './FacebookPixel';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import NavBar from './NavBar';
@@ -104,6 +105,7 @@ const Cart = () => {
   };
 
   const handleCheckout = () => {
+    trackFacebookEvent('InitiateCheckout', { subtotal, shipping, total });
     navigate('/checkout');
   };
 

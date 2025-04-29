@@ -1,5 +1,6 @@
 // src/ProductDetail.js
 import React, { useEffect, useState } from 'react';
+import { trackFacebookEvent } from './FacebookPixel';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import NavBar from './NavBar';
@@ -44,6 +45,7 @@ function ProductDetail() {
         quantity: 1
       });
       localStorage.setItem('localCart', JSON.stringify(local));
+      trackFacebookEvent('AddToCart', { productId: id, quantity: 1 });
       navigate('/cart');
     }
   };

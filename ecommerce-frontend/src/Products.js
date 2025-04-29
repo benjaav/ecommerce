@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { trackFacebookEvent } from './FacebookPixel';
 import axios from 'axios';
 import NavBar from './NavBar';
 import { useNavigate } from 'react-router-dom';
 import './Products.css';
-import FloatingCartButton from './FloatingCartButton';
 
 function Products() {
   const [products, setProducts] = useState([]);
-  const [successMessage, setSuccessMessage] = useState(null); 
+  const [successMessage, setSuccessMessage] = useState(null);   
   const navigate = useNavigate();
   const token = localStorage.getItem('accessToken');
 
@@ -37,6 +37,7 @@ function Products() {
       }
       localStorage.setItem('localCart', JSON.stringify(localCart));
       setSuccessMessage(productId);
+      trackFacebookEvent('AddToCart', { productId, quantity: 1 });
       setTimeout(() => setSuccessMessage(null), 3000);
       return;
     }
