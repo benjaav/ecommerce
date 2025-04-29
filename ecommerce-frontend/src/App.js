@@ -1,8 +1,6 @@
-// src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Home';
-import React, { useEffect } from 'react';
 import Products from './Products';
 import ProductDetail from './ProductDetail';
 import Login from './Login';
@@ -13,14 +11,7 @@ import ProtectedRoute from './ProtectedRoute';
 import './App.css';
 import { trackFacebookEvent } from './FacebookPixel';
 
-
 function App() {
-  const location = useLocation();
-  useEffect(() => {
-    // Dispara un PageView en cada cambio de ruta
-    trackFacebookEvent('PageView', {});
- }, [location]);
-
   return (
     <Router>
       <Routes>

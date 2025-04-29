@@ -118,7 +118,7 @@ function Checkout() {
         localStorage.removeItem('isGuest');
       }
       trackFacebookEvent('Purchase', {
-        value: total + shipping,
+        value: total,
         currency: 'CLP'
       });
       window.location.href = prefRes.data.init_point;
