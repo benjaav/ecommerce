@@ -10,6 +10,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-(wlxd-4*159by$$_f+r)ugq5p)^!z2h38b7_$or^ubln-&$a@z')
 
+META_PIXEL_ID     = os.environ.get('META_PIXEL_ID', '4077146172601780')
+META_ACCESS_TOKEN = os.environ.get('EAAbdSgJidSIBO3670kpkZChFfRvgbYYnhNQ8UIU1ZCVEC7gnfpxz4Emd7mVBxRIlPFfeh0T3UP0pCT4aPoc0ZBsPJoIh20bSvXdxPzo6aIUEC8PFT4ZA7JW9Bk4jSouPyl8Kknlk0JTAXDBZAfKQPgZBW23CQC74ZBV1Vh2ymWsU8lQKZCTE45RYXUfrRXCJGzupCwZDZD')
+
+
 DEBUG = True
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')

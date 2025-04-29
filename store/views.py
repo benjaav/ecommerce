@@ -27,6 +27,8 @@ from .serializers import (
     UserRegistrationSerializer
 )
 
+from .facebook_conversions import send_facebook_conversion_event
+
 logger = logging.getLogger(__name__)
 User = get_user_model()
 
@@ -216,6 +218,10 @@ class OrderListCreateView(generics.ListCreateAPIView):
         return Order.objects.none()
 
     def perform_create(self, serializer):
+        import time
+        import hashlib
+        from .facebook_conversions import send_facebook_conversion_event
+
         # Asegura session_key para invitados
         session_key = self.request.session.session_key
         if not session_key:
@@ -253,6 +259,30 @@ class OrderListCreateView(generics.ListCreateAPIView):
                 quantity=item.quantity,
                 price=item.product.price
             )
+
+        # Preparar datos para Facebook Conversions API
+        import time
+        import hashlib
+
+        event_time = int(time.time())
+
+        def hash_data(data):
+            if not data:
+                return None
+            return hashlib.sha256(data.strip().lower().encode('utf-8')).hexdigest()
+
+        user_data = {
+            "em": hash_data(order.user.email) if order.user else None,
+            "ph": hash_data(order.phone_number),
+        }
+
+        custom_data = {
+            "currency": "CLP",
+            "value": float(order.total_price),
+        }
+
+        # Enviar evento Purchase a Facebook
+        send_facebook_conversion_event("Purchase", event_time, user_data, custom_data)
 
 
 @method_decorator(csrf_exempt, name='dispatch')
