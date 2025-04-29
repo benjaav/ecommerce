@@ -118,9 +118,10 @@ function Checkout() {
         localStorage.removeItem('isGuest');
       }
       trackFacebookEvent('Purchase', {
-               currency: 'CLP',
-               value: total + shipping  // total ya lo calculaste antes (subtotal + envío)
-             });
+        value: total + shipping,
+        currency: 'CLP'
+      });
+      window.location.href = prefRes.data.init_point;
 
       // 4) Redirige a Mercado Pago
       window.location.href = prefRes.data.init_point;

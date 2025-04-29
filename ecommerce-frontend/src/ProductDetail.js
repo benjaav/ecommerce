@@ -15,16 +15,26 @@ function ProductDetail() {
   const token = localStorage.getItem('accessToken');
   const isGuest = localStorage.getItem('isGuest') === 'true';
 
-  useEffect(() => {
+  React.useEffect(() => {
     axios.get(`/products/${id}/`)
-      .then(res => setProduct(res.data))
+      .then(res => {
+        setProduct(res.data);
+        trackFacebookEvent('ViewContent', {
+          content_ids: [res.data.id],
+          content_type: 'product',
+          value: res.data.price,
+          currency: 'CLP'
+        });
+      })
       .catch(err => {
-        console.error("Error al cargar el producto:", err);
-        setError('No se pudo cargar el producto.');
+        console.error(err);
+        setError('Error al cargar el producto.');
       });
   }, [id]);
 
-  const handleGoBack = () => navigate(-1);
+  function handleGoBack() {
+    return navigate(-1);
+  }
 
   const handleAddToCart = () => {
     const payload = { product_id: id, quantity: 1 };
@@ -45,7 +55,12 @@ function ProductDetail() {
         quantity: 1
       });
       localStorage.setItem('localCart', JSON.stringify(local));
-      trackFacebookEvent('AddToCart', { productId: id, quantity: 1 });
+      trackFacebookEvent('AddToCart', {
+        content_ids: [id],
+        content_type: 'product',
+        value: product.price,
+        currency: 'CLP'
+      });
       navigate('/cart');
     }
   };

@@ -37,7 +37,12 @@ function Products() {
       }
       localStorage.setItem('localCart', JSON.stringify(localCart));
       setSuccessMessage(productId);
-      trackFacebookEvent('AddToCart', { productId, quantity: 1 });
+      trackFacebookEvent('AddToCart', {
+        content_ids: [productId],
+        content_type: 'product',
+        value: products.find(p => p.id === productId)?.price || 0,
+        currency: 'CLP'
+      });
       setTimeout(() => setSuccessMessage(null), 3000);
       return;
     }

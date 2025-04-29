@@ -105,7 +105,10 @@ const Cart = () => {
   };
 
   const handleCheckout = () => {
-    trackFacebookEvent('InitiateCheckout', { subtotal, shipping, total });
+    trackFacebookEvent('InitiateCheckout', {
+      value: total,
+      currency: 'CLP'
+    });
     navigate('/checkout');
   };
 
