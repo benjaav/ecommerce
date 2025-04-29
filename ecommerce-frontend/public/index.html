@@ -12,29 +12,14 @@
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>Codestore</title>
-
-    <!-- Meta Pixel Code -->
-    <script>
-      !function(f,b,e,v,n,t,s)
-      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(
-        window, document,'script',
-        'https://connect.facebook.net/es_LA/fbevents.js'
-      );
-      fbq('init', '517991158551582');
-      fbq('track', 'PageView');
-    </script> 
-    <noscript>
-      <img height="1" width="1" style="display:none"
-        src="https://www.facebook.com/tr?id=517991158551582&ev=PageView&noscript=1"
-      />
-    </noscript>
-    <!-- End Meta Pixel Code -->
+    <!-- Aquí puedes añadir otras meta tags o webfonts si lo necesitas -->
   </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <!-- 
+      Los scripts de React y tu bundle se insertan automáticamente aquí al hacer build
+      No hace falta añadir nada más: el Pixel se inicializa desde src/index.js 
+    -->
   </body>
 </html>
