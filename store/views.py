@@ -114,7 +114,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     """
     CRUD de productos.
     """
-    queryset = Product.objects.all()
+    queryset = Product.objects.all().select_related('category', 'vendor').prefetch_related('images')
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
