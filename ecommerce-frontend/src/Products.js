@@ -13,7 +13,14 @@ function Products() {
 
   useEffect(() => {
     axios.get('products/')
-      .then(response => setProducts(response.data))
+      .then(response => {
+        // Check if response.data has 'results' key (paginated)
+        if (response.data.results) {
+          setProducts(response.data.results);
+        } else {
+          setProducts(response.data);
+        }
+      })
       .catch(error => console.error("Error al cargar productos:", error));
   }, []);
 
