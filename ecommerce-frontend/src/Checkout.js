@@ -117,10 +117,10 @@ function Checkout() {
         localStorage.removeItem('localCart');
         localStorage.removeItem('isGuest');
       }
-      trackFacebookEvent('Purchase', {
-        value: total,
-        currency: 'CLP'
-      });
+      // trackFacebookEvent('Purchase', {
+      //   value: total,
+      //   currency: 'CLP'
+      // });
       window.location.href = prefRes.data.init_point;
 
       // 4) Redirige a Mercado Pago
