@@ -180,6 +180,13 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# Cambia estas URLs para que apunten a tu CDN una vez que esté activo
+STATIC_URL = 'https://codestorebl.com/static/'
+MEDIA_URL = 'https://codestorebl.com/media/'
+
+# Agrega STATIC_ROOT para collectstatic
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MERCADO_PAGO_ACCESS_TOKEN = os.environ.get('MERCADO_PAGO_ACCESS_TOKEN', 'APP_USR-38253822250545-041101-62d1610b796f1e9f8d7dfc01594adebe-1212312390')

@@ -110,6 +110,9 @@ class CategoryViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+
 class ProductViewSet(viewsets.ModelViewSet):
     """
     CRUD de productos.
@@ -117,6 +120,10 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+
+    @method_decorator(cache_page(60*5))  # Cache response for 5 minutes
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
 
 
 class CartDetailView(generics.RetrieveUpdateAPIView):

@@ -85,6 +85,7 @@ function Products() {
                 src={product.images[0].image} 
                 alt={product.name} 
                 className="product-image"
+                loading="lazy"
               />
             )}
             <h3>{product.name}</h3>
