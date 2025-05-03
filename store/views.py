@@ -113,6 +113,13 @@ class CategoryViewSet(viewsets.ModelViewSet):
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 
+from rest_framework.pagination import PageNumberPagination
+
+class ProductPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+
 class ProductViewSet(viewsets.ModelViewSet):
     """
     CRUD de productos.
@@ -120,9 +127,12 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+    pagination_class = ProductPagination
 
     @method_decorator(cache_page(60*5))  # Cache response for 5 minutes
     def list(self, request, *args, **kwargs):
+        # Optimizar consultas con select_related si hay relaciones
+        self.queryset = self.queryset.select_related('category', 'vendor')
         return super().list(request, *args, **kwargs)
 
 
