@@ -115,6 +115,16 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# Configuración para evitar bucles de redirección con Cloudflare
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Redirigir a HTTPS en producción
+SECURE_SSL_REDIRECT = not DEBUG
+
+# Configuración de cookies seguras
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+
 ROOT_URLCONF = 'ecommerce.urls'
 
 TEMPLATES = [
