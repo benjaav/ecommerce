@@ -88,6 +88,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
+    'django_redis',
 ]
 
 REST_FRAMEWORK = {
@@ -127,6 +128,17 @@ CSRF_COOKIE_SECURE = True
 
 SESSION_COOKIE_SAMESITE = 'None'
 CSRF_COOKIE_SAMESITE = 'None'
+
+# Configuración de caché con Redis
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://red-d0behbidbo4c73clom90:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
 
 ROOT_URLCONF = 'ecommerce.urls'
 
