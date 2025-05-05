@@ -78,9 +78,9 @@ class CreatePaymentPreferenceView(APIView):
                 }],
                 "payer": {"email": payer_email},
                 "back_urls": {
-                    "success": "https://codestorebl.com/success",
-                    "failure": "https://codestorebl.com/failure",
-                    "pending": "https://codestorebl.com/pending"
+                    "success": "http://localhost:3000/success",
+                    "failure": "http://localhost:3000/failure",
+                    "pending": "http://localhost:3000/pending"
                 },
                 "auto_return": "approved",
             }
