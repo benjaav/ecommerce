@@ -5,16 +5,31 @@ import NavBar from './NavBar';
 import { useNavigate } from 'react-router-dom';
 import './Products.css';
 
+function SkeletonCard() {
+  return (
+    <div className="product-card skeleton-card">
+      <div className="skeleton-image" />
+      <div className="skeleton-text title" />
+      <div className="skeleton-text price" />
+      <div className="skeleton-button" />
+    </div>
+  );
+}
+
 function Products() {
   const [products, setProducts] = useState([]);
   const [successMessage, setSuccessMessage] = useState(null);
   const [loadingProgress, setLoadingProgress] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem('accessToken');
 
-  useEffect(() => {
+  const fetchProducts = (page = 1) => {
+    setLoading(true);
     setLoadingProgress(0);
-    axios.get('products/', {
+    axios.get(`products/?page=${page}`, {
       onDownloadProgress: progressEvent => {
         if (progressEvent.lengthComputable) {
           const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
@@ -23,17 +38,36 @@ function Products() {
       }
     })
       .then(response => {
-        if (response.data.results) {
-          setProducts(response.data.results);
+        const data = response.data;
+        if (data.results) {
+          if (page === 1) {
+            setProducts(data.results);
+          } else {
+            setProducts(prevProducts => [...prevProducts, ...data.results]);
+          }
+          setTotalPages(Math.ceil(data.count / 10)); // assuming page_size=10
+          setCurrentPage(page);
         } else {
-          setProducts(response.data);
+          if (page === 1) {
+            setProducts(data);
+          } else {
+            setProducts(prevProducts => [...prevProducts, ...data]);
+          }
+          setTotalPages(1);
+          setCurrentPage(page);
         }
         setLoadingProgress(100);
+        setLoading(false);
       })
       .catch(error => {
         console.error("Error al cargar productos:", error);
         setLoadingProgress(100);
+        setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchProducts(1);
   }, []);
 
   const handleAddToCart = (e, productId) => {
@@ -78,6 +112,12 @@ function Products() {
       });
   };
 
+  const handleLoadMore = () => {
+    if (currentPage < totalPages && !loading) {
+      fetchProducts(currentPage + 1);
+    }
+  };
+
   return (
     <div className="container">
       <NavBar />
@@ -90,37 +130,59 @@ function Products() {
       )}
 
       <div className="product-grid" style={{ opacity: loadingProgress < 100 ? 0.5 : 1 }}>
-        {products.map(product => (
-          <div
-            key={product.id}
-            className="product-card"
-            onClick={() => navigate(`/products/${product.id}`)}
-            style={{ cursor: 'pointer' }}
-          >
-            {product.images && product.images.length > 0 && (
-              <img
-                src={product.images[0].image}
-                alt={product.name}
-                className="product-image"
-                loading="lazy"
-              />
-            )}
-            <h3>{product.name}</h3>
-            <p className="price">${parseInt(product.price)}</p>
-
-            <button
-              className="add-to-cart-btn"
-              onClick={(e) => handleAddToCart(e, product.id)}
+        {loading && currentPage === 1 ? (
+          <>
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+          </>
+        ) : (
+          products.map(product => (
+            <div
+              key={product.id}
+              className="product-card"
+              onClick={() => navigate(`/products/${product.id}`)}
+              style={{ cursor: 'pointer' }}
             >
-              Agregar al Carrito
-            </button>
+              {product.images && product.images.length > 0 && (
+                <img
+                  src={product.images[0].image}
+                  alt={product.name}
+                  className="product-image"
+                  loading="lazy"
+                />
+              )}
+              <h3>{product.name}</h3>
+              <p className="price">${parseInt(product.price)}</p>
 
-            {successMessage === product.id && (
-              <p className="success-message">¡Producto agregado con éxito!</p>
-            )}
-          </div>
-        ))}
+              <button
+                className="add-to-cart-btn"
+                onClick={(e) => handleAddToCart(e, product.id)}
+              >
+                Agregar al Carrito
+              </button>
+
+              {successMessage === product.id && (
+                <p className="success-message">¡Producto agregado con éxito!</p>
+              )}
+            </div>
+          ))
+        )}
       </div>
+
+      {currentPage < totalPages && !loading && (
+        <div className="load-more-container">
+          <button className="load-more-btn" onClick={handleLoadMore}>
+            Cargar más
+          </button>
+        </div>
+      )}
+
+      {loading && currentPage > 1 && (
+        <div className="loading-more">Cargando más productos...</div>
+      )}
     </div>
   );
 }
