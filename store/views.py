@@ -69,6 +69,12 @@ class CreatePaymentPreferenceView(APIView):
             if request.user.is_authenticated:
                 payer_email = request.user.email or payer_email
 
+            from django.conf import settings
+
+            base_url = "http://localhost:3000"
+            if not settings.DEBUG:
+                base_url = "https://codestorebl.com"
+
             preference_data = {
                 "items": [{
                     "title": "Orden de E-commerce",
@@ -78,9 +84,9 @@ class CreatePaymentPreferenceView(APIView):
                 }],
                 "payer": {"email": payer_email},
                 "back_urls": {
-                    "success": "http://localhost:3000/success",
-                    "failure": "http://localhost:3000/failure",
-                    "pending": "http://localhost:3000/pending"
+                    "success": f"{base_url}/success",
+                    "failure": f"{base_url}/failure",
+                    "pending": f"{base_url}/pending"
                 },
                 "auto_return": "approved",
             }
