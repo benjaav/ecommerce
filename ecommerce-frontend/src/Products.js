@@ -5,6 +5,9 @@ import NavBar from './NavBar';
 import { useNavigate } from 'react-router-dom';
 import './Products.css';
 
+// Configurar URL base de axios para apuntar a la API backend
+axios.defaults.baseURL = 'https://api.codestorebl.com/api/';
+
 function SkeletonCard() {
   return (
     <div className="product-card skeleton-card">
