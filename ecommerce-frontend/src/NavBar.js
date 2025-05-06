@@ -80,6 +80,48 @@ function NavBar() {
           </button>
         </Link>
 
+        {/* Botón WhatsApp */}
+        <a
+          href="https://wa.me/56992036338"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="link-btn"
+        >
+          <button className="button" aria-label="WhatsApp">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1em"
+              height="1em"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M20.52 3.48A11.91 11.91 0 0 0 12 0C5.37 0 0 5.37 0 12a11.91 11.91 0 0 0 3.48 8.52l-1.5 5.52 5.52-1.5A11.91 11.91 0 0 0 12 24c6.63 0 12-5.37 12-12a11.91 11.91 0 0 0-3.48-8.52Zm-8.52 16.5a8.25 8.25 0 0 1-4.5-1.35l-.3-.18-3 1 1-3-.18-.3a8.25 8.25 0 0 1-1.35-4.5 8.25 8.25 0 0 1 15 0 8.25 8.25 0 0 1-8.25 8.25Zm4.5-5.25c-.15 0-.3 0-.45-.15l-1.35-1.35a.3.3 0 0 1 0-.45l.15-.15a.3.3 0 0 1 .45 0l1.35 1.35c.15.15.15.3 0 .45l-.15.15Zm-2.25-3.75a.75.75 0 0 1 0-1.5h.15a.75.75 0 0 1 0 1.5h-.15Z" />
+            </svg>
+            <span className="btn-text">WhatsApp</span>
+          </button>
+        </a>
+
+        {/* Botón Instagram */}
+        <a
+          href="https://www.instagram.com/codestorebl/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="link-btn"
+        >
+          <button className="button" aria-label="Instagram">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1em"
+              height="1em"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5Zm4.25 3.25a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9Zm0 1.5a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm4.75-.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Z" />
+            </svg>
+            <span className="btn-text">Instagram</span>
+          </button>
+        </a>
+
         {username && (
           <>
             <div className="user-welcome">
