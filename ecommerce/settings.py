@@ -117,7 +117,7 @@ MIDDLEWARE = [
 ]
 
 # Configuración para evitar bucles de redirección con Cloudflare
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Redirigir a HTTPS en producción
 SECURE_SSL_REDIRECT = not DEBUG
