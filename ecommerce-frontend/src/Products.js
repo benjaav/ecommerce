@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { trackFacebookEvent } from './FacebookPixel';
 import axios from 'axios';
 import NavBar from './NavBar';
@@ -23,18 +23,42 @@ function Products() {
   const [products, setProducts] = useState([]);
   const [successMessage, setSuccessMessage] = useState(null);
   const [loadingProgress, setLoadingProgress] = useState(0);
+  const [remainingTime, setRemainingTime] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem('accessToken');
 
+  // Refs to track progress timing and bytes loaded
+  const startTimeRef = useRef(null);
+  const lastLoadedRef = useRef(0);
+
   const fetchProducts = (page = 1) => {
     setLoading(true);
     setLoadingProgress(0);
+    setRemainingTime(null);
+    startTimeRef.current = null;
+    lastLoadedRef.current = 0;
+
     axios.get(`products/?page=${page}`, {
       onDownloadProgress: progressEvent => {
         if (progressEvent.lengthComputable) {
+          const now = Date.now();
+          if (!startTimeRef.current) {
+            startTimeRef.current = now;
+            lastLoadedRef.current = progressEvent.loaded;
+          } else {
+            const elapsed = (now - startTimeRef.current) / 1000; // seconds
+            const totalLoaded = progressEvent.loaded;
+            const total = progressEvent.total;
+            const speed = totalLoaded / elapsed; // bytes per second
+            const remainingBytes = total - totalLoaded;
+            const estimatedRemainingTime = remainingBytes / speed; // seconds
+
+            setRemainingTime(Math.max(0, Math.round(estimatedRemainingTime)));
+          }
+
           const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
           setLoadingProgress(percentCompleted);
         }
@@ -60,11 +84,13 @@ function Products() {
           setCurrentPage(page);
         }
         setLoadingProgress(100);
+        setRemainingTime(0);
         setLoading(false);
       })
       .catch(error => {
         console.error("Error al cargar productos:", error);
         setLoadingProgress(100);
+        setRemainingTime(0);
         setLoading(false);
       });
   };
@@ -129,6 +155,9 @@ function Products() {
       {loadingProgress < 100 && (
         <div className="loading-progress">
           Cargando productos... {loadingProgress}%
+          {remainingTime !== null && remainingTime > 0 && (
+            <span> - Tiempo restante: {remainingTime} segundos</span>
+          )}
         </div>
       )}
 
