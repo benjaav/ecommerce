@@ -102,6 +102,7 @@ function Products() {
   const handleAddToCart = (e, productId) => {
     e.stopPropagation();
 
+    // Solo rastrear evento Pixel en acciones iniciadas por el usuario
     if (!token) {
       let localCart = JSON.parse(localStorage.getItem('localCart')) || [];
       const existingItem = localCart.find(item => item.id === productId);
@@ -135,6 +136,13 @@ function Products() {
       .then(response => {
         setSuccessMessage(productId);
         setTimeout(() => setSuccessMessage(null), 3000);
+        // Evento Pixel solo en acción usuario
+        trackFacebookEvent('AddToCart', {
+          content_ids: [productId],
+          content_type: 'product',
+          value: products.find(p => p.id === productId)?.price || 0,
+          currency: 'CLP'
+        });
       })
       .catch(error => {
         console.error("Error agregando al carrito:", error);
