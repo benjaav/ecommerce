@@ -206,7 +206,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 # Cambia estas URLs para que apunten a tu CDN una vez que esté activo
-STATIC_URL = 'https://codestorebl.com/static/'
+STATIC_URL = '/static/'
 # Cambia MEDIA_URL para apuntar al Static Site de Render que sirve la carpeta media
 MEDIA_URL = 'https://ecommerce-media.onrender.com/'
 
