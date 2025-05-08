@@ -62,6 +62,7 @@ class CreatePaymentPreferenceView(APIView):
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
+            from django.conf import settings
             sdk = mercadopago.SDK(settings.MERCADO_PAGO_ACCESS_TOKEN)
             unit_price = int(round(total))
 
