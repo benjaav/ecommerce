@@ -89,7 +89,7 @@ class CreatePaymentPreferenceView(APIView):
                     "failure": f"{base_url}/failure",
                     "pending": f"{base_url}/pending"
                 },
-                "auto_return": "approved",
+                # "auto_return": "approved",  # Removed due to Mercado Pago error
             }
 
             resp = sdk.preference().create(preference_data)
