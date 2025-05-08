@@ -28,14 +28,14 @@ if 'api.codestorebl.com' not in ALLOWED_HOSTS:
 
 
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOW_CREDENTIALS = True
 
-# CORS_ALLOWED_ORIGINS = [
-#     "https://codestorebl.com",
-#     "https://www.codestorebl.com",
-#     "http://localhost:3000",
-# ]
+CORS_ALLOWED_ORIGINS = [
+    "https://codestorebl.com",
+    "https://www.codestorebl.com",
+    "http://localhost:3000",
+]
 
 CORS_ALLOW_METHODS = [
     'GET',
