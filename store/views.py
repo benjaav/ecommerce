@@ -92,6 +92,7 @@ class CreatePaymentPreferenceView(APIView):
             }
 
             resp = sdk.preference().create(preference_data)
+            logger.debug(f"Mercado Pago Response: {resp}")
             if resp.get('status') != 201:
                 logger.error(f"Mercado Pago Error: {resp}")
                 return Response(

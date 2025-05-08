@@ -15,6 +15,14 @@ const Cart = () => {
   const token   = localStorage.getItem('accessToken');
   const isGuest = localStorage.getItem('isGuest') === 'true';
 
+  // Limpia localStorage de carrito y tokens antiguos
+  const clearLocalStorage = () => {
+    localStorage.removeItem('localCart');
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('isGuest');
+    setMessage('Datos antiguos limpiados. Por favor, recarga la página.');
+  };
+
   // Carga el carrito: API si auth, localStorage + fetch productos si invitado
   const fetchCart = async () => {
     try {
@@ -128,6 +136,10 @@ const Cart = () => {
       {error && <p className="cart-error">{error}</p>}
       {message && <p className="cart-message">{message}</p>}
 
+      <button onClick={clearLocalStorage} className="clear-storage-btn">
+        Limpiar datos antiguos
+      </button>
+
       {cart.items.length === 0 ? (
         <p className="empty-cart-message">Tu carrito está vacío.</p>
       ) : (
@@ -200,4 +212,3 @@ const Cart = () => {
   );
 };
 
-export default Cart;
