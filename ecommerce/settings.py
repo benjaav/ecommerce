@@ -133,7 +133,7 @@ CSRF_COOKIE_SAMESITE = 'None'
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://red-d0behbidbo4c73clom90:6379/1",
+        "LOCATION": "redis://red-d0ep80k9c44c7389vm00:6379",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
