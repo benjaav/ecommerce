@@ -1,14 +1,14 @@
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 30px; /* Increased gap for more spacing */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px; /* más separación entre productos */
   width: 90%;
   max-width: 1200px;
-  margin: 1rem auto;
+  margin: 2rem auto; /* más espacio vertical */
   justify-items: center;
-  }
-  
-  .product-card {
+}
+
+.product-card {
   background: rgba(255,255,255,0.07);
   border: 2px solid #00ffcc;
   border-radius: 1rem;
@@ -19,35 +19,36 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  }
-  
-  .product-card:hover {
+  gap: 1rem; /* más espacio entre elementos dentro de la tarjeta */
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover {
   transform: translateY(-10px);
   box-shadow: 0 0 20px var(--primary-color);
-  }
-  
-  .product-image {
+}
+
+.product-image {
   width: 100%;
   height: 200px;
   object-fit: cover;
   border-radius: 0.5rem;
   margin-bottom: 0.5rem;
-  }
-  
-  .description {
+}
+
+.description {
   font-size: 0.9rem;
   color: #ccc;
   margin-bottom: 0.5rem;
-  }
-  
-  .price {
+}
+
+.price {
   font-weight: bold;
   color: #00ffcc;
   font-size: 1.2rem;
-  }
-  
-  .add-to-cart-btn {
+}
+
+.add-to-cart-btn {
   margin-top: auto;
   padding: 0.75rem 1.5rem;
   border-radius: 50px;
@@ -57,36 +58,47 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  }
-  
-  .add-to-cart-btn:hover {
+}
+
+.add-to-cart-btn:hover {
   background: rgba(255,105,180,0.3);
   box-shadow: 0 0 10px #ff69b4;
   transform: translateY(-2px);
-  }
-  
-  .success-message {
+}
+
+.success-message {
   color: #00ffcc;
   text-align: center;
   font-weight: 600;
   margin-top: 10px;
   animation: fadeInOut 3s ease;
-  }
-  
-  @keyframes fadeInOut {
+}
+
+@keyframes fadeInOut {
   0% { opacity: 0; }
   20% { opacity: 1; }
   80% { opacity: 1; }
   100% { opacity: 0; }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
   }
-  
-  /* Responsive */
-  @media (max-width: 1024px) {
-  .product-grid { grid-template-columns: repeat(3, 1fr); gap: 25px; }
+}
+
+@media (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
   }
-  @media (max-width: 768px) {
-  .product-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+}
+
+@media (max-width: 480px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
-  @media (max-width: 480px) {
-  .product-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
-  }
+}
