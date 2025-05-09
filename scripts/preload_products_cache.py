@@ -4,7 +4,8 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def preload_products_cache():
-    url = "https://mi-backend.onrender.com/api/products/"
+    url = "https://api.codestorebl.com/api/products/"
+
     try:
         response = requests.get(url, timeout=10)
         response.raise_for_status()
