@@ -1,5 +1,4 @@
 import requests
-import time
 import logging
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -14,6 +13,4 @@ def preload_products_cache():
         logging.error(f"Failed to preload products cache: {e}")
 
 if __name__ == "__main__":
-    while True:
-        preload_products_cache()
-        time.sleep(300)  # Sleep for 5 minutes (300 seconds)
+    preload_products_cache()
