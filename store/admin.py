@@ -41,6 +41,8 @@ class ProductAdmin(admin.ModelAdmin):
     )
     list_filter = ('available', 'category', 'vendor')
     search_fields = ('name', 'description')
+    ordering = ('-created_at',)
+
 
 # Registro para ProductImage para ver el producto y la imagen asociada
 class ProductImageAdmin(admin.ModelAdmin):
