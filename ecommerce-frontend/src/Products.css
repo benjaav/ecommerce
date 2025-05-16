@@ -1,40 +1,34 @@
-/* src/Products.css */
-
-/* Contenedor en grid para tarjetas de productos */
 .product-grid {
   display: grid;
-  /* Autoajusta el número de columnas según el ancho disponible
-     con tarjetas de un mínimo de 250px */
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 40px;               /* Espacio entre tarjetas */
+  /* Cambio a columnas fijas para forzar espacio */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 60px; /* aumento de la separación general */
   width: 90%;
   max-width: 1200px;
-  margin: 2rem auto;       /* Centrado con margen superior/inferior */
-  justify-items: center;   /* Centra el contenido dentro de cada celda */
-  padding: 0 1rem;         /* Espacio lateral para que no pegue a los bordes */
+  margin: 2rem auto;
+  justify-items: center;
 }
 
-/* Cada tarjeta de producto */
 .product-card {
-  background: rgba(255, 255, 255, 0.07);
+  background: rgba(255,255,255,0.07);
   border: 2px solid #00ffcc;
   border-radius: 1rem;
   box-shadow: 0 0 20px #00ffcc;
-  padding: 1rem;           /* Ajusta según necesidad */
+  padding: 1rem;
   width: 100%;
-  max-width: 300px;        /* Ancho máximo para pantallas grandes */
+  max-width: 250px;
   text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem; /* más espacio entre elementos dentro de la tarjeta */
   transition: transform 0.3s ease;
 }
 
 .product-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-10px);
+  box-shadow: 0 0 20px var(--primary-color);
 }
 
-/* Imagen del producto */
 .product-image {
   width: 100%;
   height: 200px;
@@ -43,27 +37,24 @@
   margin-bottom: 0.5rem;
 }
 
-/* Nombre del producto */
-.product-card h3 {
-  color: #fff;
-  margin: 0.5rem 0;
-  font-size: 1.1rem;
+.description {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-bottom: 0.5rem;
 }
 
-/* Precio */
 .price {
   font-weight: bold;
   color: #00ffcc;
   font-size: 1.2rem;
 }
 
-/* Botón para agregar al carrito */
 .add-to-cart-btn {
-  margin-top: auto;        /* Empuja el botón hacia abajo */
+  margin-top: auto;
   padding: 0.75rem 1.5rem;
   border-radius: 50px;
   border: 2px solid #ff69b4;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255,255,255,0.1);
   color: #fff;
   font-weight: 600;
   cursor: pointer;
@@ -71,12 +62,11 @@
 }
 
 .add-to-cart-btn:hover {
-  background: rgba(255, 105, 180, 0.3);
+  background: rgba(255,105,180,0.3);
   box-shadow: 0 0 10px #ff69b4;
   transform: translateY(-2px);
 }
 
-/* Mensaje de éxito al agregar */
 .success-message {
   color: #00ffcc;
   text-align: center;
@@ -92,29 +82,42 @@
   100% { opacity: 0; }
 }
 
-/* ===== Responsive ===== */
 @media (max-width: 768px) {
   .product-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
+    gap: 40px; /* aumento proporcional */
   }
 }
 
 @media (max-width: 480px) {
-  /* Pasamos a 1 columna en móviles pequeños */
+  .product-grid {
+    /* Aquí forzamos dos columnas en móvil y aumentamos el gap */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 35px; /* aumento proporcional */
+  }
+  .product-card {
+    /* Un pequeño padding extra dentro de cada tarjeta */
+    padding: 1.5rem 1rem;
+  }
+}
+/* Responsive */
+@media (max-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px; /* aumento proporcional */
+  }
+}
+
+@media (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px; /* aumento proporcional */
+  }
+}
+
+@media (max-width: 480px) {
   .product-grid {
     grid-template-columns: 1fr;
-    gap: 20px;
-    padding: 0 1.5rem;
-  }
-
-  .product-card {
-    /* Un poco más de espacio interno para que respire */
-    padding: 1.5rem 1rem;
-    max-width: none; /* Ocupa todo el ancho disponible */
-  }
-
-  .product-image {
-    height: auto; /* Deja que la imagen adapte altura */
+    gap: 35px; /* aumento proporcional */
   }
 }
