@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import NavBar from './NavBar';
 import './Cart.css';
 
-const Cart = () => {
+export default function Cart() {
   const [cart, setCart] = useState(null);
   const [quantities, setQuantities] = useState({});
   const [error, setError] = useState('');
