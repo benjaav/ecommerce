@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Home';
 import Products from './Products';
+import MaterialUIStoreExample from './MaterialUIStoreExample';
 import ProductDetail from './ProductDetail';
 import Login from './Login';
 import Register from './Register';
@@ -18,7 +19,8 @@ function App() {
         <Route path="/" element={<Home />} />
 
         {/* Productos accesibles sin login */}
-        <Route path="/products" element={<Products />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/mui-store" element={<MaterialUIStoreExample />} />
         <Route path="/products/:id" element={<ProductDetail />} />
 
         <Route path="/login" element={<Login />} />
