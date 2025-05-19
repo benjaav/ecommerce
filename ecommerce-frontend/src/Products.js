@@ -179,7 +179,7 @@ function Products() {
             <SkeletonCard />
           </>
         ) : (
-          products.slice().reverse().map(product => (
+          products.map(product => (
             <div
               key={product.id}
               className="product-card"
