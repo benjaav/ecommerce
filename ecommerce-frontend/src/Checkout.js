@@ -1,4 +1,3 @@
-// src/Checkout.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavBar from './NavBar';
@@ -45,7 +44,6 @@ function Checkout() {
     setError('');
 
     try {
-      // 0) Si eres invitado, "sube" tu localCart al servidor
       if (isGuest) {
         const localCart = JSON.parse(localStorage.getItem('localCart')) || [];
         for (let entry of localCart) {
@@ -63,7 +61,6 @@ function Checkout() {
         }
       }
 
-      // 1) Crear la orden (invitado o autenticado)
       const ordRes = await axios.post(
         'orders/',
         formData,
@@ -90,7 +87,6 @@ function Checkout() {
         throw new Error('El total de la orden es 0. Verifica tu carrito.');
       }
 
-      // 2) Generar preferencia de pago
       const prefRes = await axios.post(
         'create-payment-preference/',
         { total },
@@ -112,18 +108,11 @@ function Checkout() {
             }
       );
 
-      // 3) Si fuiste invitado, limpia localStorage
       if (isGuest) {
         localStorage.removeItem('localCart');
         localStorage.removeItem('isGuest');
       }
-      // trackFacebookEvent('Purchase', {
-      //   value: total,
-      //   currency: 'CLP'
-      // });
-      window.location.href = prefRes.data.init_point;
 
-      // 4) Redirige a Mercado Pago
       window.location.href = prefRes.data.init_point;
 
     } catch (err) {
@@ -137,7 +126,7 @@ function Checkout() {
   };
 
   return (
-    <div className="container checkout-container">
+    <div className="checkout-container">
       <NavBar />
       <h2>Checkout</h2>
       {error && <p className="cart-error">{error}</p>}
@@ -205,13 +194,13 @@ function Checkout() {
             />
           </div>
 
-          <button type="submit" className="submit">
+          <button type="submit" className="checkout-btn">
             Finalizar Compra
           </button>
           <button
             type="button"
             onClick={() => navigate('/cart')}
-            className="secondary-btn"
+            className="remove-btn"
           >
             Volver al Carrito
           </button>
