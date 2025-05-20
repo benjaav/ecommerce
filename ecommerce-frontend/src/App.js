@@ -19,12 +19,13 @@ function App() {
   const addToCart = (product) => {
     setCartItems(prevItems => {
       const existingItem = prevItems.find(item => item.id === product.id);
+      const image = product.images && product.images.length > 0 ? product.images[0].image : '';
       if (existingItem) {
         return prevItems.map(item =>
           item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
         );
       } else {
-        return [...prevItems, { ...product, quantity: 1 }];
+        return [...prevItems, { ...product, quantity: 1, image }];
       }
     });
   };
