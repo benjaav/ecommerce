@@ -1,8 +1,3 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './Home';
-import Products from './Products';
-import ProductDetail from './ProductDetail';
 import Login from './Login';
 import Register from './Register';
 import Cart from './Cart';
@@ -12,16 +7,27 @@ import './App.css';
 import { trackFacebookEvent } from './FacebookPixel';
 
 function App() {
-  const [cartItems, setCartItems] = useState(() => {
-    // Cargar carrito desde localStorage o iniciar vacío
+  const [cartItems, setCartItems] = React.useState(() => {
     const savedCart = localStorage.getItem('cartItems');
     return savedCart ? JSON.parse(savedCart) : [];
   });
 
-  useEffect(() => {
-    // Guardar carrito en localStorage al cambiar
+  React.useEffect(() => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems]);
+
+  const addToCart = (product) => {
+    setCartItems(prevItems => {
+      const existingItem = prevItems.find(item => item.id === product.id);
+      if (existingItem) {
+        return prevItems.map(item =>
+          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+        );
+      } else {
+        return [...prevItems, { ...product, quantity: 1 }];
+      }
+    });
+  };
 
   const onUpdateQuantity = (id, quantity) => {
     setCartItems(prevItems =>
@@ -40,14 +46,26 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
 
-        {/* Productos accesibles sin login */}
-        <Route path="/products" element={<Products />} />
-        <Route path="/products/:id" element={<ProductDetail />} />
+        <Route
+          path="/products"
+          element={
+            <Products
+              addToCart={addToCart}
+            />
+          }
+        />
+        <Route
+          path="/products/:id"
+          element={
+            <ProductDetail
+              addToCart={addToCart}
+            />
+          }
+        />
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* Carrito y checkout accesibles sin login */}
         <Route
           path="/cart"
           element={

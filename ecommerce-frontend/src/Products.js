@@ -1,25 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { trackFacebookEvent } from './FacebookPixel';
-import axios from 'axios';
-import NavBar from './NavBar';
-import { useNavigate } from 'react-router-dom';
-import './Products.css';
-
-// Configurar URL base de axios para apuntar a la API backend
-axios.defaults.baseURL = 'https://api.codestorebl.com/api/';
-
-function SkeletonCard() {
-  return (
-    <div className="product-card skeleton-card">
-      <div className="skeleton-image" />
-      <div className="skeleton-text title" />
-      <div className="skeleton-text price" />
-      <div className="skeleton-button" />
-    </div>
-  );
-}
-
-function Products() {
+function Products({ addToCart }) {
   const [products, setProducts] = useState([]);
   const [successMessage, setSuccessMessage] = useState(null);
   const [loadingProgress, setLoadingProgress] = useState(0);
@@ -99,54 +78,22 @@ function Products() {
     fetchProducts(1);
   }, []);
 
-  const handleAddToCart = (e, productId) => {
+  const handleAddToCart = (e, product) => {
     e.stopPropagation();
 
-    // Solo rastrear evento Pixel en acciones iniciadas por el usuario
-    if (!token) {
-      let localCart = JSON.parse(localStorage.getItem('localCart')) || [];
-      const existingItem = localCart.find(item => item.id === productId);
-      if (existingItem) {
-        existingItem.quantity += 1;
-      } else {
-        const product = products.find(p => p.id === productId);
-        localCart.push({
-          id: productId,
-          quantity: 1,
-          name: product ? product.name : '',
-          price: product ? product.price : 0,
-          images: product ? product.images : []
-        });
-      }
-      localStorage.setItem('localCart', JSON.stringify(localCart));
-      setSuccessMessage(productId);
-      trackFacebookEvent('AddToCart', {
-        content_ids: [productId],
-        content_type: 'product',
-        value: products.find(p => p.id === productId)?.price || 0,
-        currency: 'CLP'
-      });
-      setTimeout(() => setSuccessMessage(null), 3000);
-      return;
-    }
+    // Usar la función addToCart pasada desde App.js para actualizar estado global
+    addToCart(product);
 
-    axios.post('add-to-cart/', { product_id: productId, quantity: 1 }, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(response => {
-        setSuccessMessage(productId);
-        setTimeout(() => setSuccessMessage(null), 3000);
-        // Evento Pixel solo en acción usuario
-        trackFacebookEvent('AddToCart', {
-          content_ids: [productId],
-          content_type: 'product',
-          value: products.find(p => p.id === productId)?.price || 0,
-          currency: 'CLP'
-        });
-      })
-      .catch(error => {
-        console.error("Error agregando al carrito:", error);
-      });
+    // Solo rastrear evento Pixel en acciones iniciadas por el usuario
+    trackFacebookEvent('AddToCart', {
+      content_ids: [product.id],
+      content_type: 'product',
+      value: product.price || 0,
+      currency: 'CLP'
+    });
+
+    setSuccessMessage(product.id);
+    setTimeout(() => setSuccessMessage(null), 3000);
   };
 
   const handleLoadMore = () => {
@@ -204,7 +151,7 @@ function Products() {
 
               <button
                 className="add-to-cart-btn"
-                onClick={(e) => handleAddToCart(e, product.id)}
+                onClick={(e) => handleAddToCart(e, product)}
               >
                 ¡Añadir al carrito ahora! 🚀
               </button>
