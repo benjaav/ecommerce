@@ -1,66 +1,19 @@
-// src/ProductDetail.js
-import React, { useEffect, useState } from 'react';
-import { trackFacebookEvent } from './FacebookPixel';
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import NavBar from './NavBar';
-import './ProductDetail.css';
-
-function ProductDetail() {
-  const { id } = useParams();
-  const [product, setProduct] = useState(null);
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
-
-  const token = localStorage.getItem('accessToken');
-  const isGuest = localStorage.getItem('isGuest') === 'true';
-
-  React.useEffect(() => {
-    axios.get(`/products/${id}/`)
-      .then(res => {
-        setProduct(res.data);
-        trackFacebookEvent('ViewContent', {
-          content_ids: [res.data.id],
-          content_type: 'product',
-          value: res.data.price,
-          currency: 'CLP'
-        });
-      })
-      .catch(err => {
-        console.error(err);
-        setError('Error al cargar el producto.');
-      });
-  }, [id]);
-
-  function handleGoBack() {
-    return navigate(-1);
-  }
-
-  const handleAddToCart = () => {
-    const payload = { product_id: id, quantity: 1 };
-    if (token && !isGuest) {
-      axios.post('add-to-cart/', payload, {
-        headers: { Authorization: `Bearer ${token}` }
-      })
-        .then(() => navigate('/cart'))
-        .catch(err => console.error(err));
-    } else {
-      const local = JSON.parse(localStorage.getItem('localCart')) || [];
-      const idx = local.findIndex(i => i.id === Number(id));
-      if (idx >= 0) local[idx].quantity += 1;
-      else local.push({
-        id: Number(id),
+const handleAddToCart = () => {
+    if (product) {
+      addToCart({
+        id: product.id,
         name: product.name,
         price: product.price,
-        quantity: 1
+        images: product.images,
       });
-      localStorage.setItem('localCart', JSON.stringify(local));
+
       trackFacebookEvent('AddToCart', {
-        content_ids: [id],
+        content_ids: [product.id],
         content_type: 'product',
         value: product.price,
         currency: 'CLP'
       });
+
       navigate('/cart');
     }
   };
