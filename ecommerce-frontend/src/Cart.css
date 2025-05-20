@@ -27,11 +27,13 @@
   border: none;
   color: white;
   padding: 10px 15px;
-  border-radius: 25px;
+  border-radius: 0 !important;
   cursor: pointer;
   font-weight: 700;
   margin-bottom: 20px;
   transition: background-color 0.3s ease;
+  width: 120px !important;
+  text-align: center;
 }
 
 .clear-storage-btn:hover {
@@ -83,7 +85,7 @@
 .quantity-input {
   width: 50px;
   padding: 5px;
-  border-radius: 8px;
+  border-radius: 0 !important;
   border: 1px solid #00ffcc;
   background-color: #121212;
   color: #00ffcc;
@@ -92,14 +94,24 @@
 }
 
 .update-btn, .remove-btn {
-  padding: 8px 15px;
-  border-radius: 25px;
+  padding: 10px 20px;
+  border-radius: 0 !important;
   border: none;
   cursor: pointer;
   font-weight: 700;
   color: white;
   box-shadow: 0 0 10px transparent;
   transition: all 0.3s ease;
+  width: 140px !important;
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.2;
+  box-sizing: border-box;
+}
+
+.update-btn, .remove-btn {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .update-btn {
@@ -127,6 +139,8 @@
   min-width: 120px;
   color: #00ffcc;
   font-weight: 700;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .price-line, .total-line {
@@ -151,7 +165,7 @@
   border: none;
   color: #121212;
   padding: 12px 25px;
-  border-radius: 30px;
+  border-radius: 0 !important;
   font-weight: 800;
   font-size: 1.1rem;
   cursor: pointer;
@@ -159,10 +173,24 @@
   transition: all 0.3s ease;
   display: block;
   margin-left: auto;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
 }
 
 .checkout-btn:hover {
   background-color: #00b3a6;
   box-shadow: 0 0 25px #00ffcc;
   transform: translateY(-3px);
+}
+
+/* Responsive fix for price overflow on mobile */
+@media (max-width: 480px) {
+  .cart-price-info {
+    min-width: auto;
+    max-width: 100px;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
 }
