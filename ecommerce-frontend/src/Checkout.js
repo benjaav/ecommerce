@@ -158,7 +158,7 @@ function Checkout() {
           </div>
 
           <div className="input-span">
-            <label htmlFor="postalCode" className="label">Código Postal:</label>
+            <label htmlFor="postalCode" className="label">Rut:</label>
             <input
               type="text"
               id="postalCode"
