@@ -5,6 +5,11 @@
   overflow: hidden;
   border-radius: 1rem;
   margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .home-hero video {
@@ -25,8 +30,15 @@
   position: relative;
   z-index: 1;
   color: white;
-  text-align: center;
   padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero-content p {
+  color: #ff0000;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
 }
 
 .hero-btn {
@@ -58,6 +70,7 @@
   overflow-x: auto;
   gap: 1rem;
   scroll-snap-type: x mandatory;
+  justify-content: center;
 }
 
 .promo-slide {
