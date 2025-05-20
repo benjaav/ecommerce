@@ -15,7 +15,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Products />} />
 
         {/* Productos accesibles sin login */}
         <Route path="/products" element={<Products />} />
