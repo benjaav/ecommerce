@@ -69,27 +69,39 @@ label[for="postalCode"]::after {
   margin-left: 0.5rem;
 }
 
-/* Botón Volver al Carrito ajustado */
-.back-to-cart-btn {
+/* Botones estilo carrito */
+.checkout-btn, .remove-btn, .back-to-cart-btn {
   width: 100%;
-  padding: 1rem 0;
+  padding: 12px 25px;
   margin-top: 1rem;
-  border-radius: 50px;
+  border-radius: 30px;
   border: none;
-  background-color: #ff4081;
-  color: white;
-  font-weight: 700;
+  font-weight: 800;
   font-size: 1.1rem;
   cursor: pointer;
-  box-shadow: 0 0 15px #ff4081;
+  box-shadow: 0 0 15px #00ffcc;
   transition: all 0.3s ease;
   text-align: center;
+  color: #121212;
+  background-color: #00ffcc;
+  display: block;
 }
 
-.back-to-cart-btn:hover {
-  background-color: #ff79a9;
-  box-shadow: 0 0 25px #ff79a9;
+.checkout-btn:hover, .remove-btn:hover, .back-to-cart-btn:hover {
+  background-color: #00b3a6;
+  box-shadow: 0 0 25px #00ffcc;
   transform: translateY(-3px);
+}
+
+/* Ajuste contenedor principal */
+.checkout-container {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  color: #fff;
+  background-color: #121212;
+  border-radius: 10px;
+  box-shadow: 0 0 15px #00ffcc;
 }
 
 /* Responsive */
