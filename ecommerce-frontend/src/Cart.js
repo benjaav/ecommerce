@@ -1,7 +1,9 @@
 import React from 'react';
 import './Cart.css';
 
-function Cart({ cartItems, onUpdateQuantity, onRemoveItem }) {
+function Cart(props) {
+  const { cartItems = [], onUpdateQuantity, onRemoveItem } = props;
+
   return (
     <div className="cart-container">
       <h2>Mi Carrito</h2>
