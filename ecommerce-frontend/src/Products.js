@@ -1,3 +1,20 @@
+import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import NavBar from './NavBar';
+import ProductCard from './ProductCard';
+import './Products.css';
+
+function SkeletonCard() {
+  return (
+    <div className="skeleton-card">
+      <div className="skeleton-image" />
+      <div className="skeleton-text" />
+      <div className="skeleton-text short" />
+    </div>
+  );
+}
+
 function Products({ addToCart }) {
   const [products, setProducts] = useState([]);
   const [loadingProgress, setLoadingProgress] = useState(0);
