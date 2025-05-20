@@ -22,16 +22,23 @@ function ProductCard({ product }) {
   }
 
   return (
-    <div className="product-card">
-      {imageUrl ? (
-        <img src={imageUrl} alt={product.name} />
-      ) : (
-        <div className="no-image">Sin imagen</div>
-      )}
-      <h3>{product.name}</h3>
-      <p>{product.description}</p>
-      <p className="price">${product.price}</p>
-    </div>
+  <div className="product-card">
+    {imageUrl ? (
+      <img src={imageUrl} alt={product.name} />
+    ) : (
+      <div className="no-image">Sin imagen</div>
+    )}
+    <h3>{product.name}</h3>
+    <p>{product.description}</p>
+    <p className="price">${product.price}</p>
+
+    <button
+      className="add-to-cart-btn"
+      onClick={() => window.dispatchEvent(new CustomEvent('add-to-cart', { detail: product }))}
+    >
+      ¡Agregar al carrito!
+    </button>
+  </div>
   );
 }
 
