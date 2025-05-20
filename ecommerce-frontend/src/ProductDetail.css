@@ -1,86 +1,32 @@
 .detail-container {
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  background: #121212;
+  border-radius: 1rem;
+  box-shadow: 0 0 20px #00ffcc;
+  color: #eee;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin: 1rem auto;
-  max-width: 800px;
-  background: rgba(255,255,255,0.05);
-  border: 2px solid #00ffcc;
-  border-radius: 1rem;
-  padding: 2rem;
-  box-shadow: 0 0 20px #00ffcc;
+  gap: 1.5rem;
 }
 
-.back-btn {
-  align-self: flex-start;
-  margin-bottom: 1rem;
-  background-color: #333;
-  color: #fff;
-  border-radius: 3rem;
-  padding: 0.5rem 1rem;
+.buy-now-btn {
+  align-self: center;
+  padding: 1rem 2rem;
+  background: #ff4081;
+  color: white;
+  font-weight: 700;
+  font-size: 1.25rem;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 0 0 15px #ff4081;
   cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-top: auto;
 }
 
-.detail-header {
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-.detail-header h2 {
-  margin: 0 0 0.5rem;
-  color: #fff;
-}
-
-.detail-header .price {
-  color: #00ffcc;
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-.detail-images {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.detail-img {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 0.5rem;
-}
-
-.detail-info p {
-  background-color: rgba(0, 255, 204, 0.1);
-  border: 1px solid #00ffcc;
-  border-radius: 0.5rem;
-  padding: 1rem;
-  font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-  font-size: 1.1rem;
-  font-weight: 400;
-  color: #00ffcc;
-  margin-bottom: 1rem;
-  }
-
-.detail-info h3 {
-  margin: 0 0 0.5rem;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .detail-container {
-    padding: 1rem;
-  }
-  .detail-images {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-}
-@media (max-width: 480px) {
-  .detail-images .detail-img {
-    width: 100%;
-    height: auto;
-  }
+.buy-now-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 25px #ff79a9;
 }

@@ -1,61 +1,84 @@
-/* Home.css */
-
 .home-hero {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+}
+
+.home-hero video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  z-index: -1;
+  filter: brightness(0.7);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  color: white;
   text-align: center;
-  padding: 80px 20px;
-  background-color: rgba(255, 255, 255, 0.05);
+  padding: 2rem;
 }
 
-.home-hero h1 {
-  font-size: 2.5rem;
-  margin-bottom: 16px;
-  color: #fff;
-  font-weight: bold;
-}
-
-.home-hero p {
-  font-size: 1.1rem;
-  margin-bottom: 32px;
-  color: #ccc;
-}
-
-/* Contenedor de los dos botones */
-.hero-btns {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-/* Estilo uniforme para ambos */
 .hero-btn {
-  min-width: 160px;
-  padding: 12px 0;
-  border: 2px solid #00ffcc;
-  border-radius: 8px;
-  background: transparent;
-  color: #00ffcc;
-  font-size: 1rem;
-  font-weight: 600;
+  background-color: #ff4081;
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 1.2rem;
   cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-  text-decoration: none;
-  display: inline-flex;
+  box-shadow: 0 0 10px #ff4081;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.hero-btn:hover {
+  background-color: #ff79a9;
+  box-shadow: 0 0 20px #ff79a9;
+  transform: translateY(-3px);
+}
+
+/* Slider placeholder */
+.promo-slider {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto 2rem auto;
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  scroll-snap-type: x mandatory;
+}
+
+.promo-slide {
+  flex: 0 0 auto;
+  width: 300px;
+  height: 180px;
+  background: #00ffcc;
+  border-radius: 1rem;
+  color: #121212;
+  font-weight: 700;
+  font-size: 1.2rem;
+  display: flex;
   align-items: center;
   justify-content: center;
+  scroll-snap-align: start;
+  cursor: pointer;
+  box-shadow: 0 0 15px #00ffcc;
+  transition: transform 0.3s ease;
 }
 
-/* Hover / foco */
-.hero-btn:hover,
-.hero-btn:focus {
-  background-color: #00ffcc;
-  color: #222;
-}
-
-/* Responsive: en pantallas pequeñas, apilar verticalmente */
-@media (max-width: 480px) {
-  .hero-btns {
-    flex-direction: column;
-    gap: 12px;
-  }
+.promo-slide:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px #00ffcc;
 }

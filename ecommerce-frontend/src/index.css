@@ -1,29 +1,59 @@
-/* index.css */
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Oxygen',
-               'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-               sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #111;
-  color: #fff;
-  overflow-x: hidden;
+/* Transición global entre páginas */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(20px);
 }
 
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.page-transition-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 300ms, transform 300ms;
+}
+
+/* Mejoras de legibilidad */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #121212;
+  color: #eee;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  color: #00ffcc;
+}
+
+p {
+  font-size: 1rem;
+  color: #ccc;
+  margin-bottom: 1rem;
+}
+
+a {
+  color: #ff69b4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Espaciado general */
 .container {
-  padding: 2rem;
+  padding: 1rem 2rem;
   max-width: 1200px;
   margin: 0 auto;
-}
-
-@media (max-width: 768px) {
-  body       { font-size: 14px; }
-  .container{ padding: 1rem; }
-  h2        { font-size: 1.5rem; }
-}
-@media (max-width: 480px) {
-  body       { font-size: 12px; }
-  h2        { font-size: 1.2rem; }
-  .container{ padding: 0.5rem; }
 }

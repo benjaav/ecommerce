@@ -22,6 +22,7 @@
   gap: 1.2rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
+  position: relative;
 }
 
 .product-card:hover {
@@ -66,12 +67,27 @@
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 0 5px transparent;
+  font-size: 1rem;
+  font-weight: 800;
 }
 
 .add-to-cart-btn:hover {
   background: rgba(255, 105, 180, 0.4);
   box-shadow: 0 0 15px #ff69b4;
   transform: translateY(-3px);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 15px #ff69b4;
+  }
+  50% {
+    box-shadow: 0 0 25px #ff69b4;
+  }
+  100% {
+    box-shadow: 0 0 15px #ff69b4;
+  }
 }
 
 .success-message {
@@ -88,6 +104,30 @@
   20% { opacity: 1; }
   80% { opacity: 1; }
   100% { opacity: 0; }
+}
+
+/* Badge para ofertas */
+.offer-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #ff4081;
+  color: white;
+  font-weight: 700;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  animation: glow 2s infinite alternate;
+  user-select: none;
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 5px #ff4081;
+  }
+  to {
+    box-shadow: 0 0 15px #ff79a9;
+  }
 }
 
 /* Responsive */
@@ -109,3 +149,12 @@
   }
 }
 
+@media (max-width: 480px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  .product-card {
+    padding: 1rem;
+  }
+}

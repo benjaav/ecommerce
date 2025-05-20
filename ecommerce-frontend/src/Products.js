@@ -194,14 +194,19 @@ function Products() {
                   loading="lazy"
                 />
               )}
-              <h3>{product.name}</h3>
+              <h3>
+                {product.name}
+                {product.discount && (
+                  <span className="offer-badge" role="img" aria-label="Oferta">🔥 Oferta</span>
+                )}
+              </h3>
               <p className="price">${parseInt(product.price)}</p>
 
               <button
                 className="add-to-cart-btn"
                 onClick={(e) => handleAddToCart(e, product.id)}
               >
-                Agregar al Carrito
+                ¡Añadir al carrito ahora! 🚀
               </button>
 
               {successMessage === product.id && (
