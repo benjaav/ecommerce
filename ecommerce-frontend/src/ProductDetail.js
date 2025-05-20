@@ -1,4 +1,41 @@
-const handleAddToCart = () => {
+import React, { useEffect, useState } from 'react';
+import { trackFacebookEvent } from './FacebookPixel';
+import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import NavBar from './NavBar';
+import './ProductDetail.css';
+
+function ProductDetail({ addToCart }) {
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const token = localStorage.getItem('accessToken');
+  const isGuest = localStorage.getItem('isGuest') === 'true';
+
+  useEffect(() => {
+    axios.get(`/products/${id}/`)
+      .then(res => {
+        setProduct(res.data);
+        trackFacebookEvent('ViewContent', {
+          content_ids: [res.data.id],
+          content_type: 'product',
+          value: res.data.price,
+          currency: 'CLP'
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        setError('Error al cargar el producto.');
+      });
+  }, [id]);
+
+  function handleGoBack() {
+    return navigate(-1);
+  }
+
+  const handleAddToCart = () => {
     if (product) {
       addToCart({
         id: product.id,
