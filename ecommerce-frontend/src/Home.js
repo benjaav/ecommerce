@@ -1,16 +1,9 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Home.css';
 import './HeroAnimation.css';
 
 function Home() {
-  const navigate = useNavigate();
-
-  const handleGuestLogin = () => {
-    localStorage.setItem('isGuest', 'true');
-    navigate('/products');
-  };
-
   return (
     <>
       {/* Logo animado */}
@@ -26,8 +19,7 @@ function Home() {
 
         {/* Botones centrados debajo del texto */}
         <div className="hero-btns">
-          <Link to="/login" className="hero-btn">Iniciar Sesión</Link>
-          <button onClick={handleGuestLogin} className="hero-btn">Ingresar como invitado</button>
+          <Link to="/login" className="hero-btn">Ingresar</Link>
         </div>
       </section>
     </>
