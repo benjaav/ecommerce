@@ -1,23 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import NavBar from './NavBar';
-import SkeletonCard from './SkeletonCard';
-import ProductCard from './ProductCard';
-import { trackFacebookEvent } from './FacebookPixel';
-import './Products.css';
-
 function Products({ addToCart }) {
   const [products, setProducts] = useState([]);
-  const [successMessage, setSuccessMessage] = useState(null);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [remainingTime, setRemainingTime] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const token = localStorage.getItem('accessToken');
 
+  // Refs to track progress timing and bytes loaded
   const startTimeRef = useRef(null);
   const lastLoadedRef = useRef(0);
 
@@ -36,12 +26,12 @@ function Products({ addToCart }) {
             startTimeRef.current = now;
             lastLoadedRef.current = progressEvent.loaded;
           } else {
-            const elapsed = (now - startTimeRef.current) / 1000;
+            const elapsed = (now - startTimeRef.current) / 1000; // seconds
             const totalLoaded = progressEvent.loaded;
             const total = progressEvent.total;
-            const speed = totalLoaded / elapsed;
+            const speed = totalLoaded / elapsed; // bytes per second
             const remainingBytes = total - totalLoaded;
-            const estimatedRemainingTime = remainingBytes / speed;
+            const estimatedRemainingTime = remainingBytes / speed; // seconds
 
             setRemainingTime(Math.max(0, Math.round(estimatedRemainingTime)));
           }
@@ -59,7 +49,7 @@ function Products({ addToCart }) {
           } else {
             setProducts(prevProducts => [...prevProducts, ...data.results]);
           }
-          setTotalPages(Math.ceil(data.count / 10));
+          setTotalPages(Math.ceil(data.count / 10)); // assuming page_size=10
           setCurrentPage(page);
         } else {
           if (page === 1) {
