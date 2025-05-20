@@ -1,3 +1,12 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import NavBar from './NavBar';
+import SkeletonCard from './SkeletonCard';
+import ProductCard from './ProductCard';
+import { trackFacebookEvent } from './FacebookPixel';
+import './Products.css';
+
 function Products({ addToCart }) {
   const [products, setProducts] = useState([]);
   const [successMessage, setSuccessMessage] = useState(null);
@@ -9,7 +18,6 @@ function Products({ addToCart }) {
   const navigate = useNavigate();
   const token = localStorage.getItem('accessToken');
 
-  // Refs to track progress timing and bytes loaded
   const startTimeRef = useRef(null);
   const lastLoadedRef = useRef(0);
 
@@ -28,12 +36,12 @@ function Products({ addToCart }) {
             startTimeRef.current = now;
             lastLoadedRef.current = progressEvent.loaded;
           } else {
-            const elapsed = (now - startTimeRef.current) / 1000; // seconds
+            const elapsed = (now - startTimeRef.current) / 1000;
             const totalLoaded = progressEvent.loaded;
             const total = progressEvent.total;
-            const speed = totalLoaded / elapsed; // bytes per second
+            const speed = totalLoaded / elapsed;
             const remainingBytes = total - totalLoaded;
-            const estimatedRemainingTime = remainingBytes / speed; // seconds
+            const estimatedRemainingTime = remainingBytes / speed;
 
             setRemainingTime(Math.max(0, Math.round(estimatedRemainingTime)));
           }
@@ -51,7 +59,7 @@ function Products({ addToCart }) {
           } else {
             setProducts(prevProducts => [...prevProducts, ...data.results]);
           }
-          setTotalPages(Math.ceil(data.count / 10)); // assuming page_size=10
+          setTotalPages(Math.ceil(data.count / 10));
           setCurrentPage(page);
         } else {
           if (page === 1) {
@@ -77,24 +85,6 @@ function Products({ addToCart }) {
   useEffect(() => {
     fetchProducts(1);
   }, []);
-
-  const handleAddToCart = (e, product) => {
-    e.stopPropagation();
-
-    // Usar la función addToCart pasada desde App.js para actualizar estado global
-    addToCart(product);
-
-    // Solo rastrear evento Pixel en acciones iniciadas por el usuario
-    trackFacebookEvent('AddToCart', {
-      content_ids: [product.id],
-      content_type: 'product',
-      value: product.price || 0,
-      currency: 'CLP'
-    });
-
-    setSuccessMessage(product.id);
-    setTimeout(() => setSuccessMessage(null), 3000);
-  };
 
   const handleLoadMore = () => {
     if (currentPage < totalPages && !loading) {
@@ -127,39 +117,11 @@ function Products({ addToCart }) {
           </>
         ) : (
           products.map(product => (
-            <div
+            <ProductCard
               key={product.id}
-              className="product-card"
-              onClick={() => navigate(`/products/${product.id}`)}
-              style={{ cursor: 'pointer' }}
-            >
-              {product.images && product.images.length > 0 && (
-                <img
-                  src={product.images[0].image}
-                  alt={product.name}
-                  className="product-image"
-                  loading="lazy"
-                />
-              )}
-              <h3>
-                {product.name}
-                {product.discount && (
-                  <span className="offer-badge" role="img" aria-label="Oferta">🔥 Oferta</span>
-                )}
-              </h3>
-              <p className="price">${parseInt(product.price)}</p>
-
-              <button
-                className="add-to-cart-btn"
-                onClick={(e) => handleAddToCart(e, product)}
-              >
-                ¡Añadir al carrito ahora! 🚀
-              </button>
-
-              {successMessage === product.id && (
-                <p className="success-message">¡Producto agregado con éxito!</p>
-              )}
-            </div>
+              product={product}
+              addToCart={addToCart}
+            />
           ))
         )}
       </div>
