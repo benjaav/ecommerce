@@ -5,18 +5,21 @@
   padding: 20px;
   background-color: #121212;
   color: #00ffcc;
-  border-radius: 10px;
+  border-radius: 0;
   box-shadow: 0 0 15px #00ffcc;
 }
 
 .form-container {
   margin-top: 20px;
+  max-width: 600px;
+  margin: 20px auto 0 auto;
 }
 
 .form {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  width: 100%;
 }
 
 .input-span {
@@ -33,11 +36,13 @@
 input[type="text"],
 input[type="tel"] {
   padding: 10px;
-  border-radius: 8px;
+  border-radius: 0;
   border: 1px solid #00ffcc;
   background-color: #121212;
   color: #00ffcc;
   font-weight: 700;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 input[type="text"]::placeholder,
@@ -51,13 +56,15 @@ input[type="tel"]::placeholder {
   border: none;
   color: #121212;
   padding: 12px 25px;
-  border-radius: 30px;
+  border-radius: 0;
   font-weight: 800;
   font-size: 1.1rem;
   cursor: pointer;
   box-shadow: 0 0 15px #00ffcc;
   transition: all 0.3s ease;
   margin-top: 10px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .checkout-btn:hover {
@@ -71,13 +78,15 @@ input[type="tel"]::placeholder {
   border: none;
   color: white;
   padding: 12px 25px;
-  border-radius: 30px;
+  border-radius: 0;
   font-weight: 800;
   font-size: 1.1rem;
   cursor: pointer;
   box-shadow: 0 0 15px #ff4081;
   transition: all 0.3s ease;
   margin-top: 10px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .remove-btn:hover {

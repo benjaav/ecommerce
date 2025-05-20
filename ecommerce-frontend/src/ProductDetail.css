@@ -1,14 +1,253 @@
-.back-button:hover {
-  background-color: #ff79a9;
-  box-shadow: 0 0 25px #ff79a9;
+.product-detail-container {
+  background-color: #121212;
+  color: #00ffcc;
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.detail-container {
+  max-width: 900px;
+  width: 100%;
+  background-color: #121212;
+  border-radius: 10px;
+  box-shadow: 0 0 15px #00ffcc;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.back-btn {
+  background-color: #00ffcc;
+  color: #121212;
+  border: none;
+  padding: 10px 20px;
+  font-weight: 700;
+  border-radius: 30px;
+  cursor: pointer;
+  align-self: flex-start;
+  box-shadow: 0 0 15px #00ffcc;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background-color: #00b3a6;
+  box-shadow: 0 0 25px #00ffcc;
   transform: translateY(-3px);
 }
 
+.badges {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.badge {
+  padding: 5px 12px;
+  border-radius: 5px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  border: 2px solid #ff6600;
+  color: #ff6600;
+}
+
+.badge.premium {
+  background-color: transparent;
+}
+
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detail-header h2 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 900;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #00ffcc;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.rating-count {
+  font-weight: 400;
+  color: #00ccaa;
+}
+
+.price-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #00ffcc;
+}
+
+.discounted-price {
+  color: #00ffcc;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: #888;
+  font-size: 1.2rem;
+}
+
+.discount-label {
+  background-color: #ff6600;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.detail-images {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.detail-img {
+  max-height: 300px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #00ffcc;
+  object-fit: contain;
+}
+
+.detail-info {
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.description-list {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0.5rem;
+}
+
+.description-list li {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.submit {
+  background-color: #00ffcc;
+  color: #121212;
+  border: none;
+  padding: 15px 30px;
+  font-weight: 700;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 0 15px #00ffcc;
+  transition: all 0.3s ease;
+  align-self: center;
+  margin-top: 10px;
+  font-size: 1.1rem;
+}
+
+.submit:hover {
+  background-color: #00b3a6;
+  box-shadow: 0 0 25px #00ffcc;
+  transform: translateY(-3px);
+}
+
+.customer-review {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  background-color: #0d0d0d;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #00ffcc;
+  max-width: 600px;
+}
+
+.review-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 8px #00ffcc;
+}
+
+.review-content {
+  flex: 1;
+  color: #00ffcc;
+}
+
+.reviewer-name-rating {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #00ccaa;
+}
+
+/* Star rating styles */
+.star-rating {
+  display: inline-flex;
+  gap: 2px;
+  vertical-align: middle;
+}
+
+.star {
+  width: 16px;
+  height: 16px;
+}
+
+.star.full path {
+  fill: #00ffcc;
+}
+
+.star.half path {
+  fill: url(#halfGrad);
+}
+
+.star.empty path {
+  stroke: #00ffcc;
+  fill: none;
+}
+
 /* Responsive */
-@media (max-width: 480px) {
-  .back-button {
+@media (max-width: 768px) {
+  .detail-container {
+    padding: 15px;
+  }
+  .detail-images {
+    flex-direction: column;
+    align-items: center;
+  }
+  .detail-img {
+    max-height: 200px;
     width: 100%;
-    padding: 1rem 0;
-    font-size: 1.1rem;
+  }
+  .detail-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .badges {
+    flex-direction: column;
+    gap: 5px;
+  }
+  .customer-review {
+    flex-direction: column;
+    align-items: center;
   }
 }

@@ -4,6 +4,7 @@
   color: #00ffcc;
   min-height: 100vh;
   padding: 20px 0;
+  background: #121212; /* Asegurar fondo negro sólido */
 }
 
 .product-grid {
@@ -62,23 +63,22 @@
 .add-to-cart-btn {
   margin-top: auto;
   padding: 0.85rem 1.75rem;
-  border-radius: 50px;
-  border: 2px solid #ff4081;
-  background: rgba(255, 255, 255, 0.15);
-  color: #ff4081;
+  border-radius: 30px;
+  border: 2px solid #00ffcc;
+  background-color: #00ffcc;
+  color: #121212;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 0 5px transparent;
+  box-shadow: 0 0 15px #00ffcc;
   font-size: 1rem;
   font-weight: 800;
 }
 
 .add-to-cart-btn:hover {
-  background: rgba(255, 64, 129, 0.4);
-  box-shadow: 0 0 15px #ff4081;
+  background-color: #00b3a6;
+  box-shadow: 0 0 25px #00ffcc;
   transform: translateY(-3px);
-  animation: pulse 1.5s infinite;
 }
 
 @keyframes pulse {

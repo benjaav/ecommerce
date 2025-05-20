@@ -6,6 +6,38 @@ import axios from 'axios';
 import NavBar from './NavBar';
 import './ProductDetail.css';
 
+function StarRating({ rating }) {
+  const fullStars = Math.floor(rating);
+  const halfStar = rating - fullStars >= 0.5;
+  const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+
+  return (
+    <span className="star-rating" aria-label={`Rating: ${rating} out of 5`}>
+      {[...Array(fullStars)].map((_, i) => (
+        <svg key={`full-${i}`} className="star full" viewBox="0 0 20 20" fill="#00ffcc" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+          <path d="M10 1.5l2.9 6 6.6.6-5 4.7 1.5 6.5-5.5-3-5.5 3 1.5-6.5-5-4.7 6.6-.6 2.9-6z"/>
+        </svg>
+      ))}
+      {halfStar && (
+        <svg className="star half" viewBox="0 0 20 20" fill="#00ffcc" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+          <defs>
+            <linearGradient id="halfGrad">
+              <stop offset="50%" stopColor="#00ffcc" />
+              <stop offset="50%" stopColor="transparent" />
+            </linearGradient>
+          </defs>
+          <path fill="url(#halfGrad)" d="M10 1.5l2.9 6 6.6.6-5 4.7 1.5 6.5-5.5-3-5.5 3 1.5-6.5-5-4.7 6.6-.6 2.9-6z"/>
+        </svg>
+      )}
+      {[...Array(emptyStars)].map((_, i) => (
+        <svg key={`empty-${i}`} className="star empty" viewBox="0 0 20 20" fill="none" stroke="#00ffcc" strokeWidth="1.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+          <path d="M10 1.5l2.9 6 6.6.6-5 4.7 1.5 6.5-5.5-3-5.5 3 1.5-6.5-5-4.7 6.6-.6 2.9-6z"/>
+        </svg>
+      ))}
+    </span>
+  );
+}
+
 function ProductDetail() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
@@ -73,14 +105,40 @@ function ProductDetail() {
   );
 
   return (
-    <div className="container">
+    <div className="product-detail-container">
       <NavBar />
       <div className="detail-container">
         <button onClick={handleGoBack} className="back-btn">Volver</button>
+
+        {/* Badges */}
+        <div className="badges">
+          <span className="badge premium">POCO STOCK</span>
+          <span className="badge premium">CALIDAD PREMIUM</span>
+        </div>
+
+        {/* Product Title and Rating */}
         <div className="detail-header">
           <h2>{product.name}</h2>
-          <p className="price">${product.price}</p>
+          <div className="rating">
+            <StarRating rating={4.8} />
+            <span className="rating-count">+2482 Unidades Vendidas</span>
+          </div>
         </div>
+
+        {/* Price with discount */}
+        <div className="price-section">
+          {product.discount_price ? (
+            <>
+              <span className="discounted-price">${product.discount_price}</span>
+              <span className="original-price">${product.price}</span>
+              <span className="discount-label">¡Solo por Hoy!</span>
+            </>
+          ) : (
+            <span className="discounted-price">${product.price}</span>
+          )}
+        </div>
+
+        {/* Images */}
         <div className="detail-images">
           {product.images && product.images.length > 0
             ? product.images.map(imgObj => {
@@ -94,16 +152,45 @@ function ProductDetail() {
             : <p>No hay imágenes para este producto.</p>
           }
         </div>
+
+        {/* Description with bullet points */}
         <div className="detail-info">
           <h3>Descripción</h3>
-          <p>{product.description}</p>
+          <ul className="description-list">
+            {product.description.split('\n').map((line, index) => {
+              const trimmed = line.trim();
+              if (!trimmed) return null;
+              // Simple emoji assignment based on keywords
+              let emoji = '•';
+              if (trimmed.toLowerCase().includes('natural')) emoji = '🌱';
+              else if (trimmed.toLowerCase().includes('definida')) emoji = '✨';
+              else if (trimmed.toLowerCase().includes('curvas')) emoji = '🍑';
+              else if (trimmed.toLowerCase().includes('unidades')) emoji = '🟢';
+              return <li key={index}>{emoji} {trimmed}</li>;
+            })}
+          </ul>
         </div>
+
+        {/* Add to Cart Button */}
         <button onClick={handleAddToCart} className="submit">
-          Agregar al Carrito
+          Agregar al carrito.
         </button>
+
+        {/* Customer Review */}
+        <div className="customer-review">
+          <img src="/images/marcela.png" alt="Marcela Benavente" className="review-avatar" />
+          <div className="review-content">
+            <p>Todo perfecto, buenos precios y el producto tal cual lo describen. Se nota que les importa el cliente.</p>
+            <div className="reviewer-name-rating">
+              <span className="reviewer-name">Marcela Benavente</span>
+              <StarRating rating={5} />
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   );
 }
 
-export default ProductDetail;
+export default ProductDetail; 

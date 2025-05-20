@@ -156,7 +156,7 @@ function Products() {
   };
 
   return (
-    <div className="container">
+    <div className="products-page-container">
       <NavBar />
       <h2 className="header">Lista de Productos</h2>
 
