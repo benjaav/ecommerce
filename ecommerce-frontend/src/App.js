@@ -14,6 +14,7 @@ import { trackFacebookEvent } from './FacebookPixel';
 
 function App() {
   const [cartItems, setCartItems] = React.useState([]);
+  const [successMessage, setSuccessMessage] = React.useState('');
 
   // Cargar carrito inicial desde backend
   React.useEffect(() => {
@@ -53,6 +54,9 @@ function App() {
             return [...prevItems, { ...product, quantity: response.data.cart_item.quantity, image: product.images && product.images.length > 0 ? product.images[0].image : '' }];
           }
         });
+        // Mostrar mensaje de éxito
+        setSuccessMessage('Producto agregado con éxito');
+        setTimeout(() => setSuccessMessage(''), 3000);
       }
     })
     .catch(error => {
@@ -76,41 +80,48 @@ function App() {
 
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
+      <div>
+        {successMessage && (
+          <div className="success-message">
+            {successMessage}
+          </div>
+        )}
+        <Routes>
+          <Route path="/" element={<Home />} />
 
-        <Route
-          path="/products"
-          element={
-            <Products
-              addToCart={addToCart}
-            />
-          }
-        />
-        <Route
-          path="/products/:id"
-          element={
-            <ProductDetail
-              addToCart={addToCart}
-            />
-          }
-        />
+          <Route
+            path="/products"
+            element={
+              <Products
+                addToCart={addToCart}
+              />
+            }
+          />
+          <Route
+            path="/products/:id"
+            element={
+              <ProductDetail
+                addToCart={addToCart}
+              />
+            }
+          />
 
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
-        <Route
-          path="/cart"
-          element={
-            <Cart
-              cartItems={cartItems}
-              onUpdateQuantity={onUpdateQuantity}
-              onRemoveItem={onRemoveItem}
-            />
-          }
-        />
-        <Route path="/checkout" element={<Checkout />} />
-      </Routes>
+          <Route
+            path="/cart"
+            element={
+              <Cart
+                cartItems={cartItems}
+                onUpdateQuantity={onUpdateQuantity}
+                onRemoveItem={onRemoveItem}
+              />
+            }
+          />
+          <Route path="/checkout" element={<Checkout />} />
+        </Routes>
+      </div>
     </Router>
   );
 }

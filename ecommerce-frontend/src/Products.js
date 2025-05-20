@@ -60,23 +60,13 @@ function Products({ addToCart }) {
     })
       .then(response => {
         const data = response.data;
-        if (data.results) {
-          if (page === 1) {
-            setProducts(data.results);
-          } else {
-            setProducts(prevProducts => [...prevProducts, ...data.results]);
-          }
-          setTotalPages(Math.ceil(data.count / 10)); // assuming page_size=10
-          setCurrentPage(page);
+        if (page === 1) {
+          setProducts(data.results || data);
         } else {
-          if (page === 1) {
-            setProducts(data);
-          } else {
-            setProducts(prevProducts => [...prevProducts, ...data]);
-          }
-          setTotalPages(1);
-          setCurrentPage(page);
+          setProducts(prevProducts => [...prevProducts, ...(data.results || data)]);
         }
+        setTotalPages(data.count ? Math.ceil(data.count / 10) : 1);
+        setCurrentPage(page);
         setLoadingProgress(100);
         setRemainingTime(0);
         setLoading(false);
@@ -100,50 +90,58 @@ function Products({ addToCart }) {
   };
 
   return (
-    <div className="container">
+    <div className="products-page-container">
       <NavBar />
-      <h2 className="header">Lista de Productos</h2>
+      <div className="side-ad left-ad">
+        <img src="/ads/ad1.jpg" alt="Publicidad 1" />
+      </div>
+      <div className="main-content">
+        <h2 className="header">Lista de Productos</h2>
 
-      {loadingProgress < 100 && (
-        <div className="loading-progress">
-          Cargando productos... {loadingProgress}%
-          {remainingTime !== null && remainingTime > 0 && (
-            <span> - Tiempo restante: {remainingTime} segundos</span>
+        {loadingProgress < 100 && (
+          <div className="loading-progress">
+            Cargando productos... {loadingProgress}%
+            {remainingTime !== null && remainingTime > 0 && (
+              <span> - Tiempo restante: {remainingTime} segundos</span>
+            )}
+          </div>
+        )}
+
+        <div className="product-grid" style={{ opacity: loadingProgress < 100 ? 0.5 : 1 }}>
+          {loading && currentPage === 1 ? (
+            <>
+              <SkeletonCard />
+              <SkeletonCard />
+              <SkeletonCard />
+              <SkeletonCard />
+              <SkeletonCard />
+            </>
+          ) : (
+            products.map(product => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                addToCart={addToCart}
+              />
+            ))
           )}
         </div>
-      )}
 
-      <div className="product-grid" style={{ opacity: loadingProgress < 100 ? 0.5 : 1 }}>
-        {loading && currentPage === 1 ? (
-          <>
-            <SkeletonCard />
-            <SkeletonCard />
-            <SkeletonCard />
-            <SkeletonCard />
-            <SkeletonCard />
-          </>
-        ) : (
-          products.map(product => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              addToCart={addToCart}
-            />
-          ))
+        {currentPage < totalPages && !loading && (
+          <div className="load-more-container">
+            <button className="load-more-btn" onClick={handleLoadMore}>
+              Cargar más
+            </button>
+          </div>
+        )}
+
+        {loading && currentPage > 1 && (
+          <div className="loading-more">Cargando más productos...</div>
         )}
       </div>
-
-      {currentPage < totalPages && !loading && (
-        <div className="load-more-container">
-          <button className="load-more-btn" onClick={handleLoadMore}>
-            Cargar más
-          </button>
-        </div>
-      )}
-
-      {loading && currentPage > 1 && (
-        <div className="loading-more">Cargando más productos...</div>
-      )}
+      <div className="side-ad right-ad">
+        <img src="/ads/ad2.jpg" alt="Publicidad 2" />
+      </div>
     </div>
   );
 }

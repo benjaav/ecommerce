@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './ProductCard.css';
 
 function ProductCard({ product, addToCart }) {
@@ -16,13 +17,14 @@ function ProductCard({ product, addToCart }) {
 
   return (
     <div className="product-card">
-      {imageUrl ? (
-        <img src={imageUrl} alt={product.name} />
-      ) : (
-        <div className="no-image">Sin imagen</div>
-      )}
-      <h3>{product.name}</h3>
-      <p>{product.description}</p>
+      <Link to={`/products/${product.id}`}>
+        {imageUrl ? (
+          <img src={imageUrl} alt={product.name} />
+        ) : (
+          <div className="no-image">Sin imagen</div>
+        )}
+        <h3>{product.name}</h3>
+      </Link>
       <p className="price">${product.price}</p>
 
       <button
