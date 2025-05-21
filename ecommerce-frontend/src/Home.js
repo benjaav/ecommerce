@@ -13,11 +13,7 @@ function Home() {
 
   return (
     <>
-      {/* Logo animado */}
-      <button className="button" data-text="CodeStore">
-        <span className="actual-text">&nbsp;CodeStore&nbsp;</span>
-        <span aria-hidden="true" className="hover-text">&nbsp;CodeStore&nbsp;</span>
-      </button>
+  
 
       {/* Hero */}
       <section className="home-hero">

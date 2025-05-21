@@ -130,10 +130,11 @@
 
 @media (max-width: 480px) {
   .product-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr); /* Mostrar 2 productos por fila en móvil */
     gap: 25px;
   }
   .product-card {
     padding: 1rem;
   }
 }
+
