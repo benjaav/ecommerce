@@ -62,43 +62,6 @@
   gap: 10px; /* add gap between wrapped items */
 }
 
-.quantity-input {
-  width: 50px;
-  padding: 5px;
-  border-radius: 0 !important;
-  border: 1px solid #00ffcc;
-  background-color: #121212;
-  color: #00ffcc;
-  font-weight: 700;
-  text-align: center;
-  flex-shrink: 0;
-  min-width: 50px;
-}
-
-.update-btn, .remove-btn {
-  padding: 10px 20px !important;
-  border-radius: 0 !important;
-  border: none;
-  cursor: pointer;
-  font-weight: 800;
-  color: white;
-  box-shadow: 0 0 15px transparent;
-  transition: all 0.3s ease;
-  width: 320px !important; /* fixed width */
-  height: 50px !important; /* fixed height */
-  display: flex; /* flex for centering */
-  justify-content: center; /* horizontal center */
-  align-items: center; /* vertical center */
-  font-size: 1.2rem; /* unified font size */
-  box-sizing: border-box;
-  white-space: nowrap;
-}
-
-.update-btn, .remove-btn {
-  text-transform: none !important;
-  letter-spacing: normal !important;
-}
-
 .cart-product-image {
   width: 100px;
   height: 100px;
@@ -130,6 +93,8 @@
   color: #00ffcc;
   font-weight: 700;
   text-align: center;
+  flex-shrink: 0;
+  min-width: 50px;
 }
 
 .update-btn, .remove-btn {
@@ -141,16 +106,16 @@
   color: white;
   box-shadow: 0 0 15px transparent;
   transition: all 0.3s ease;
-  width: 320px !important; /* increased width */
-  text-align: center;
-  font-size: 1.2rem; /* increased font size */
-  line-height: 50px; /* match checkout button height */
+  flex: 1 1 140px !important; /* allow shrinking and growing */
+  max-width: 140px;
+  height: 50px !important; /* fixed height */
+  display: flex; /* flex for centering */
+  justify-content: center; /* horizontal center */
+  align-items: center; /* vertical center */
+  font-size: 1.2rem; /* unified font size */
   box-sizing: border-box;
-  white-space: nowrap; /* prevent text wrapping */
-}
-
-.update-btn, .remove-btn {
-  text-transform: none !important; /* remove uppercase */
+  white-space: nowrap;
+  text-transform: none !important;
   letter-spacing: normal !important;
 }
 
