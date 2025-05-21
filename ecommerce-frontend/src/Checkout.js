@@ -194,16 +194,18 @@ function Checkout() {
             />
           </div>
 
-          <button type="submit" className="checkout-btn">
-            Finalizar Compra
-          </button>
-          <button
-            type="button"
-            onClick={() => navigate('/cart')}
-            className="remove-btn"
-          >
-            Volver al Carrito
-          </button>
+          <div className="checkout-buttons-container">
+            <button type="submit" className="checkout-btn">
+              Finalizar Compra
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate('/cart')}
+              className="checkout-back-btn"
+            >
+              Volver al Carrito
+            </button>
+          </div>
         </form>
       </div>
     </div>

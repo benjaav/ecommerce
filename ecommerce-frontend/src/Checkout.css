@@ -4,7 +4,7 @@
   margin: 40px auto;
   padding: 20px;
   background-color: #121212;
-  color: #00ffcc;
+  color: #ffffff;
   border-radius: 0;
   box-shadow: 0 0 15px #00ffcc;
 }
@@ -50,6 +50,52 @@ input[type="tel"]::placeholder {
   color: #00ffcc;
   opacity: 0.7;
 }
+.checkout-btn,
+.checkout-back-btn {
+  display: block;
+  width: 320px;
+  height: 50px;
+  margin: 10px auto;
+  padding: 0 20px;
+  font-weight: 800;
+  font-size: 1.2rem;
+  border-radius: 0;
+  cursor: pointer;
+  text-align: center;
+  line-height: 50px;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  font-family: Arial, sans-serif;
+}
+
+.checkout-btn {
+  background-color: #00ffcc;
+  color: #121212;
+  box-shadow: 0 0 15px #00ffcc;
+  border: none;
+}
+
+.checkout-btn:hover {
+  background-color: #00b3a6;
+  box-shadow: 0 0 25px #00ffcc;
+  transform: translateY(-3px);
+}
+
+.checkout-back-btn {
+  background-color: #ff4081;
+  color: white;
+  box-shadow: 0 0 15px #ff79a9;
+  border: none;
+}
+
+.checkout-back-btn:hover {
+  background-color: #e60073;
+  box-shadow: 0 0 25px #ff79a9;
+  transform: translateY(-3px);
+}
+
+
+
 
 .checkout-btn, .remove-btn {
 display: block;
@@ -73,6 +119,7 @@ transition: all 0.3s ease;
 }
 
 .checkout-btn {
+  
 background-color: #00ffcc;
 color: #121212;
 border: none;
@@ -91,7 +138,7 @@ border: none;
 }
 
 .remove-btn:hover {
-background-color: #e60073;
+background-color: #864566;
 box-shadow: 0 0 15px #ff79a9;
 transform: translateY(-3px);
 }
