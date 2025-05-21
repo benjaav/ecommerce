@@ -51,48 +51,49 @@ input[type="tel"]::placeholder {
   opacity: 0.7;
 }
 
-.checkout-btn {
-  background-color: #00ffcc;
-  border: none;
-  color: #121212;
-  padding: 12px 25px;
-  border-radius: 0;
-  font-weight: 800;
-  font-size: 1.1rem;
-  cursor: pointer;
-  box-shadow: 0 0 15px #00ffcc;
-  transition: all 0.3s ease;
-  margin-top: 10px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.checkout-btn:hover {
-  background-color: #00b3a6;
-  box-shadow: 0 0 25px #00ffcc;
-  transform: translateY(-3px);
+.checkout-btn, .remove-btn {
+display: block;
+width: 320px !important; /* increased fixed width with !important */
+height: 50px; /* fixed height */
+margin: 10px auto;
+padding: 0 20px !important; /* add horizontal padding with !important */
+font-weight: 800;
+font-size: 1.2rem; /* unified font size */
+border-radius: 0 !important;
+cursor: pointer;
+text-align: center;
+line-height: 50px; /* vertically center text */
+white-space: nowrap; /* prevent text wrapping */
+box-shadow: 0 0 15px #00ffcc;
+transition: all 0.3s ease;
 }
 
 .remove-btn {
-  background-color: #ff4081;
-  border: none;
-  color: white;
-  padding: 12px 25px;
-  border-radius: 0;
-  font-weight: 800;
-  font-size: 1.1rem;
-  cursor: pointer;
-  box-shadow: 0 0 15px #ff4081;
-  transition: all 0.3s ease;
-  margin-top: 10px;
-  width: 100%;
-  box-sizing: border-box;
+  text-transform: none !important; /* override uppercase */
+}
+
+.checkout-btn {
+background-color: #00ffcc;
+color: #121212;
+border: none;
+}
+
+.checkout-btn:hover {
+background-color: #00b3a6;
+box-shadow: 0 0 25px #00ffcc;
+transform: translateY(-3px);
+}
+
+.remove-btn {
+background-color: #ff4081;
+color: white;
+border: none;
 }
 
 .remove-btn:hover {
-  background-color: #e60073;
-  box-shadow: 0 0 25px #ff79a9;
-  transform: translateY(-3px);
+background-color: #e60073;
+box-shadow: 0 0 15px #ff79a9;
+transform: translateY(-3px);
 }
 
 .cart-error {
