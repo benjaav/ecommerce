@@ -1,4 +1,3 @@
-// src/ProductDetail.js
 import React, { useEffect, useState } from 'react';
 import { trackFacebookEvent } from './FacebookPixel';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -42,15 +41,17 @@ function ProductDetail() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [error, setError] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
 
   const token = localStorage.getItem('accessToken');
   const isGuest = localStorage.getItem('isGuest') === 'true';
 
-  React.useEffect(() => {
+  useEffect(() => {
     axios.get(`/products/${id}/`)
       .then(res => {
         setProduct(res.data);
+        setCurrentIndex(0);
         trackFacebookEvent('ViewContent', {
           content_ids: [res.data.id],
           content_type: 'product',
@@ -67,6 +68,10 @@ function ProductDetail() {
   function handleGoBack() {
     return navigate(-1);
   }
+
+  const selectImage = (index) => {
+    setCurrentIndex(index);
+  };
 
   const handleAddToCart = () => {
     const payload = { product_id: id, quantity: 1 };
@@ -138,19 +143,38 @@ function ProductDetail() {
           )}
         </div>
 
-        {/* Images */}
-        <div className="detail-images">
-          {product.images && product.images.length > 0
-            ? product.images.map(imgObj => {
-                const src = imgObj.image.startsWith('http')
-                  ? imgObj.image
-                  : `/media/${imgObj.image}`;
-                return (
-                  <img key={imgObj.id} src={src} alt={product.name} className="detail-img" />
-                );
-              })
-            : <p>No hay imágenes para este producto.</p>
-          }
+        {/* Image carousel with thumbnails */}
+        <div className="carousel-container">
+          <div className="carousel-slide" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
+            {product.images && product.images.length > 0
+              ? product.images.map(imgObj => {
+                  const src = imgObj.image.startsWith('http')
+                    ? imgObj.image
+                    : `/media/${imgObj.image}`;
+                  return (
+                    <img key={imgObj.id} src={src} alt={product.name} className="carousel-img" />
+                  );
+                })
+              : <p>No hay imágenes para este producto.</p>
+            }
+          </div>
+          {/* Thumbnails */}
+          <div className="carousel-thumbnails">
+            {product.images && product.images.length > 0 && product.images.map((imgObj, index) => {
+              const src = imgObj.image.startsWith('http')
+                ? imgObj.image
+                : `/media/${imgObj.image}`;
+              return (
+                <img
+                  key={imgObj.id}
+                  src={src}
+                  alt={`${product.name} miniatura ${index + 1}`}
+                  className={`thumbnail-img ${index === currentIndex ? 'active' : ''}`}
+                  onClick={() => selectImage(index)}
+                />
+              );
+            })}
+          </div>
         </div>
 
         {/* Description with bullet points */}
@@ -160,7 +184,6 @@ function ProductDetail() {
             {product.description.split('\n').map((line, index) => {
               const trimmed = line.trim();
               if (!trimmed) return null;
-              // Simple emoji assignment based on keywords
               let emoji = '•';
               if (trimmed.toLowerCase().includes('natural')) emoji = '🌱';
               else if (trimmed.toLowerCase().includes('definida')) emoji = '✨';
@@ -193,4 +216,4 @@ function ProductDetail() {
   );
 }
 
-export default ProductDetail; 
+export default ProductDetail;
