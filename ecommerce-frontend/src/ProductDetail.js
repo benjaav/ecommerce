@@ -178,11 +178,11 @@ function ProductDetail() {
 
         {/* Customer Review */}
         <div className="customer-review">
-          <img src="/images/marcela.png" alt="Marcela Benavente" className="review-avatar" />
+          <img src="/images/marcelo.png" alt="Marcela Benavente" className="review-avatar" />
           <div className="review-content">
             <p>Todo perfecto, buenos precios y el producto tal cual lo describen. Se nota que les importa el cliente.</p>
             <div className="reviewer-name-rating">
-              <span className="reviewer-name">Marcela Benavente</span>
+              <span className="reviewer-name">Marcelo Benavente</span>
               <StarRating rating={5} />
             </div>
           </div>
