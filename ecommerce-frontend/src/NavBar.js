@@ -135,11 +135,6 @@ const StyledWrapper = styled.div`
     padding: 10px 15px;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
     gap: 10px;
   }
 
@@ -200,13 +195,20 @@ const StyledWrapper = styled.div`
   }
 
   @media (max-width: 768px) {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    z-index: 10000 !important;
+
     .button-container {
       flex-direction: row;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      width: 100%;
+      position: fixed !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      width: 100% !important;
       max-height: 60px;
       transform: none;
       padding: 10px 0;
