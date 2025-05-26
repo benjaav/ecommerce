@@ -1,14 +1,14 @@
 :root {
-  --clr-background: linear-gradient(135deg, #141e30, #243b55);
-  --clr-rectangle: rgba(255,255,255,0.07);
-  --clr-form-border: #00ffcc;
-  --clr-input-bg: rgba(255,255,255,0.1);
-  --clr-input-focus: #00ffcc;
-  --clr-text: #e0e0e0;
-  --clr-accent: #00ffcc;
+  --clr-background: linear-gradient(135deg, #ff6f61, #ffb347);
+  --clr-rectangle: rgba(255, 255, 255, 0.07);
+  --clr-form-border: #d94f4f;
+  --clr-input-bg: rgba(255, 255, 255, 0.1);
+  --clr-input-focus: #d94f4f;
+  --clr-text: #333333;
+  --clr-accent: #d94f4f;
   --clr-error: #f33;
-  --clr-button-bg: #333;
-  --clr-button-hover: #00ffcc;
+  --clr-button-bg: #ff6f61;
+  --clr-button-hover: #ffb347;
 }
 
 .container {
@@ -23,11 +23,14 @@
 
 .container h2 {
   text-align: center;
-  color: var(--clr-light);
+  color: var(--clr-text);
   margin-bottom: 1rem;
 }
 
-p { text-align: center; color: var(--clr-error); }
+p {
+  text-align: center;
+  color: var(--clr-error);
+}
 
 .form-container {
   background: var(--clr-rectangle);
@@ -67,7 +70,7 @@ p { text-align: center; color: var(--clr-error); }
 
 .label {
   align-self: flex-start;
-  color: var(--clr-light);
+  color: var(--clr-text);
   font-weight: 600;
 }
 
@@ -76,7 +79,7 @@ p { text-align: center; color: var(--clr-error); }
   width: 100%;
   border-radius: 3rem;
   background-color: var(--clr-button-bg);
-  color: var(--clr-light);
+  color: var(--clr-text);
   border: none;
   cursor: pointer;
   font-weight: 600;
@@ -85,7 +88,7 @@ p { text-align: center; color: var(--clr-error); }
 
 .submit:hover {
   background-color: var(--clr-button-hover);
-  color: var(--clr-dark);
+  color: var(--clr-text);
 }
 
 .span {
@@ -103,7 +106,7 @@ p { text-align: center; color: var(--clr-error); }
   top: 20px;
   left: 20px;
   cursor: pointer;
-  color: #fff;
+  color: var(--clr-text);
   opacity: 0.8;
   transition: transform 0.3s, opacity 0.3s;
 }
@@ -114,10 +117,21 @@ p { text-align: center; color: var(--clr-error); }
 }
 
 @media (max-width: 768px) {
-  .form-container { padding: 1rem; }
-  input, button { width: 100%; margin-bottom: 10px; }
+  .form-container {
+    padding: 1rem;
+  }
+  input,
+  button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
 }
 @media (max-width: 480px) {
-  .form-container { padding: 0.75rem; }
-  input, .submit { font-size: 0.9rem; }
+  .form-container {
+    padding: 0.75rem;
+  }
+  input,
+  .submit {
+    font-size: 0.9rem;
+  }
 }

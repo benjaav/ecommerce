@@ -1,10 +1,10 @@
 /* ecommerce-frontend/src/Products.css */
 .products-page-container {
-  background-color: #121212;
-  color: #00ffcc;
+  background-color: var(--background-color);
+  color: var(--primary-color);
   min-height: 100vh;
   padding: 20px 0;
-  background: #121212; /* Asegurar fondo negro sólido */
+  background: var(--background-color); /* Asegurar fondo sólido */
 }
 
 .product-grid {
@@ -18,10 +18,10 @@
 }
 
 .product-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 2px solid #00ffcc;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid var(--primary-color);
   border-radius: 1rem;
-  box-shadow: 0 0 25px #00ffcc;
+  box-shadow: 0 0 25px var(--primary-color);
   padding: 1.5rem;
   width: 100%;
   max-width: 280px;
@@ -32,12 +32,12 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
   position: relative;
-  color: #00ffcc;
+  color: var(--primary-color);
 }
 
 .product-card:hover {
   transform: translateY(-12px);
-  box-shadow: 0 0 30px #00ffcc;
+  box-shadow: 0 0 30px var(--primary-color);
 }
 
 .product-card img {
@@ -47,7 +47,7 @@
   border-radius: 0.75rem;
   margin-bottom: 0.75rem;
   transition: transform 0.3s ease;
-  box-shadow: 0 0 10px #00ffcc;
+  box-shadow: 0 0 10px var(--primary-color);
 }
 
 .product-card:hover img {
@@ -56,7 +56,7 @@
 
 .price {
   font-weight: 700;
-  color: #00ffcc;
+  color: var(--primary-color);
   font-size: 1.4rem;
 }
 
@@ -64,20 +64,20 @@
   margin-top: auto;
   padding: 0.85rem 1.75rem;
   border-radius: 30px;
-  border: 2px solid #00ffcc;
-  background-color: #00ffcc;
-  color: #121212;
+  border: 2px solid var(--primary-color);
+  background-color: var(--primary-color);
+  color: var(--background-color);
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 0 15px #00ffcc;
+  box-shadow: 0 0 15px var(--primary-color);
   font-size: 1rem;
   font-weight: 800;
 }
 
 .add-to-cart-btn:hover {
-  background-color: #00b3a6;
-  box-shadow: 0 0 25px #00ffcc;
+  background-color: #cc5c4f;
+  box-shadow: 0 0 25px var(--primary-color);
   transform: translateY(-3px);
 }
 
@@ -94,7 +94,7 @@
 }
 
 .success-message {
-  color: #00ffcc;
+  color: var(--primary-color);
   text-align: center;
   font-weight: 700;
   margin-top: 12px;

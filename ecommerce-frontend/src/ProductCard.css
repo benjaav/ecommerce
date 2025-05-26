@@ -7,7 +7,7 @@
 }
 
 .offer-badge {
-  background: #ff4081;
+  background: var(--accent-color);
   color: white;
   font-weight: 700;
   padding: 0.2rem 0.5rem;
@@ -20,9 +20,9 @@
 
 @keyframes glow {
   from {
-    box-shadow: 0 0 5px #ff4081;
+    box-shadow: 0 0 5px var(--accent-color);
   }
   to {
-    box-shadow: 0 0 15px #ff79a9;
+    box-shadow: 0 0 15px #ffb347;
   }
 }

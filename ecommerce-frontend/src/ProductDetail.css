@@ -1,6 +1,6 @@
 .product-detail-container {
-  background-color: #121212;
-  color: #00ffcc;
+  background-color: #4a2c2c;
+  color: #d94f4f;
   min-height: 100vh;
   padding: 20px;
   display: flex;
@@ -11,9 +11,9 @@
 .detail-container {
   max-width: 900px;
   width: 100%;
-  background-color: #121212;
+  background-color: #4a2c2c;
   border-radius: 10px;
-  box-shadow: 0 0 15px #00ffcc;
+  box-shadow: 0 0 15px #d94f4f;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -21,21 +21,21 @@
 }
 
 .back-btn {
-  background-color: #00ffcc;
-  color: #121212;
+  background-color: #d94f4f;
+  color: #333333;
   border: none;
   padding: 10px 20px;
   font-weight: 700;
   border-radius: 0;
   cursor: pointer;
   align-self: flex-start;
-  box-shadow: 0 0 15px #00ffcc;
+  box-shadow: 0 0 15px #d94f4f;
   transition: all 0.3s ease;
 }
 
 .back-btn:hover {
-  background-color: #00b3a6;
-  box-shadow: 0 0 25px #00ffcc;
+  background-color: #b33a3a;
+  box-shadow: 0 0 25px #d94f4f;
   transform: translateY(-3px);
 }
 
@@ -75,14 +75,14 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #00ffcc;
+  color: #d94f4f;
   font-weight: 700;
   font-size: 0.9rem;
 }
 
 .rating-count {
   font-weight: 400;
-  color: #00ccaa;
+  color: #b33a3a;
 }
 
 .price-section {
@@ -91,11 +91,11 @@
   gap: 15px;
   font-weight: 700;
   font-size: 1.5rem;
-  color: #00ffcc;
+  color: #d94f4f;
 }
 
 .discounted-price {
-  color: #00ffcc;
+  color: #d94f4f;
 }
 
 .original-price {
@@ -123,7 +123,7 @@
 .detail-img {
   max-height: 300px;
   border-radius: 10px;
-  box-shadow: 0 0 10px #00ffcc;
+  box-shadow: 0 0 10px #d94f4f;
   object-fit: contain;
 }
 
@@ -145,14 +145,14 @@
 }
 
 .submit {
-  background-color: #00ffcc;
-  color: #121212;
+  background-color: #d94f4f;
+  color: #333333;
   border: none;
   padding: 15px 30px;
   font-weight: 700;
   border-radius: 0 !important;
   cursor: pointer;
-  box-shadow: 0 0 15px #00ffcc;
+  box-shadow: 0 0 15px #d94f4f;
   transition: all 0.3s ease;
   align-self: center;
   margin-top: 10px;
@@ -160,8 +160,8 @@
 }
 
 .submit:hover {
-  background-color: #00b3a6;
-  box-shadow: 0 0 25px #00ffcc;
+  background-color: #b33a3a;
+  box-shadow: 0 0 25px #d94f4f;
   transform: translateY(-3px);
 }
 
@@ -169,10 +169,10 @@
   display: flex;
   gap: 15px;
   margin-top: 20px;
-  background-color: #0d0d0d;
+  background-color: #3a1f1f;
   padding: 15px;
   border-radius: 10px;
-  box-shadow: 0 0 10px #00ffcc;
+  box-shadow: 0 0 10px #d94f4f;
   max-width: 600px;
 }
 
@@ -181,12 +181,12 @@
   height: 60px;
   border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0 0 8px #00ffcc;
+  box-shadow: 0 0 8px #d94f4f;
 }
 
 .review-content {
   flex: 1;
-  color: #00ffcc;
+  color: #d94f4f;
 }
 
 .reviewer-name-rating {
@@ -196,7 +196,7 @@
   margin-top: 8px;
   font-weight: 700;
   font-size: 0.9rem;
-  color: #00ccaa;
+  color: #b33a3a;
 }
 
 /* Star rating styles */
@@ -212,7 +212,7 @@
 }
 
 .star.full path {
-  fill: #00ffcc;
+  fill: #d94f4f;
 }
 
 .star.half path {
@@ -220,9 +220,11 @@
 }
 
 .star.empty path {
-  stroke: #00ffcc;
+  stroke: #d94f4f;
   fill: none;
 }
+
+/* ...existing code... */
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -251,3 +253,8 @@
     align-items: center;
   }
 }
+
+/* Se eliminaron los errores:
+   - Caracter '<' suelto
+   - Comentario de cierre inválido
+*/

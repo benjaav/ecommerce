@@ -36,13 +36,13 @@
 }
 
 .hero-content p {
-  color: #ff0000;
+  color: var(--accent-color);
   font-weight: 600;
   margin-bottom: 1.5rem;
 }
 
 .hero-btn {
-  background-color: #ff4081;
+  background-color: var(--accent-color);
   color: white;
   padding: 1.2rem 2.5rem; /* Ajustado tamaño */
   border: none;
@@ -50,14 +50,14 @@
   font-weight: 700;
   font-size: 1.3rem; /* Ajustado tamaño */
   cursor: pointer;
-  box-shadow: 0 0 10px #ff4081;
+  box-shadow: 0 0 10px var(--accent-color);
   transition: all 0.3s ease;
   margin-top: 2.5rem; /* Separado un poco del título */
 }
 
 .hero-btn:hover {
-  background-color: #ff79a9;
-  box-shadow: 0 0 20px #ff79a9;
+  background-color: #b33a3a;
+  box-shadow: 0 0 20px #b33a3a;
   transform: translateY(-3px);
 }
 
@@ -77,9 +77,9 @@
   flex: 0 0 auto;
   width: 300px;
   height: 180px;
-  background: #00ffcc;
+  background: var(--primary-color);
   border-radius: 1rem;
-  color: #121212;
+  color: var(--background-color);
   font-weight: 700;
   font-size: 1.2rem;
   display: flex;
@@ -87,11 +87,11 @@
   justify-content: center;
   scroll-snap-align: start;
   cursor: pointer;
-  box-shadow: 0 0 15px #00ffcc;
+  box-shadow: 0 0 15px var(--primary-color);
   transition: transform 0.3s ease;
 }
 
 .promo-slide:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 25px #00ffcc;
+  box-shadow: 0 0 25px var(--primary-color);
 }

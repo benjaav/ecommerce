@@ -1,31 +1,8 @@
-/* Transición global entre páginas */
-.page-transition-enter {
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-.page-transition-enter-active {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 300ms, transform 300ms;
-}
-
-.page-transition-exit {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.page-transition-exit-active {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 300ms, transform 300ms;
-}
-
 /* Mejoras de legibilidad */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #121212;
-  color: #eee;
+  background-color: var(--background-color);
+  color: var(--text-color);
   line-height: 1.6;
   margin: 0;
   padding: 0;
@@ -33,7 +10,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
-  color: #00ffcc;
+  color: var(--primary-color);
 }
 
 p {
@@ -43,17 +20,10 @@ p {
 }
 
 a {
-  color: #ff69b4;
+  color: var(--accent-color);
   text-decoration: none;
 }
 
 a:hover {
   text-decoration: underline;
-}
-
-/* Espaciado general */
-.container {
-  padding: 1rem 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
 }

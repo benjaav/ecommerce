@@ -28,11 +28,11 @@
 
 /* Paleta de colores mejorada */
 :root {
-  --primary-color: #00ffcc;
-  --secondary-color: #ff69b4;
-  --background-color: #121212;
-  --text-color: #eee;
-  --accent-color: #ff4081;
+  --primary-color: #ff6f61;
+  --secondary-color: #ffb347;
+  --background-color: #ffffff;
+  --text-color: #333333;
+  --accent-color: #d94f4f;
 }
 
 body {
