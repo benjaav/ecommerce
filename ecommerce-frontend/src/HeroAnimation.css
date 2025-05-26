@@ -85,6 +85,8 @@
   box-sizing: border-box;
   max-width: 100%;
   overflow-x: hidden;
+  min-height: 100vh;
+  height: 100%;
 }
 
 /* Responsive adjustments */
@@ -92,7 +94,7 @@
   .home-hero {
     padding: 2rem 1rem;
     height: auto;
-    min-height: 60vh;
+    min-height: 100vh;
   }
 }
 

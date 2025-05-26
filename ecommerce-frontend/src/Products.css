@@ -7,6 +7,12 @@
   background: var(--background-color); /* Asegurar fondo sólido */
 }
 
+@media (max-width: 768px) {
+  .products-page-container {
+    padding-bottom: 80px; /* espacio para navbar fijo en móvil */
+  }
+}
+
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));

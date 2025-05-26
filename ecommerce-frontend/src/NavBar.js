@@ -201,19 +201,28 @@ const StyledWrapper = styled.div`
 
   @media (max-width: 768px) {
     .button-container {
-      /* Mantenemos fila */
       flex-direction: row;
-      position: static;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      max-height: 60px;
       transform: none;
-      padding: 10px;
+      padding: 10px 0;
       overflow-x: auto;
-      justify-content: center;
+      overflow-y: hidden;
+      justify-content: space-around;
+      background: rgba(0, 0, 0, 0.9);
+      border-radius: 0;
+      z-index: 10000;
+      pointer-events: auto;
     }
 
     .button {
       width: 50px;
       height: 50px;
-      margin: 0 5px;
+      margin: 0;
     }
   }
 
@@ -228,5 +237,6 @@ const StyledWrapper = styled.div`
     }
   }
 `;
+
 
 export default NavBar;

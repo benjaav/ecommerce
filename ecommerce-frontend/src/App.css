@@ -52,3 +52,9 @@ a {
 a:hover {
   color: var(--secondary-color);
 }
+
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 70px; /* espacio para la barra inferior */
+  }
+}
