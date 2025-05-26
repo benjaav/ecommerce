@@ -26,13 +26,13 @@
   }
 }
 
-/* Paleta de colores mejorada */
+/* Paleta de colores elegante y neutra */
 :root {
-  --primary-color: #ff6f61;
-  --secondary-color: #ffb347;
-  --background-color: #ffffff;
-  --text-color: #333333;
-  --accent-color: #d94f4f;
+  --primary-color: #000000;
+  --secondary-color: #c9b89a;
+  --background-color: #f9f7f2;
+  --text-color: #000000;
+  --accent-color: #c9b89a;
 }
 
 body {

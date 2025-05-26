@@ -1,14 +1,14 @@
 :root {
-  --clr-background: linear-gradient(135deg, #ff6f61, #ffb347);
+  --clr-background: linear-gradient(135deg, #f9f7f2, #c9b89a);
   --clr-rectangle: rgba(255, 255, 255, 0.07);
-  --clr-form-border: #d94f4f;
+  --clr-form-border: #c9b89a;
   --clr-input-bg: rgba(255, 255, 255, 0.1);
-  --clr-input-focus: #d94f4f;
-  --clr-text: #333333;
-  --clr-accent: #d94f4f;
+  --clr-input-focus: #a88c5a;
+  --clr-text: #000000;
+  --clr-accent: #c9b89a;
   --clr-error: #f33;
-  --clr-button-bg: #ff6f61;
-  --clr-button-hover: #ffb347;
+  --clr-button-bg: #c9b89a;
+  --clr-button-hover: #a88c5a;
 }
 
 .container {

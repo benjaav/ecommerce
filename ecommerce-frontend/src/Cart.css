@@ -122,42 +122,42 @@
 }
 
 .update-btn {
-  background-color: #d94f4f !important;
-  color: #333333 !important;
-  box-shadow: 0 0 15px #d94f4f !important;
+  background-color: #c9b89a !important;
+  color: #000000 !important;
+  box-shadow: 0 0 15px #c9b89a !important;
 }
 
 .update-btn:hover {
-  background-color: #b33a3a !important;
+  background-color: #a88c5a !important;
   color: #fff !important;
-  box-shadow: 0 0 15px #b33a3a !important;
+  box-shadow: 0 0 15px #a88c5a !important;
   transform: translateY(-3px) !important;
 }
 
 .remove-btn {
-  background-color: #b33a3a !important;
+  background-color: #a88c5a !important;
   color: #fff !important;
-  box-shadow: 0 0 15px #b33a3a !important;
+  box-shadow: 0 0 15px #a88c5a !important;
 }
 
 .remove-btn:hover {
-  background-color: #7a2525 !important;
+  background-color: #7a6b3f !important;
   color: #fff !important;
-  box-shadow: 0 0 15px #7a2525 !important;
+  box-shadow: 0 0 15px #7a6b3f !important;
   transform: translateY(-3px) !important;
 }
 
 /* Separate styles for checkout buttons */
 .checkout-btn {
-  background-color: #00ffcc;
+  background-color: var(--primary-color);
   border: none;
-  color: #121212;
+  color: var(--background-color);
   padding: 12px 25px;
   border-radius: 0 !important;
   font-weight: 800;
   font-size: 1.1rem;
   cursor: pointer;
-  box-shadow: 0 0 15px #00ffcc;
+  box-shadow: 0 0 15px var(--primary-color);
   transition: all 0.3s ease;
   display: block;
   margin-left: auto;
@@ -167,21 +167,21 @@
 }
 
 .checkout-btn:hover {
-  background-color: #00b3a6;
-  box-shadow: 0 0 25px #00ffcc;
+  background-color: #333333;
+  box-shadow: 0 0 25px var(--primary-color);
   transform: translateY(-3px);
 }
 
 .checkout-back-btn {
-  background-color: #ff4081;
+  background-color: var(--accent-color);
   border: none;
-  color: white;
+  color: var(--background-color);
   padding: 12px 25px;
   border-radius: 0 !important;
   font-weight: 800;
   font-size: 1.1rem;
   cursor: pointer;
-  box-shadow: 0 0 15px #ff79a9;
+  box-shadow: 0 0 15px var(--accent-color);
   transition: all 0.3s ease;
   display: block;
   margin-left: auto;
@@ -191,8 +191,8 @@
 }
 
 .checkout-back-btn:hover {
-  background-color: #e60073;
-  box-shadow: 0 0 25px #ff79a9;
+  background-color: #a88c5a;
+  box-shadow: 0 0 25px var(--accent-color);
   transform: translateY(-3px);
 }
 

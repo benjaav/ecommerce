@@ -5,19 +5,19 @@
     --y-0: 90%;
     --s-start-0: 1%;
     --s-end-0: 61%;
-    --c-0: hsla(20, 80%, 15%, 1);
+    --c-0: hsla(42, 30%, 85%, 1);
     --x-1: 17%;
     --s-start-1: 0%;
     --s-end-1: 55%;
     --y-1: 24%;
-    --c-1: hsla(30, 90%, 10%, 1);
+    --c-1: hsla(40, 25%, 80%, 1);
     --x-2: 11%;
     --y-2: 32%;
     --s-start-2: 19%;
     --s-end-2: 54%;
-    --c-2: hsla(15, 70%, 20%, 1);
+    --c-2: hsla(38, 20%, 75%, 1);
     --y-3: 31%;
-    --c-3: hsla(10, 90%, 40%, 1);
+    --c-3: hsla(35, 15%, 70%, 1);
     --s-start-3: 0%;
     --s-end-3: 67%;
     --x-3: 2%;
@@ -25,7 +25,7 @@
     --s-start-4: 12%;
     --s-end-4: 82%;
     --y-4: 93%;
-    --c-4: hsla(10, 0%, 0%, 1);
+    --c-4: hsla(30, 10%, 65%, 1);
   }
 
   100% {
@@ -33,19 +33,19 @@
     --y-0: 25%;
     --s-start-0: 19%;
     --s-end-0: 69%;
-    --c-0: hsla(10, 0%, 0%, 1);
+    --c-0: hsla(30, 10%, 65%, 1);
     --x-1: 1%;
     --s-start-1: 3%;
     --s-end-1: 77%;
     --y-1: 41%;
-    --c-1: hsla(20, 80%, 15%, 1);
+    --c-1: hsla(42, 30%, 85%, 1);
     --x-2: 44%;
     --y-2: 93%;
     --s-start-2: 6%;
     --s-end-2: 73%;
-    --c-2: hsla(15, 70%, 20%, 1);
+    --c-2: hsla(38, 20%, 75%, 1);
     --y-3: 51%;
-    --c-3: hsla(10, 0%, 0%, 1);
+    --c-3: hsla(30, 10%, 65%, 1);
     --s-start-3: 8%;
     --s-end-3: 86%;
     --x-3: 97%;
@@ -53,7 +53,7 @@
     --s-start-4: 20%;
     --s-end-4: 75%;
     --y-4: 69%;
-    --c-4: hsla(10, 90%, 40%, 1);
+    --c-4: hsla(35, 15%, 70%, 1);
   }
 }
 
@@ -68,7 +68,7 @@
   text-align: center;
   padding: 0 20px;
   color: var(--primary-color);
-  background-color: hsla(20, 80%, 15%, 1);
+  background-color: hsla(42, 30%, 85%, 1);
   background-image:
     radial-gradient(circle at var(--x-0) var(--y-0), var(--c-0) var(--s-start-0), transparent var(--s-end-0)),
     radial-gradient(circle at var(--x-1) var(--y-1), var(--c-1) var(--s-start-1), transparent var(--s-end-1)),
@@ -79,6 +79,21 @@
   animation: hero-gradient-animation 10s linear infinite alternate;
   box-shadow: 0 0 30px var(--primary-color);
   border-radius: 0;
+  /* Added for better centering and responsiveness */
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  box-sizing: border-box;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .home-hero {
+    padding: 2rem 1rem;
+    height: auto;
+    min-height: 60vh;
+  }
 }
 
 /* Opcional: scroll suave */

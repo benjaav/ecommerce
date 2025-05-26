@@ -1,6 +1,6 @@
 .product-detail-container {
-  background-color: #4a2c2c;
-  color: #d94f4f;
+  background-color: var(--background-color);
+  color: var(--primary-color);
   min-height: 100vh;
   padding: 20px;
   display: flex;
@@ -11,9 +11,9 @@
 .detail-container {
   max-width: 900px;
   width: 100%;
-  background-color: #4a2c2c;
+  background-color: var(--background-color);
   border-radius: 10px;
-  box-shadow: 0 0 15px #d94f4f;
+  box-shadow: 0 0 15px var(--accent-color);
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -21,21 +21,21 @@
 }
 
 .back-btn {
-  background-color: #d94f4f;
-  color: #333333;
+  background-color: var(--accent-color);
+  color: var(--text-color);
   border: none;
   padding: 10px 20px;
   font-weight: 700;
   border-radius: 0;
   cursor: pointer;
   align-self: flex-start;
-  box-shadow: 0 0 15px #d94f4f;
+  box-shadow: 0 0 15px var(--accent-color);
   transition: all 0.3s ease;
 }
 
 .back-btn:hover {
-  background-color: #b33a3a;
-  box-shadow: 0 0 25px #d94f4f;
+  background-color: #a88c5a;
+  box-shadow: 0 0 25px var(--accent-color);
   transform: translateY(-3px);
 }
 
@@ -51,8 +51,8 @@
   font-weight: 700;
   font-size: 0.85rem;
   text-transform: uppercase;
-  border: 2px solid #ff6600;
-  color: #ff6600;
+  border: 2px solid var(--secondary-color);
+  color: var(--secondary-color);
 }
 
 .badge.premium {
@@ -69,20 +69,21 @@
   margin: 0;
   font-size: 2rem;
   font-weight: 900;
+  color: var(--primary-color);
 }
 
 .rating {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #d94f4f;
+  color: var(--accent-color);
   font-weight: 700;
   font-size: 0.9rem;
 }
 
 .rating-count {
   font-weight: 400;
-  color: #b33a3a;
+  color: #a88c5a;
 }
 
 .price-section {
@@ -91,11 +92,11 @@
   gap: 15px;
   font-weight: 700;
   font-size: 1.5rem;
-  color: #d94f4f;
+  color: var(--accent-color);
 }
 
 .discounted-price {
-  color: #d94f4f;
+  color: var(--accent-color);
 }
 
 .original-price {
@@ -105,8 +106,8 @@
 }
 
 .discount-label {
-  background-color: #ff6600;
-  color: white;
+  background-color: var(--secondary-color);
+  color: var(--background-color);
   padding: 4px 10px;
   border-radius: 20px;
   font-weight: 700;
@@ -123,13 +124,14 @@
 .detail-img {
   max-height: 300px;
   border-radius: 10px;
-  box-shadow: 0 0 10px #d94f4f;
+  box-shadow: 0 0 10px var(--accent-color);
   object-fit: contain;
 }
 
 .detail-info {
   font-size: 1.1rem;
   line-height: 1.5;
+  color: var(--primary-color);
 }
 
 .description-list {
@@ -142,17 +144,18 @@
   margin-bottom: 0.5rem;
   font-weight: 600;
   font-size: 1.05rem;
+  color: var(--primary-color);
 }
 
 .submit {
-  background-color: #d94f4f;
-  color: #333333;
+  background-color: var(--accent-color);
+  color: var(--text-color);
   border: none;
   padding: 15px 30px;
   font-weight: 700;
   border-radius: 0 !important;
   cursor: pointer;
-  box-shadow: 0 0 15px #d94f4f;
+  box-shadow: 0 0 15px var(--accent-color);
   transition: all 0.3s ease;
   align-self: center;
   margin-top: 10px;
@@ -160,8 +163,8 @@
 }
 
 .submit:hover {
-  background-color: #b33a3a;
-  box-shadow: 0 0 25px #d94f4f;
+  background-color: #a88c5a;
+  box-shadow: 0 0 25px var(--accent-color);
   transform: translateY(-3px);
 }
 
@@ -169,10 +172,10 @@
   display: flex;
   gap: 15px;
   margin-top: 20px;
-  background-color: #3a1f1f;
+  background-color: #f0ede7;
   padding: 15px;
   border-radius: 10px;
-  box-shadow: 0 0 10px #d94f4f;
+  box-shadow: 0 0 10px var(--accent-color);
   max-width: 600px;
 }
 
@@ -181,12 +184,12 @@
   height: 60px;
   border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0 0 8px #d94f4f;
+  box-shadow: 0 0 8px var(--accent-color);
 }
 
 .review-content {
   flex: 1;
-  color: #d94f4f;
+  color: var(--primary-color);
 }
 
 .reviewer-name-rating {
@@ -196,7 +199,7 @@
   margin-top: 8px;
   font-weight: 700;
   font-size: 0.9rem;
-  color: #b33a3a;
+  color: #a88c5a;
 }
 
 /* Star rating styles */
@@ -212,7 +215,7 @@
 }
 
 .star.full path {
-  fill: #d94f4f;
+  fill: var(--accent-color);
 }
 
 .star.half path {
@@ -220,11 +223,9 @@
 }
 
 .star.empty path {
-  stroke: #d94f4f;
+  stroke: var(--accent-color);
   fill: none;
 }
-
-/* ...existing code... */
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -253,8 +254,3 @@
     align-items: center;
   }
 }
-
-/* Se eliminaron los errores:
-   - Caracter '<' suelto
-   - Comentario de cierre inválido
-*/
