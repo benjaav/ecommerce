@@ -1,14 +1,28 @@
-/* Contenedor principal */
-.product-detail-container {
-  background-color: var(--background-color);
-  color: var(--text-color);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding: 20px;
+/* Ajuste puntual para que todas las imágenes del carrusel carguen sin afectar diseño */
+
+.carousel-slide {
+  display: flex;
+  transition: transform 0.5s ease;
+  overflow: hidden;
+  border-radius: 15px;
+  box-shadow: 0 0 20px var(--accent-color);
+  width: 100%;
 }
 
-/* Botón volver */
+.carousel-slide img.carousel-img {
+  flex-shrink: 0;
+  width: 100%;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+  box-shadow: 0 0 15px var(--primary-color);
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
 .back-btn {
-  background-color: var(--primary-color);
+  background-color: var(--accent-color);
   color: var(--text-color);
   border: none;
   padding: 10px 20px;
@@ -282,3 +296,29 @@
     align-items: flex-start;
   }
 }
+
+@media (min-width: 1024px) {
+  .carousel-container {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .carousel-slide {
+    display: flex;
+    transition: transform 0.5s ease;
+    height: 500px;
+    width: 100%;
+  }
+
+  .carousel-slide img.carousel-img {
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    margin: auto;
+  }
+}
+

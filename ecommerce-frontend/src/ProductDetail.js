@@ -117,19 +117,31 @@ function ProductDetail() {
         <div className="left-column">
           {/* Image carousel with thumbnails */}
           <div className="carousel-container">
-            <div className="carousel-slide" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
-              {product.images && product.images.length > 0
-                ? product.images.map(imgObj => {
-                    const src = imgObj.image.startsWith('http')
-                      ? imgObj.image
-                      : `/media/${imgObj.image}`;
-                    return (
-                      <img key={imgObj.id} src={src} alt={product.name} className="carousel-img" />
-                    );
-                  })
-                : <p>No hay imágenes para este producto.</p>
-              }
-            </div>
+            <div
+  className="carousel-slide"
+  style={{
+    transform: `translateX(-${currentIndex * (100 / (product.images?.length || 1))}%)`,
+    width: `${(product.images?.length || 1) * 100}%`
+  }}
+>
+  {product.images && product.images.length > 0
+    ? product.images.map(imgObj => {
+        const src = imgObj.image.startsWith('http')
+          ? imgObj.image
+          : `/media/${imgObj.image}`;
+        return (
+          <img
+            key={imgObj.id}
+            src={src}
+            alt={product.name}
+            className="carousel-img"
+            style={{ width: `${100 / product.images.length}%` }}
+          />
+        );
+      })
+    : <p>No hay imágenes para este producto.</p>
+  }
+</div>
             {/* Thumbnails */}
             <div className="carousel-thumbnails">
               {product.images && product.images.length > 0 && product.images.map((imgObj, index) => {
