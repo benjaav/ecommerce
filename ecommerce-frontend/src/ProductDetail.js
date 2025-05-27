@@ -112,105 +112,106 @@ function ProductDetail() {
   return (
     <div className="product-detail-container">
       <NavBar />
+      <button onClick={handleGoBack} className="back-btn">Volver</button>
       <div className="detail-container">
-        <button onClick={handleGoBack} className="back-btn">Volver</button>
-
-        {/* Badges */}
-        <div className="badges">
-          <span className="badge premium">POCO STOCK</span>
-          <span className="badge premium">CALIDAD PREMIUM</span>
-        </div>
-
-        {/* Product Title and Rating */}
-        <div className="detail-header">
-          <h2>{product.name}</h2>
-          <div className="rating">
-            <StarRating rating={4.8} />
-            <span className="rating-count">+2482 Unidades Vendidas</span>
-          </div>
-        </div>
-
-        {/* Price with discount */}
-        <div className="price-section">
-          {product.discount_price ? (
-            <>
-              <span className="discounted-price">${product.discount_price}</span>
-              <span className="original-price">${product.price}</span>
-              <span className="discount-label">¡Solo por Hoy!</span>
-            </>
-          ) : (
-            <span className="discounted-price">${product.price}</span>
-          )}
-        </div>
-
-        {/* Image carousel with thumbnails */}
-        <div className="carousel-container">
-          <div className="carousel-slide" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
-            {product.images && product.images.length > 0
-              ? product.images.map(imgObj => {
-                  const src = imgObj.image.startsWith('http')
-                    ? imgObj.image
-                    : `/media/${imgObj.image}`;
-                  return (
-                    <img key={imgObj.id} src={src} alt={product.name} className="carousel-img" />
-                  );
-                })
-              : <p>No hay imágenes para este producto.</p>
-            }
-          </div>
-          {/* Thumbnails */}
-          <div className="carousel-thumbnails">
-            {product.images && product.images.length > 0 && product.images.map((imgObj, index) => {
-              const src = imgObj.image.startsWith('http')
-                ? imgObj.image
-                : `/media/${imgObj.image}`;
-              return (
-                <img
-                  key={imgObj.id}
-                  src={src}
-                  alt={`${product.name} miniatura ${index + 1}`}
-                  className={`thumbnail-img ${index === currentIndex ? 'active' : ''}`}
-                  onClick={() => selectImage(index)}
-                />
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Description with bullet points */}
-        <div className="detail-info">
-          <h3>Descripción</h3>
-          <ul className="description-list">
-            {product.description.split('\n').map((line, index) => {
-              const trimmed = line.trim();
-              if (!trimmed) return null;
-              let emoji = '•';
-              if (trimmed.toLowerCase().includes('natural')) emoji = '🌱';
-              else if (trimmed.toLowerCase().includes('definida')) emoji = '✨';
-              else if (trimmed.toLowerCase().includes('curvas')) emoji = '🍑';
-              else if (trimmed.toLowerCase().includes('unidades')) emoji = '🟢';
-              return <li key={index}>{emoji} {trimmed}</li>;
-            })}
-          </ul>
-        </div>
-
-        {/* Add to Cart Button */}
-        <button onClick={handleAddToCart} className="submit">
-          Agregar al carrito.
-        </button>
-
-        {/* Customer Review */}
-        <div className="customer-review">
-          <img src="/images/marcelo.png" alt="Marcela Benavente" className="review-avatar" />
-          <div className="review-content">
-            <p>Todo perfecto, buenos precios y el producto tal cual lo describen. Se nota que les importa el cliente.</p>
-            <div className="reviewer-name-rating">
-              <span className="reviewer-name">Marcelo Benavente</span>
-              <StarRating rating={5} />
+        <div className="left-column">
+          {/* Image carousel with thumbnails */}
+          <div className="carousel-container">
+            <div className="carousel-slide" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
+              {product.images && product.images.length > 0
+                ? product.images.map(imgObj => {
+                    const src = imgObj.image.startsWith('http')
+                      ? imgObj.image
+                      : `/media/${imgObj.image}`;
+                    return (
+                      <img key={imgObj.id} src={src} alt={product.name} className="carousel-img" />
+                    );
+                  })
+                : <p>No hay imágenes para este producto.</p>
+              }
+            </div>
+            {/* Thumbnails */}
+            <div className="carousel-thumbnails">
+              {product.images && product.images.length > 0 && product.images.map((imgObj, index) => {
+                const src = imgObj.image.startsWith('http')
+                  ? imgObj.image
+                  : `/media/${imgObj.image}`;
+                return (
+                  <img
+                    key={imgObj.id}
+                    src={src}
+                    alt={`${product.name} miniatura ${index + 1}`}
+                    className={`thumbnail-img ${index === currentIndex ? 'active' : ''}`}
+                    onClick={() => selectImage(index)}
+                  />
+                );
+              })}
             </div>
           </div>
         </div>
+        <div className="right-column">
+          {/* Badges */}
+          <div className="badges">
+            <span className="badge premium">POCO STOCK</span>
+            <span className="badge premium">CALIDAD PREMIUM</span>
+          </div>
 
+          {/* Product Title and Rating */}
+          <div className="detail-header">
+            <h2>{product.name}</h2>
+            <div className="rating">
+              <StarRating rating={4.8} />
+              <span className="rating-count">+2482 Unidades Vendidas</span>
+            </div>
+          </div>
+
+          {/* Price with discount */}
+          <div className="price-section">
+            {product.discount_price ? (
+              <>
+                <span className="discounted-price">${product.discount_price}</span>
+                <span className="original-price">${product.price}</span>
+                <span className="discount-label">¡Solo por Hoy!</span>
+              </>
+            ) : (
+              <span className="discounted-price">${product.price}</span>
+            )}
+          </div>
+
+          {/* Description with bullet points */}
+          <div className="detail-info">
+            <h3>Descripción</h3>
+            <ul className="description-list">
+              {product.description.split('\n').map((line, index) => {
+                const trimmed = line.trim();
+                if (!trimmed) return null;
+                let emoji = '•';
+                if (trimmed.toLowerCase().includes('natural')) emoji = '🌱';
+                else if (trimmed.toLowerCase().includes('definida')) emoji = '✨';
+                else if (trimmed.toLowerCase().includes('curvas')) emoji = '🍑';
+                else if (trimmed.toLowerCase().includes('unidades')) emoji = '🟢';
+                return <li key={index}>{emoji} {trimmed}</li>;
+              })}
+            </ul>
+          </div>
+
+          {/* Add to Cart Button */}
+          <button onClick={handleAddToCart} className="submit">
+            Agregar al carrito.
+          </button>
+
+          {/* Customer Review */}
+          <div className="customer-review">
+            <img src="/images/marcelo.png" alt="Marcela Benavente" className="review-avatar" />
+            <div className="review-content">
+              <p>Todo perfecto, buenos precios y el producto tal cual lo describen. Se nota que les importa el cliente.</p>
+              <div className="reviewer-name-rating">
+                <span className="reviewer-name">Marcelo Benavente</span>
+                <StarRating rating={5} />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
